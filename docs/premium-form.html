@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>استمارة القبول — Premium ريما يعقوب</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Tajawal',sans-serif;background:#eef1f7;color:#0f1e3d;direction:rtl}
+  :root{
+    --navy:#0f1e3d;
+    --navy2:#1a2f5a;
+    --gold:#c9a84c;
+    --gold2:#e8c96a;
+    --bg:#eef1f7;
+    --white:#ffffff;
+    --border:#c8d3e8;
+    --muted:#6b7a99;
+    --green:#2d7d52;
+    --orange:#b07a10;
+    --red:#b83232;
+  }
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:none;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:1em;font-weight:700;transition:all .2s}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),#a8862e);color:#fff;box-shadow:0 4px 16px rgba(201,168,76,.35)}
+  .btn-gold:hover{opacity:.92;transform:translateY(-1px)}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:var(--navy2)}
+  .btn-outline{background:transparent;border:2px solid var(--gold);color:var(--gold)}
+  .card{background:var(--white);border-radius:16px;padding:30px;box-shadow:0 4px 24px rgba(15,30,61,.09)}
+  .section-title{font-size:1.15em;font-weight:900;color:var(--navy);margin:-30px -30px 22px;padding:16px 30px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,#f0f4ff,#fff);border-bottom:2px solid #dde4f4;display:flex;align-items:center;gap:10px}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-weight:800;font-size:1.05em;margin-bottom:10px;color:var(--navy);border-right:3px solid var(--gold);padding-right:10px;line-height:1.5}
+  .field input,.field select,.field textarea{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:.95em;color:var(--navy);background:#f8faff;transition:border .2s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:#fff}
+  .field textarea{min-height:90px;resize:vertical}
+  .field select{cursor:pointer}
+  .options-grid{display:grid;gap:10px}
+  .options-grid.cols-2{grid-template-columns:1fr 1fr}
+  .options-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+  .option-item{padding:12px 16px;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.93em;display:flex;align-items:center;gap:10px;background:#f8faff;color:var(--navy)}
+  .option-item:hover{border-color:var(--gold);background:#fffbf0}
+  .option-item.selected{border-color:var(--gold);background:#fffbf0;font-weight:700;color:var(--navy)}
+  .option-item input[type=checkbox],.option-item input[type=radio]{accent-color:var(--gold);width:16px;height:16px;flex-shrink:0}
+  .progress-bar{height:6px;background:#d4dcee;border-radius:6px;overflow:hidden;margin-bottom:20px}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:6px;transition:width .4s ease}
+  .stat-card{background:var(--white);border-radius:12px;padding:22px;display:flex;align-items:center;gap:15px;box-shadow:0 2px 12px rgba(15,30,61,.08)}
+  .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4em}
+  .lead-card{background:var(--white);border-radius:12px;padding:24px;margin-bottom:14px;box-shadow:0 2px 10px rgba(15,30,61,.07);border-right:6px solid transparent}
+  .lead-card.high{border-right-color:var(--green)}
+  .lead-card.mid{border-right-color:var(--orange)}
+  .lead-card.low{border-right-color:var(--red)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:600px){.field-row,.options-grid.cols-2,.options-grid.cols-3{grid-template-columns:1fr}}
+  .disqualified-box{background:linear-gradient(135deg,#fffbf0,#fff8e6);border:2px solid var(--gold);border-radius:16px;padding:36px 28px;text-align:center;margin-top:16px;box-shadow:0 8px 30px rgba(201,168,76,.2)}
+  .focus-cta-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),#a8862e);color:#fff;font-family:'Tajawal',sans-serif;font-size:1.15em;font-weight:800;padding:16px 36px;border-radius:14px;text-decoration:none;margin-top:18px;box-shadow:0 6px 20px rgba(201,168,76,.4);transition:all .2s}
+  .focus-cta-btn:hover{transform:translateY(-2px)}
+  .success-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+  .admin-bar{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty-state .icon{font-size:3em;margin-bottom:16px;opacity:.3}
+  input[type=text],input[type=email],input[type=tel]{direction:rtl}
+  .tag{background:#eef1f7;color:var(--navy2);padding:4px 10px;border-radius:20px;font-size:.82em;font-weight:600;border:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+const STORAGE_KEY = 'rima_premium_leads_v2';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg1lSFnveV1-kvw4XBqIeHuyU_10HGNBYXdZR0ClHcXDyNuQ1t5qShq-aCsNz_mAxWkA/exec';
+
+function calcScore(d) {
+  let s = 0;
+  const income = {'أكثر من $14,000':30,'$8,000 إلى $14,000':25,'$4,000 إلى $8,000':20,'$2,000 إلى $4,000':10,'أقل من $2,000':0};
+  const exp    = {'أقل من سنة':5,'1 إلى 2 سنوات':10,'3 إلى 5 سنوات':15,'5 سنوات وأكثر':20};
+  const budget = {'أكثر من $5,500':30,'$3,200 إلى $5,500':25,'$2,000 إلى $3,200':15,'أريد أن أفهم القيمة أولاً':10,'أقل من $2,000':0};
+  const time   = {'أكثر من 10 ساعات':10,'5 إلى 10 ساعات':8,'3 إلى 5 ساعات':5,'أقل من 3 ساعات':2};
+  const commit = {'جاهز 100% للاستثمار والالتزام':10,'مستعد لكن أحتاج بعض التهيئة':7,'لا زلت في مرحلة الاستكشاف':3,'أبحث عن حل مجاني أو منخفض التكلفة':0};
+  s += income[d.monthlyIncome]    || 0;
+  s += exp[d.experience]          || 0;
+  s += budget[d.investmentBudget] || 0;
+  s += time[d.weeklyTime]         || 0;
+  s += commit[d.commitment]       || 0;
+  return s;
+}
+
+function scoreClass(n){ return n >= 70 ? 'high' : n >= 50 ? 'mid' : 'low'; }
+function scoreLabel(n){ return n >= 70 ? '✅ مرشح ممتاز' : n >= 50 ? '🟡 مرشح متوسط' : '🔴 غير مناسب حالياً'; }
+
+function exportCSV(rows) {
+  const headers = ['التاريخ','النتيجة','المستوى','الاسم','الإيميل','الهاتف','الموقع','نوع البزنس','الخبرة','موظفين','الدخل الشهري','نظام محاسبة','هامش الربح','ميزانية التطوير','الهدف المالي','التحديات','العوائق','تدريب سابق','وقت أسبوعي','الالتزام','ميزانية الاستثمار','الرؤية المستقبلية'];
+  const csv = [
+    headers.join(','),
+    ...rows.map(r => [
+      r.timestamp, r.score+'/100', scoreLabel(r.score),
+      r.fullName, r.email, r.phone, r.location,
+      r.businessType === 'أخرى' ? r.businessTypeOther : r.businessType,
+      r.experience, r.hasEmployees, r.monthlyIncome, r.accountingSystem,
+      r.profitMargin, r.developmentBudget, r.financialGoal,
+      (r.challenges||[]).join(' | '), (r.barriers||[]).join(' | '),
+      r.previousCoaching, r.weeklyTime, r.commitment,
+      r.investmentBudget, r.futureVision
+    ].map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(','))
+  ].join('\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `leads-premium-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+const emptyForm = {
+  fullName:'', email:'', phone:'', location:'',
+  businessType:'', businessTypeOther:'',
+  experience:'', hasEmployees:'',
+  monthlyIncome:'',
+  accountingSystem:'', profitMargin:'', developmentBudget:'',
+  financialGoal:'',
+  challenges:[], barriers:[],
+  previousCoaching:'', weeklyTime:'',
+  commitment:'', investmentBudget:'',
+  futureVision:''
+};
+
+function CheckGroup({ options, selected, onChange, max }) {
+  function toggle(val) {
+    if (selected.includes(val)) onChange(selected.filter(v => v !== val));
+    else if (!max || selected.length < max) onChange([...selected, val]);
+  }
+  return (
+    <div className="options-grid">
+      {options.map(opt => (
+        <label key={opt} className={`option-item${selected.includes(opt) ? ' selected' : ''}`}>
+          <input type="checkbox" checked={selected.includes(opt)} onChange={() => toggle(opt)} />
+          {opt}
+        </label>
+      ))}
+    </div>
+  );
+}
+
+function RadioGroup({ name, options, value, onChange, cols }) {
+  return (
+    <div className={`options-grid${cols ? ' cols-'+cols : ''}`}>
+      {options.map(opt => (
+        <label key={opt} className={`option-item${value === opt ? ' selected' : ''}`}>
+          <input type="radio" name={name} value={opt} checked={value === opt} onChange={() => onChange(opt)} />
+          {opt}
+        </label>
+      ))}
+    </div>
+  );
+}
+
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
+function AdminView({ leads, onBack }) {
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
+
+  const visible = leads.filter(l => {
+    const ms = !search || l.fullName.includes(search) || l.email.toLowerCase().includes(search.toLowerCase()) || l.phone.includes(search);
+    const mf = filter === 'all' || (filter==='high' && l.score>=70) || (filter==='mid' && l.score>=50 && l.score<70) || (filter==='low' && l.score<50);
+    return ms && mf;
+  });
+
+  const total = leads.length;
+  const high  = leads.filter(l => l.score >= 70).length;
+  const mid   = leads.filter(l => l.score >= 50 && l.score < 70).length;
+  const low   = leads.filter(l => l.score < 50).length;
+
+  return (
+    <div style={{ minHeight:'100vh', background:'var(--bg)', padding:'20px' }}>
+      <div className="admin-bar">
+        <div>
+          <h1 style={{ fontSize:'1.7em', marginBottom:'6px' }}>👥 لوحة المتقدمين — Premium</h1>
+          <p style={{ opacity:.8, fontSize:'.95em' }}>تتبع ومتابعة المتقدمين للبرنامج</p>
+        </div>
+        <button className="btn btn-outline" onClick={onBack}>← العودة للاستمارة</button>
+      </div>
+
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:'16px', marginBottom:'20px' }}>
+        {[
+          { label:'إجمالي المتقدمين', val:total, emoji:'📋', bg:'#eef1f7', color:'var(--navy)' },
+          { label:'مرشحون ممتازون', val:high,  emoji:'🟢', bg:'#e6f4ed', color:'var(--green)' },
+          { label:'مرشحون متوسطون', val:mid,   emoji:'🟡', bg:'#fdf6e3', color:'var(--orange)' },
+          { label:'غير مناسبين',    val:low,   emoji:'🔴', bg:'#fdeaea', color:'var(--red)' },
+        ].map(s => (
+          <div className="stat-card" key={s.label}>
+            <div className="stat-icon" style={{ background:s.bg, color:s.color }}>{s.emoji}</div>
+            <div>
+              <div style={{ fontSize:'.85em', color:'var(--muted)', marginBottom:'3px' }}>{s.label}</div>
+              <div style={{ fontSize:'2em', fontWeight:800, color:s.color }}>{s.val}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card" style={{ marginBottom:'18px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'12px' }}>
+        <div style={{ display:'flex', gap:'10px', flexWrap:'wrap', flex:1 }}>
+          <input type="text" placeholder="🔍 ابحث بالاسم أو الإيميل أو الهاتف..."
+            value={search} onChange={e => setSearch(e.target.value)}
+            style={{ padding:'10px 14px', border:'2px solid var(--border)', borderRadius:'10px', fontFamily:'Tajawal,sans-serif', fontSize:'.93em', minWidth:'240px', flex:1, background:'#f8faff', color:'var(--navy)' }}
+          />
+          <select value={filter} onChange={e => setFilter(e.target.value)}
+            style={{ padding:'10px 14px', border:'2px solid var(--border)', borderRadius:'10px', fontFamily:'Tajawal,sans-serif', fontSize:'.93em', cursor:'pointer', background:'#f8faff', color:'var(--navy)' }}>
+            <option value="all">كل المستويات</option>
+            <option value="high">ممتازون (70 وأكثر)</option>
+            <option value="mid">متوسطون (50 إلى 69)</option>
+            <option value="low">منخفض (أقل من 50)</option>
+          </select>
+        </div>
+        <button className="btn btn-gold" onClick={() => exportCSV(visible)} disabled={visible.length === 0}
+          style={{ opacity: visible.length === 0 ? .5 : 1 }}>
+          ⬇️ تصدير CSV ({visible.length})
+        </button>
+      </div>
+
+      {visible.length === 0 ? (
+        <div className="card empty-state">
+          <div className="icon">📋</div>
+          <h3>{leads.length === 0 ? 'لا يوجد متقدمون بعد' : 'لا توجد نتائج'}</h3>
+          <p style={{ fontSize:'.9em', marginTop:'8px' }}>{leads.length === 0 ? 'ستظهر الطلبات هنا فور تعبئة الاستمارة' : 'جرب تغيير كلمة البحث أو الفلتر'}</p>
+        </div>
+      ) : visible.map(l => (
+        <div key={l.id} className={`lead-card ${scoreClass(l.score)}`}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:'12px', marginBottom:'16px' }}>
+            <div>
+              <h3 style={{ fontSize:'1.25em', marginBottom:'4px', color:'var(--navy)' }}>{l.fullName}</h3>
+              <span style={{ fontSize:'.85em', color:'var(--muted)' }}>{l.timestamp}</span>
+            </div>
+            <div style={{ textAlign:'center', padding:'10px 18px', borderRadius:'10px',
+              background: l.score>=70?'#e6f4ed':l.score>=50?'#fdf6e3':'#fdeaea' }}>
+              <div style={{ fontSize:'1.8em', fontWeight:800,
+                color: l.score>=70?'var(--green)':l.score>=50?'var(--orange)':'var(--red)' }}>{l.score}/100</div>
+              <div style={{ fontSize:'.8em', fontWeight:700,
+                color: l.score>=70?'var(--green)':l.score>=50?'var(--orange)':'var(--red)' }}>{scoreLabel(l.score)}</div>
+            </div>
+          </div>
+
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:'12px', marginBottom:'14px' }}>
+            {[
+              ['📧 إيميل', l.email],
+              ['📱 هاتف',  l.phone],
+              ['📍 موقع',  l.location],
+              ['💼 نوع البزنس', l.businessType === 'أخرى' ? l.businessTypeOther : l.businessType],
+              ['💰 الدخل الشهري', l.monthlyIncome],
+              ['👥 موظفين', l.hasEmployees],
+              ['💎 ميزانية الاستثمار', l.investmentBudget],
+            ].map(([lbl, val]) => (
+              <div key={lbl}>
+                <div style={{ fontSize:'.8em', color:'var(--muted)', marginBottom:'2px' }}>{lbl}</div>
+                <div style={{ fontWeight:600, fontSize:'.92em', color:'var(--navy)' }}>{val||'—'}</div>
+              </div>
+            ))}
+          </div>
+
+          {l.challenges?.length > 0 && (
+            <div style={{ marginBottom:'10px' }}>
+              <div style={{ fontSize:'.8em', color:'var(--muted)', marginBottom:'6px' }}>🎯 التحديات</div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
+                {l.challenges.map(c => <span key={c} className="tag">{c}</span>)}
+              </div>
+            </div>
+          )}
+
+          {l.futureVision && (
+            <div style={{ background:'#f8faff', borderRadius:'10px', padding:'14px', borderRight:'4px solid var(--gold)' }}>
+              <div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'5px' }}>💬 الرؤية المستقبلية</div>
+              <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)' }}>{l.futureVision}</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── FORM ─────────────────────────────────────────────────────────────────────
+function FormView({ onSubmit, onAdmin }) {
+  const [d, setD] = useState(emptyForm);
+  const [disqualified, setDisqualified] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  function set(field, val) {
+    setD(prev => ({ ...prev, [field]: val }));
+    if (field === 'investmentBudget') setDisqualified(val === 'أقل من $2,000');
+  }
+
+  const totalFields = 19;
+  const filled = Object.entries(d).filter(([k,v]) =>
+    k === 'businessTypeOther' ? false : Array.isArray(v) ? v.length > 0 : !!v
+  ).length;
+  const progress = Math.round((filled / totalFields) * 100);
+
+  function validate() {
+    const e = {};
+    if (!d.fullName.trim())       e.fullName = 'مطلوب';
+    if (!d.email.includes('@'))   e.email = 'إيميل غير صحيح';
+    if (!d.phone.trim())          e.phone = 'مطلوب';
+    if (!d.businessType)          e.businessType = 'مطلوب';
+    if (!d.experience)            e.experience = 'مطلوب';
+    if (!d.hasEmployees)          e.hasEmployees = 'مطلوب';
+    if (!d.monthlyIncome)         e.monthlyIncome = 'مطلوب';
+    if (d.challenges.length === 0) e.challenges = 'اختر تحدياً واحداً على الأقل';
+    if (d.challenges.length > 3)   e.challenges = 'الحد الأقصى 3 تحديات';
+    if (!d.investmentBudget)      e.investmentBudget = 'مطلوب';
+    if (!d.commitment)            e.commitment = 'مطلوب';
+    return e;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (disqualified) return;
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({top:0,behavior:'smooth'}); return; }
+    const score = calcScore(d);
+    onSubmit({ ...d, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
+  }
+
+  const errStyle = { color:'var(--red)', fontSize:'.82em', marginTop:'5px', fontWeight:600 };
+
+  return (
+    <div style={{ minHeight:'100vh', background:'var(--bg)', padding:'20px' }}>
+      <div style={{ maxWidth:'780px', margin:'0 auto' }}>
+
+        {/* Header */}
+        <div style={{ background:'linear-gradient(135deg,var(--navy),var(--navy2))', borderRadius:'20px', padding:'44px 36px', textAlign:'center', color:'#fff', marginBottom:'20px', boxShadow:'0 12px 40px rgba(15,30,61,.3)' }}>
+          <div style={{ fontSize:'2.5em', marginBottom:'10px' }}>🎯</div>
+          <h1 style={{ fontSize:'1.9em', fontWeight:900, marginBottom:'12px', color:'#fff' }}>استمارة القبول — برنامج Premium</h1>
+          <div style={{ width:'60px', height:'3px', background:'var(--gold)', borderRadius:'2px', margin:'0 auto 16px' }}/>
+          <p style={{ opacity:.88, fontSize:'1.05em', lineHeight:1.8, color:'#d4dcf0' }}>هذه الاستمارة تساعدنا على فهم وضعك بشكل دقيق وتحديد إذا كنت مرشحاً مناسباً للمرافقة الشخصية</p>
+        </div>
+
+        {/* Admin button */}
+        <div style={{ textAlign:'left', marginBottom:'16px' }}>
+          <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
+            👥 لوحة المتقدمين
+          </button>
+        </div>
+
+        {/* Progress */}
+        <div style={{ marginBottom:'20px' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', fontSize:'.85em', color:'var(--muted)', marginBottom:'6px' }}>
+            <span>اكتمال الاستمارة</span><span style={{ fontWeight:700, color:'var(--gold)' }}>{progress}%</span>
+          </div>
+          <div className="progress-bar"><div className="progress-fill" style={{ width:progress+'%' }}/></div>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate>
+
+          {/* ── القسم 1: المعلومات الشخصية ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">👤 المعلومات الشخصية</div>
+            <div className="field-row">
+              <div className="field">
+                <label>الاسم الكامل *</label>
+                <input type="text" placeholder="الاسم واللقب" value={d.fullName} onChange={e => set('fullName', e.target.value)} />
+                {errors.fullName && <div style={errStyle}>{errors.fullName}</div>}
+              </div>
+              <div className="field">
+                <label>رقم الهاتف (واتساب) *</label>
+                <input type="tel" placeholder="05X-XXXXXXX" value={d.phone} onChange={e => set('phone', e.target.value)} />
+                {errors.phone && <div style={errStyle}>{errors.phone}</div>}
+              </div>
+            </div>
+            <div className="field-row">
+              <div className="field">
+                <label>البريد الإلكتروني *</label>
+                <input type="email" placeholder="example@email.com" value={d.email} onChange={e => set('email', e.target.value)} />
+                {errors.email && <div style={errStyle}>{errors.email}</div>}
+              </div>
+              <div className="field">
+                <label>المدينة / المنطقة</label>
+                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} />
+              </div>
+            </div>
+          </div>
+
+          {/* ── القسم 2: البزنس ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">💼 معلومات البزنس</div>
+
+            <div className="field">
+              <label>ما هو نوع بزنسك وخدمتك؟ *</label>
+              <RadioGroup name="businessType" value={d.businessType} onChange={v => set('businessType', v)} cols={2}
+                options={['استشارات وتدريب أعمال','صالون تجميل أو مركز رعاية','مدرب أو كوتش','خدمات رقمية وسوشيال ميديا','تصميم وإبداع','خدمات صحية وعلاجية','أخرى']}
+              />
+              {errors.businessType && <div style={errStyle}>{errors.businessType}</div>}
+            </div>
+
+            {d.businessType === 'أخرى' && (
+              <div className="field">
+                <label>اذكر نوع بزنسك</label>
+                <input type="text" placeholder="صف بزنسك..." value={d.businessTypeOther} onChange={e => set('businessTypeOther', e.target.value)} />
+              </div>
+            )}
+
+            <div className="field">
+              <label>كم سنة من الخبرة في هذا المجال؟ *</label>
+              <RadioGroup name="experience" value={d.experience} onChange={v => set('experience', v)} cols={2}
+                options={['أقل من سنة','1 إلى 2 سنوات','3 إلى 5 سنوات','5 سنوات وأكثر']}
+              />
+              {errors.experience && <div style={errStyle}>{errors.experience}</div>}
+            </div>
+
+            <div className="field">
+              <label>هل لديك موظفون؟ *</label>
+              <RadioGroup name="hasEmployees" value={d.hasEmployees} onChange={v => set('hasEmployees', v)} cols={2}
+                options={['نعم','لا']}
+              />
+              {errors.hasEmployees && <div style={errStyle}>{errors.hasEmployees}</div>}
+            </div>
+
+            <div className="field">
+              <label>ما هو دخلك الشهري الحالي من البزنس؟ *</label>
+              <RadioGroup name="monthlyIncome" value={d.monthlyIncome} onChange={v => set('monthlyIncome', v)} cols={2}
+                options={['أقل من $2,000','$2,000 إلى $4,000','$4,000 إلى $8,000','$8,000 إلى $14,000','أكثر من $14,000']}
+              />
+              {errors.monthlyIncome && <div style={errStyle}>{errors.monthlyIncome}</div>}
+            </div>
+          </div>
+
+          {/* ── القسم 3: الوضع المالي ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">📊 الوضع المالي</div>
+
+            <div className="field">
+              <label>هل لديك نظام محاسبة أو متابعة مالية؟</label>
+              <RadioGroup name="accountingSystem" value={d.accountingSystem} onChange={v => set('accountingSystem', v)} cols={2}
+                options={['نعم نظام منتظم','أساسي وبسيط','لا أعتمد على التقدير','لا أتابع أرقامي']}
+              />
+            </div>
+
+            <div className="field">
+              <label>هل تعرف هامش ربحك الصافي تقريباً؟</label>
+              <RadioGroup name="profitMargin" value={d.profitMargin} onChange={v => set('profitMargin', v)} cols={3}
+                options={['نعم بدقة','تقريباً','لا أعرف']}
+              />
+            </div>
+
+            <div className="field">
+              <label>كم تنفق شهرياً على تطوير بزنسك؟ (تسويق وأدوات وتعلم)</label>
+              <select value={d.developmentBudget} onChange={e => set('developmentBudget', e.target.value)}
+                style={{ background:'#f8faff', color:'var(--navy)' }}>
+                <option value="">اختر...</option>
+                {['لا شيء حالياً','أقل من $140','$140 إلى $550','$550 إلى $1,400','أكثر من $1,400'].map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+
+            <div className="field">
+              <label>ما هو هدفك المالي خلال 6 أشهر؟</label>
+              <input type="text" placeholder="مثال: الوصول لـ $10,000 شهرياً بثبات" value={d.financialGoal} onChange={e => set('financialGoal', e.target.value)} />
+            </div>
+          </div>
+
+          {/* ── القسم 4: التحديات ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">🎯 التحديات والعوائق</div>
+
+            <div className="field">
+              <label>ما هي أكبر تحدياتك في بزنسك الآن؟ (اختر من 1 إلى 3) *</label>
+              <CheckGroup selected={d.challenges} max={3} onChange={v => set('challenges', v)}
+                options={[
+                  'دخل غير ثابت وغير متوقع',
+                  'ربح منخفض رغم الدخل',
+                  'صعوبة في جذب عملاء جدد',
+                  'عملاء يساومون على السعر',
+                  'لا وقت كافٍ لتطوير البزنس',
+                  'لا أعرف كيف أرفع أسعاري',
+                  'التسويق والحضور الرقمي',
+                  'إدارة الوقت والأولويات',
+                ]}
+              />
+              {errors.challenges && <div style={errStyle}>{errors.challenges}</div>}
+            </div>
+
+            <div className="field">
+              <label>ما العوائق التي منعتك حتى الآن من الوصول لأهدافك؟ (اختر كل ما ينطبق)</label>
+              <CheckGroup selected={d.barriers} onChange={v => set('barriers', v)}
+                options={[
+                  'عدم وضوح الخطة والاستراتيجية',
+                  'خوف من رفع الأسعار',
+                  'ضغط الحياة اليومية',
+                  'لم أجد الدعم والتوجيه المناسب',
+                  'جربت أدوات كثيرة بدون نتيجة',
+                  'صعوبة في الالتزام',
+                ]}
+              />
+            </div>
+
+            <div className="field">
+              <label>هل سبق أن عملت مع مدرب أو مستشار أعمال؟</label>
+              <RadioGroup name="previousCoaching" value={d.previousCoaching} onChange={v => set('previousCoaching', v)}
+                options={['نعم وكانت تجربة إيجابية','نعم لكن لم تكن التجربة جيدة','لا هذه المرة الأولى']}
+              />
+            </div>
+          </div>
+
+          {/* ── القسم 5: الجاهزية ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">🚀 مدى الجاهزية</div>
+
+            <div className="field">
+              <label>كم ساعة أسبوعياً تستطيع تخصيصها لتطوير بزنسك؟</label>
+              <RadioGroup name="weeklyTime" value={d.weeklyTime} onChange={v => set('weeklyTime', v)} cols={2}
+                options={['أقل من 3 ساعات','3 إلى 5 ساعات','5 إلى 10 ساعات','أكثر من 10 ساعات']}
+              />
+            </div>
+
+            <div className="field">
+              <label>ما مستوى التزامك إذا انضممت للبرنامج؟ *</label>
+              <RadioGroup name="commitment" value={d.commitment} onChange={v => set('commitment', v)}
+                options={[
+                  'جاهز 100% للاستثمار والالتزام',
+                  'مستعد لكن أحتاج بعض التهيئة',
+                  'لا زلت في مرحلة الاستكشاف',
+                  'أبحث عن حل مجاني أو منخفض التكلفة',
+                ]}
+              />
+              {errors.commitment && <div style={errStyle}>{errors.commitment}</div>}
+            </div>
+
+            <div className="field">
+              <label>ما الميزانية التي تستطيع تخصيصها للاستثمار في تطوير بزنسك؟ *</label>
+              <RadioGroup name="investmentBudget" value={d.investmentBudget} onChange={v => set('investmentBudget', v)}
+                options={[
+                  'أقل من $2,000',
+                  '$2,000 إلى $3,200',
+                  '$3,200 إلى $5,500',
+                  'أكثر من $5,500',
+                  'أريد أن أفهم القيمة أولاً',
+                ]}
+              />
+              {errors.investmentBudget && <div style={errStyle}>{errors.investmentBudget}</div>}
+            </div>
+
+            {disqualified && (
+              <div className="disqualified-box">
+                <div style={{ fontSize:'3em', marginBottom:'12px' }}>🌟</div>
+                <h3 style={{ color:'#8b6f4f', fontSize:'1.4em', marginBottom:'14px', fontWeight:900 }}>الخطوة الأولى لك هي جلسة Focus</h3>
+                <p style={{ fontSize:'1em', lineHeight:1.9, color:'#555', maxWidth:'440px', margin:'0 auto 6px' }}>
+                  برنامج Premium مخصص لمرحلة أكثر تقدماً.<br/>
+                  <strong style={{ color:'#8b6f4f' }}>جلسة Focus</strong> هي البداية الصحيحة — تشخيص كامل لوضعك وخطة واضحة خلال ساعة واحدة.
+                </p>
+                <a href="https://rimayaqub.ravpage.co.il/focus" className="focus-cta-btn" target="_blank">
+                  🎯 احجز جلسة Focus الآن ←
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* ── القسم 6: الرؤية ── */}
+          {!disqualified && (
+            <div className="card" style={{ marginBottom:'24px' }}>
+              <div className="section-title">💬 رؤيتك المستقبلية</div>
+              <div className="field">
+                <label>صف لنا: كيف يبدو بزنسك المثالي بعد 6 أشهر من المرافقة؟</label>
+                <textarea placeholder="اكتب بحرية... الدخل، نوع العملاء، ساعات العمل، شعورك تجاه البزنس..."
+                  value={d.futureVision} onChange={e => set('futureVision', e.target.value)} style={{ minHeight:'110px' }} />
+              </div>
+            </div>
+          )}
+
+          {!disqualified && (
+            <button type="submit" className="btn btn-gold"
+              style={{ width:'100%', justifyContent:'center', fontSize:'1.15em', padding:'18px', borderRadius:'14px', marginBottom:'30px' }}>
+              📩 إرسال الاستمارة ←
+            </button>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// ─── SUCCESS ──────────────────────────────────────────────────────────────────
+function SuccessScreen() {
+  return (
+    <div className="success-screen" style={{ background:'linear-gradient(135deg,#eef1f7,#dde3f0)' }}>
+      <div style={{ maxWidth:'560px', background:'#fff', borderRadius:'20px', padding:'60px 40px', textAlign:'center', boxShadow:'0 20px 60px rgba(15,30,61,.15)' }}>
+        <div style={{ fontSize:'4em', marginBottom:'20px' }}>✅</div>
+        <h2 style={{ fontSize:'1.8em', marginBottom:'16px', color:'var(--navy)' }}>شكراً! وصلتنا استمارتك</h2>
+        <p style={{ color:'var(--muted)', lineHeight:1.9, marginBottom:'24px', fontSize:'1.05em' }}>
+          ريما ستراجع طلبك بشكل شخصي<br/>وستتواصل معك على الواتساب خلال <strong style={{ color:'var(--navy)' }}>24 ساعة</strong>.
+        </p>
+        <div style={{ background:'#f8faff', border:'2px solid var(--border)', borderRadius:'12px', padding:'18px 24px', fontSize:'.95em', color:'var(--navy2)', lineHeight:1.8 }}>
+          💛 تأكد أن رقم واتساب الذي أدخلته صحيح
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+function App() {
+  const [view, setView]   = useState('form');
+  const [leads, setLeads] = useState([]);
+
+  useEffect(() => {
+    try { const s = localStorage.getItem(STORAGE_KEY); if (s) setLeads(JSON.parse(s)); } catch {}
+  }, []);
+
+  function saveLead(lead) {
+    const updated = [lead, ...leads];
+    setLeads(updated);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(lead)
+    }).catch(() => {});
+    setView('success');
+  }
+
+  if (view === 'admin')   return <AdminView leads={leads} onBack={() => setView('form')} />;
+  if (view === 'success') return <SuccessScreen />;
+  return <FormView onSubmit={saveLead} onAdmin={() => setView('admin')} />;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
