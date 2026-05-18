@@ -281,7 +281,7 @@ function AdminView({ leads, onBack }) {
 }
 
 // ─── FORM ─────────────────────────────────────────────────────────────────────
-function FormView({ onSubmit, onAdmin }) {
+function FormView({ onSubmit }) {
   const [d, setD] = useState(emptyForm);
   const [disqualified, setDisqualified] = useState(false);
   const [errors, setErrors] = useState({});
@@ -336,12 +336,6 @@ function FormView({ onSubmit, onAdmin }) {
           <p style={{ opacity:.88, fontSize:'1.05em', lineHeight:1.8, color:'#d4dcf0' }}>هذه الاستمارة تساعدنا على فهم وضعك بشكل دقيق وتحديد إذا كنت مرشحاً مناسباً للمرافقة الشخصية</p>
         </div>
 
-        {/* Admin button */}
-        <div style={{ textAlign:'left', marginBottom:'16px' }}>
-          <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
-            👥 لوحة المتقدمين
-          </button>
-        </div>
 
         {/* Progress */}
         <div style={{ marginBottom:'20px' }}>
@@ -585,10 +579,14 @@ function SuccessScreen() {
       <div style={{ maxWidth:'560px', background:'#fff', borderRadius:'20px', padding:'60px 40px', textAlign:'center', boxShadow:'0 20px 60px rgba(15,30,61,.15)' }}>
         <div style={{ fontSize:'4em', marginBottom:'20px' }}>✅</div>
         <h2 style={{ fontSize:'1.8em', marginBottom:'16px', color:'var(--navy)' }}>شكراً! وصلتنا استمارتك</h2>
-        <p style={{ color:'var(--muted)', lineHeight:1.9, marginBottom:'24px', fontSize:'1.05em' }}>
-          ريما ستراجع طلبك بشكل شخصي<br/>وستتواصل معك على الواتساب خلال <strong style={{ color:'var(--navy)' }}>24 ساعة</strong>.
+        <p style={{ color:'var(--muted)', lineHeight:1.9, marginBottom:'20px', fontSize:'1.05em' }}>
+          سنبحث ملائمتك لأحد برامج تطوير البزنس<br/>ونتواصل معك في أقرب وقت.
         </p>
-        <div style={{ background:'#f8faff', border:'2px solid var(--border)', borderRadius:'12px', padding:'18px 24px', fontSize:'.95em', color:'var(--navy2)', lineHeight:1.8 }}>
+        <div style={{ background:'linear-gradient(135deg,#fffbf0,#fff8e6)', border:'2px solid var(--gold)', borderRadius:'14px', padding:'20px 24px', fontSize:'.95em', color:'#7a5c1e', lineHeight:1.9, marginBottom:'18px' }}>
+          <strong>ماذا بعد؟</strong><br/>
+          ريما ستراجع طلبك بشكل شخصي وستتواصل معك على الواتساب خلال <strong>24 ساعة</strong>.
+        </div>
+        <div style={{ background:'#f8faff', border:'2px solid var(--border)', borderRadius:'12px', padding:'14px 20px', fontSize:'.92em', color:'var(--navy2)', lineHeight:1.8 }}>
           💛 تأكد أن رقم واتساب الذي أدخلته صحيح
         </div>
       </div>
@@ -598,7 +596,8 @@ function SuccessScreen() {
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
-  const [view, setView]   = useState('form');
+  const isAdminUrl = new URLSearchParams(window.location.search).get('admin') === '1';
+  const [view, setView]   = useState(isAdminUrl ? 'admin' : 'form');
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
@@ -620,7 +619,7 @@ function App() {
 
   if (view === 'admin')   return <AdminView leads={leads} onBack={() => setView('form')} />;
   if (view === 'success') return <SuccessScreen />;
-  return <FormView onSubmit={saveLead} onAdmin={() => setView('admin')} />;
+  return <FormView onSubmit={saveLead} />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
