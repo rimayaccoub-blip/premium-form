@@ -313,11 +313,19 @@ function FormView({ onSubmit }) {
     return e;
   }
 
+  const [showAlert, setShowAlert] = useState(false);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (disqualified) return;
     const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({top:0,behavior:'smooth'}); return; }
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      setShowAlert(true);
+      window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
+    setShowAlert(false);
     const score = calcScore(d);
     onSubmit({ ...d, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
   }
@@ -344,6 +352,16 @@ function FormView({ onSubmit }) {
           </div>
           <div className="progress-bar"><div className="progress-fill" style={{ width:progress+'%' }}/></div>
         </div>
+
+        {showAlert && (
+          <div style={{ background:'#fdeaea', border:'2px solid var(--red)', borderRadius:'14px', padding:'18px 22px', marginBottom:'18px', display:'flex', alignItems:'center', gap:'14px' }}>
+            <div style={{ fontSize:'1.8em', flexShrink:0 }}>⚠️</div>
+            <div>
+              <div style={{ fontWeight:900, color:'var(--red)', fontSize:'1.05em', marginBottom:'4px' }}>ارجع للقائمة واملأ المطلوب</div>
+              <div style={{ color:'#8b2020', fontSize:'.92em', lineHeight:1.7 }}>الحقول المميزة بـ <strong style={{ color:'var(--red)' }}>*</strong> إلزامية — تأكد من تعبئتها جميعاً قبل الإرسال.</div>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} noValidate>
 
