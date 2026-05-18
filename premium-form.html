@@ -370,7 +370,11 @@ function FormView({ onSubmit }) {
               </div>
               <div className="field">
                 <label>المدينة / المنطقة</label>
-                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} />
+                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} list="cities-list" autoComplete="off" />
+                <datalist id="cities-list">
+                  <option value="حيفا" /><option value="تل أبيب" /><option value="ناصرة" /><option value="القدس" /><option value="أم الفحم" /><option value="الناصرة العليا" /><option value="شفاعمرو" /><option value="عكا" /><option value="كفر كنا" /><option value="طمرة" /><option value="الطيبة" /><option value="باقة الغربية" /><option value="يافا" /><option value="اللد" /><option value="الرملة" /><option value="بئر السبع" /><option value="نتانيا" /><option value="ريشون لتسيون" /><option value="أشدود" /><option value="بيت شيمش" />
+                  <option value="دبي" /><option value="أبوظبي" /><option value="الشارقة" /><option value="عمّان" /><option value="الرياض" /><option value="جدة" /><option value="الكويت" /><option value="بيروت" /><option value="القاهرة" /><option value="رام الله" /><option value="نابلس" /><option value="الخليل" />
+                </datalist>
               </div>
             </div>
           </div>
