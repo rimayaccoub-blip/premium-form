@@ -78,7 +78,7 @@ function calcScore(d) {
   let s = 0;
   const income = {'أكثر من $14,000':30,'$8,000 إلى $14,000':25,'$4,000 إلى $8,000':20,'$2,000 إلى $4,000':10,'أقل من $2,000':0};
   const exp    = {'أقل من سنة':5,'1 إلى 2 سنوات':10,'3 إلى 5 سنوات':15,'5 سنوات وأكثر':20};
-  const budget = {'أكثر من $5,500':30,'$3,200 إلى $5,500':25,'$2,000 إلى $3,200':15,'أريد أن أفهم القيمة أولاً':10,'أقل من $2,000':0};
+  const budget = {'3000-5000 ₪':30,'1500-3000 ₪':15,'أقل من 1500 ₪':0};
   const time   = {'أكثر من 10 ساعات':10,'5 إلى 10 ساعات':8,'3 إلى 5 ساعات':5,'أقل من 3 ساعات':2};
   const commit = {'جاهز 100% للاستثمار والالتزام':10,'مستعد لكن أحتاج بعض التهيئة':7,'لا زلت في مرحلة الاستكشاف':3,'أبحث عن حل مجاني أو منخفض التكلفة':0};
   s += income[d.monthlyIncome]    || 0;
@@ -281,14 +281,14 @@ function AdminView({ leads, onBack }) {
 }
 
 // ─── FORM ─────────────────────────────────────────────────────────────────────
-function FormView({ onSubmit }) {
+function FormView({ onSubmit, onAdmin }) {
   const [d, setD] = useState(emptyForm);
   const [disqualified, setDisqualified] = useState(false);
   const [errors, setErrors] = useState({});
 
   function set(field, val) {
     setD(prev => ({ ...prev, [field]: val }));
-    if (field === 'investmentBudget') setDisqualified(val === 'أقل من $2,000');
+    if (field === 'investmentBudget') setDisqualified(val === 'أقل من 1500 ₪');
   }
 
   const totalFields = 19;
@@ -313,19 +313,11 @@ function FormView({ onSubmit }) {
     return e;
   }
 
-  const [showAlert, setShowAlert] = useState(false);
-
   function handleSubmit(e) {
     e.preventDefault();
     if (disqualified) return;
     const errs = validate();
-    if (Object.keys(errs).length) {
-      setErrors(errs);
-      setShowAlert(true);
-      window.scrollTo({top:0,behavior:'smooth'});
-      return;
-    }
-    setShowAlert(false);
+    if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({top:0,behavior:'smooth'}); return; }
     const score = calcScore(d);
     onSubmit({ ...d, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
   }
@@ -344,6 +336,12 @@ function FormView({ onSubmit }) {
           <p style={{ opacity:.88, fontSize:'1.05em', lineHeight:1.8, color:'#d4dcf0' }}>هذه الاستمارة تساعدنا على فهم وضعك بشكل دقيق وتحديد إذا كنت مرشحاً مناسباً للمرافقة الشخصية</p>
         </div>
 
+        {/* Admin button */}
+        <div style={{ textAlign:'left', marginBottom:'16px' }}>
+          <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
+            👥 لوحة المتقدمين
+          </button>
+        </div>
 
         {/* Progress */}
         <div style={{ marginBottom:'20px' }}>
@@ -352,16 +350,6 @@ function FormView({ onSubmit }) {
           </div>
           <div className="progress-bar"><div className="progress-fill" style={{ width:progress+'%' }}/></div>
         </div>
-
-        {showAlert && (
-          <div style={{ background:'#fdeaea', border:'2px solid var(--red)', borderRadius:'14px', padding:'18px 22px', marginBottom:'18px', display:'flex', alignItems:'center', gap:'14px' }}>
-            <div style={{ fontSize:'1.8em', flexShrink:0 }}>⚠️</div>
-            <div>
-              <div style={{ fontWeight:900, color:'var(--red)', fontSize:'1.05em', marginBottom:'4px' }}>ارجع للقائمة واملأ المطلوب</div>
-              <div style={{ color:'#8b2020', fontSize:'.92em', lineHeight:1.7 }}>الحقول المميزة بـ <strong style={{ color:'var(--red)' }}>*</strong> إلزامية — تأكد من تعبئتها جميعاً قبل الإرسال.</div>
-            </div>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} noValidate>
 
@@ -388,11 +376,7 @@ function FormView({ onSubmit }) {
               </div>
               <div className="field">
                 <label>المدينة / المنطقة</label>
-                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} list="cities-list" autoComplete="off" />
-                <datalist id="cities-list">
-                  <option value="حيفا" /><option value="تل أبيب" /><option value="ناصرة" /><option value="القدس" /><option value="أم الفحم" /><option value="الناصرة العليا" /><option value="شفاعمرو" /><option value="عكا" /><option value="كفر كنا" /><option value="طمرة" /><option value="الطيبة" /><option value="باقة الغربية" /><option value="يافا" /><option value="اللد" /><option value="الرملة" /><option value="بئر السبع" /><option value="نتانيا" /><option value="ريشون لتسيون" /><option value="أشدود" /><option value="بيت شيمش" />
-                  <option value="دبي" /><option value="أبوظبي" /><option value="الشارقة" /><option value="عمّان" /><option value="الرياض" /><option value="جدة" /><option value="الكويت" /><option value="بيروت" /><option value="القاهرة" /><option value="رام الله" /><option value="نابلس" /><option value="الخليل" />
-                </datalist>
+                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} />
               </div>
             </div>
           </div>
@@ -545,11 +529,9 @@ function FormView({ onSubmit }) {
               <label>ما الميزانية التي تستطيع تخصيصها للاستثمار في تطوير بزنسك؟ *</label>
               <RadioGroup name="investmentBudget" value={d.investmentBudget} onChange={v => set('investmentBudget', v)}
                 options={[
-                  'أقل من $2,000',
-                  '$2,000 إلى $3,200',
-                  '$3,200 إلى $5,500',
-                  'أكثر من $5,500',
-                  'أريد أن أفهم القيمة أولاً',
+                  'أقل من 1500 ₪',
+                  '1500-3000 ₪',
+                  '3000-5000 ₪',
                 ]}
               />
               {errors.investmentBudget && <div style={errStyle}>{errors.investmentBudget}</div>}
@@ -558,14 +540,11 @@ function FormView({ onSubmit }) {
             {disqualified && (
               <div className="disqualified-box">
                 <div style={{ fontSize:'3em', marginBottom:'12px' }}>🌟</div>
-                <h3 style={{ color:'#8b6f4f', fontSize:'1.4em', marginBottom:'14px', fontWeight:900 }}>الخطوة الأولى لك هي جلسة Focus</h3>
+                <h3 style={{ color:'#8b6f4f', fontSize:'1.4em', marginBottom:'14px', fontWeight:900 }}>نعتذر</h3>
                 <p style={{ fontSize:'1em', lineHeight:1.9, color:'#555', maxWidth:'440px', margin:'0 auto 6px' }}>
-                  برنامج Premium مخصص لمرحلة أكثر تقدماً.<br/>
-                  <strong style={{ color:'#8b6f4f' }}>جلسة Focus</strong> هي البداية الصحيحة — تشخيص كامل لوضعك وخطة واضحة خلال ساعة واحدة.
+                  برامجنا التدريبية لا تلاءم امكانيات استثمارك.<br/>
+                  بأمكانك الاشتراك في <strong style={{ color:'#8b6f4f' }}>برامجنا القادمة</strong>.
                 </p>
-                <a href="https://rimayaqub.ravpage.co.il/focus" className="focus-cta-btn" target="_blank">
-                  🎯 احجز جلسة Focus الآن ←
-                </a>
               </div>
             )}
           </div>
@@ -601,14 +580,10 @@ function SuccessScreen() {
       <div style={{ maxWidth:'560px', background:'#fff', borderRadius:'20px', padding:'60px 40px', textAlign:'center', boxShadow:'0 20px 60px rgba(15,30,61,.15)' }}>
         <div style={{ fontSize:'4em', marginBottom:'20px' }}>✅</div>
         <h2 style={{ fontSize:'1.8em', marginBottom:'16px', color:'var(--navy)' }}>شكراً! وصلتنا استمارتك</h2>
-        <p style={{ color:'var(--muted)', lineHeight:1.9, marginBottom:'20px', fontSize:'1.05em' }}>
-          سنبحث ملائمتك لأحد برامج تطوير البزنس<br/>ونتواصل معك في أقرب وقت.
+        <p style={{ color:'var(--muted)', lineHeight:1.9, marginBottom:'24px', fontSize:'1.05em' }}>
+          ريما ستراجع طلبك بشكل شخصي<br/>وستتواصل معك على الواتساب خلال <strong style={{ color:'var(--navy)' }}>24 ساعة</strong>.
         </p>
-        <div style={{ background:'linear-gradient(135deg,#fffbf0,#fff8e6)', border:'2px solid var(--gold)', borderRadius:'14px', padding:'20px 24px', fontSize:'.95em', color:'#7a5c1e', lineHeight:1.9, marginBottom:'18px' }}>
-          <strong>ماذا بعد؟</strong><br/>
-          ريما ستراجع طلبك بشكل شخصي وستتواصل معك على الواتساب خلال <strong>24 ساعة</strong>.
-        </div>
-        <div style={{ background:'#f8faff', border:'2px solid var(--border)', borderRadius:'12px', padding:'14px 20px', fontSize:'.92em', color:'var(--navy2)', lineHeight:1.8 }}>
+        <div style={{ background:'#f8faff', border:'2px solid var(--border)', borderRadius:'12px', padding:'18px 24px', fontSize:'.95em', color:'var(--navy2)', lineHeight:1.8 }}>
           💛 تأكد أن رقم واتساب الذي أدخلته صحيح
         </div>
       </div>
@@ -618,8 +593,7 @@ function SuccessScreen() {
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
-  const isAdminUrl = new URLSearchParams(window.location.search).get('admin') === '1';
-  const [view, setView]   = useState(isAdminUrl ? 'admin' : 'form');
+  const [view, setView]   = useState('form');
   const [leads, setLeads] = useState([]);
 
   useEffect(() => {
@@ -641,7 +615,7 @@ function App() {
 
   if (view === 'admin')   return <AdminView leads={leads} onBack={() => setView('form')} />;
   if (view === 'success') return <SuccessScreen />;
-  return <FormView onSubmit={saveLead} />;
+  return <FormView onSubmit={saveLead} onAdmin={() => setView('admin')} />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
