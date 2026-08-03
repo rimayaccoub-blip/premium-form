@@ -235,7 +235,7 @@ function FormView({ onSubmit }) {
           <div className="progress-bar"><div className="progress-fill" style={{ width:progress+'%' }}/></div>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate autoComplete="off">
 
           {/* ── القسم 1: المعلومات الشخصية ── */}
           <div className="card" style={{ marginBottom:'18px' }}>
@@ -253,7 +253,7 @@ function FormView({ onSubmit }) {
                     style={{ width:'140px', flexShrink:0, background:'#f8faff', color:'var(--navy)' }}>
                     {COUNTRY_CODES.map(c => <option key={c.code+c.name} value={c.code}>{c.code} {c.name}</option>)}
                   </select>
-                  <input type="tel" placeholder="5X-XXXXXXX" value={d.phone} onChange={e => set('phone', e.target.value)} style={{ direction:'ltr', textAlign:'left' }} />
+                  <input type="tel" autoComplete="off" placeholder="5X-XXXXXXX" value={d.phone} onChange={e => set('phone', e.target.value)} style={{ direction:'ltr', textAlign:'left' }} />
                 </div>
                 {errors.phone && <div style={errStyle}>{errors.phone}</div>}
               </div>
@@ -266,7 +266,7 @@ function FormView({ onSubmit }) {
               </div>
               <div className="field">
                 <label>المدينة / الدولة</label>
-                <input type="text" placeholder="اكتب المدينة والدولة" value={d.location} onChange={e => set('location', e.target.value)} />
+                <input type="text" autoComplete="off" placeholder="اكتب المدينة والدولة" value={d.location} onChange={e => set('location', e.target.value)} />
               </div>
             </div>
           </div>
