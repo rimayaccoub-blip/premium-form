@@ -64,32 +64,61 @@ const { useState } = React;
 // كل استمارة تُرسل مباشرة إلى Google Sheet الخاص بريما
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg1lSFnveV1-kvw4XBqIeHuyU_10HGNBYXdZR0ClHcXDyNuQ1t5qShq-aCsNz_mAxWkA/exec';
 
+const COUNTRY_CODES = [
+  { code:'+972', name:'إسرائيل' },
+  { code:'+970', name:'فلسطين' },
+  { code:'+962', name:'الأردن' },
+  { code:'+971', name:'الإمارات' },
+  { code:'+966', name:'السعودية' },
+  { code:'+974', name:'قطر' },
+  { code:'+965', name:'الكويت' },
+  { code:'+973', name:'البحرين' },
+  { code:'+968', name:'عُمان' },
+  { code:'+961', name:'لبنان' },
+  { code:'+963', name:'سوريا' },
+  { code:'+964', name:'العراق' },
+  { code:'+20',  name:'مصر' },
+  { code:'+212', name:'المغرب' },
+  { code:'+213', name:'الجزائر' },
+  { code:'+216', name:'تونس' },
+  { code:'+218', name:'ليبيا' },
+  { code:'+249', name:'السودان' },
+  { code:'+90',  name:'تركيا' },
+  { code:'+44',  name:'بريطانيا' },
+  { code:'+1',   name:'أمريكا / كندا' },
+  { code:'+49',  name:'ألمانيا' },
+  { code:'+33',  name:'فرنسا' },
+  { code:'+39',  name:'إيطاليا' },
+  { code:'+34',  name:'إسبانيا' },
+  { code:'+46',  name:'السويد' },
+  { code:'+61',  name:'أستراليا' },
+];
+
 function calcScore(d) {
   let s = 0;
   const income = {'أكثر من $14,000':30,'$8,000 إلى $14,000':25,'$4,000 إلى $8,000':20,'$2,000 إلى $4,000':10,'أقل من $2,000':0};
   const exp    = {'أقل من سنة':2,'1 إلى 2 سنوات':5,'3 إلى 5 سنوات':8,'5 سنوات وأكثر':10};
   const budget = {'أكثر من $7,500':30,'$4,500 إلى $7,500':27,'$1,500 إلى $4,500':22,'أقل من $1,500':0};
-  const urg    = {'عاجل جداً، لا أستطيع الاستمرار بنفس الطريقة':10,'مهم، أريد أن أبدأ خلال شهر':8,'مهم لكن ليس مستعجلاً، خلال 3 إلى 6 أشهر':4,'أستكشف فقط في هذه المرحلة':0};
-  const cost   = {'أكثر من $40,000':10,'$15,000 إلى $40,000':8,'$5,000 إلى $15,000':5,'أقل من $5,000':2,'لم أحسبها من قبل':4};
+  const urg    = {'عاجل جداً، لا أستطيع الاستمرار بنفس الطريقة':15,'مهم، أريد أن أبدأ خلال شهر':12,'مهم لكن ليس مستعجلاً، خلال 3 إلى 6 أشهر':6,'أستكشف فقط في هذه المرحلة':0};
   const time   = {'أكثر من 10 ساعات':5,'5 إلى 10 ساعات':4,'3 إلى 5 ساعات':3,'أقل من 3 ساعات':1};
-  const commit = {'جاهز 100% للاستثمار والالتزام':5,'مستعد لكن أحتاج بعض التهيئة':4,'لا زلت في مرحلة الاستكشاف':2,'أبحث عن حل مجاني أو منخفض التكلفة':0};
+  const commit = {'جاهز 100% للاستثمار والالتزام':10,'لا زلت في مرحلة الاستكشاف':0};
   s += income[d.monthlyIncome]    || 0;
   s += exp[d.experience]          || 0;
   s += budget[d.investmentBudget] || 0;
   s += time[d.weeklyTime]         || 0;
   s += commit[d.commitment]       || 0;
   s += urg[d.urgency]             || 0;
-  s += cost[d.costOfDelay]        || 0;
   return s;
 }
 
 const emptyForm = {
-  fullName:'', email:'', phone:'', location:'',
-  businessType:'', businessTypeOther:'',
+  fullName:'', email:'', countryCode:'+972', phone:'', location:'',
+  businessType:'', businessTypeOther:'', businessDescription:'',
   experience:'', hasEmployees:'',
   monthlyIncome:'',
   accountingSystem:'', profitMargin:'', developmentBudget:'',
-  separateAccounts:'', breakEven:'', ownerSalary:'', pricingMethod:'', hasStrategy:'',
+  separateAccounts:'', breakEven:'', ownerSalary:'', ownerSalaryAmount:'',
+  pricingMethod:'', averagePrices:'', hasStrategy:'',
   financialGoal:'',
   challenges:[], barriers:[],
   stuckDuration:'',
@@ -140,9 +169,9 @@ function FormView({ onSubmit }) {
     if (field === 'investmentBudget') setDisqualified(val === 'أقل من $1,500');
   }
 
-  const totalFields = 30;
+  const totalFields = 34;
   const filled = Object.entries(d).filter(([k,v]) =>
-    k === 'businessTypeOther' ? false : Array.isArray(v) ? v.length > 0 : !!v
+    (k === 'businessTypeOther' || k === 'ownerSalaryAmount' || k === 'countryCode') ? false : Array.isArray(v) ? v.length > 0 : !!v
   ).length;
   const progress = Math.round((filled / totalFields) * 100);
 
@@ -152,6 +181,9 @@ function FormView({ onSubmit }) {
     if (!d.email.includes('@'))   e.email = 'إيميل غير صحيح';
     if (!d.phone.trim())          e.phone = 'مطلوب';
     if (!d.businessType)          e.businessType = 'مطلوب';
+    if (d.businessType === 'أخرى' && !d.businessTypeOther.trim()) e.businessTypeOther = 'مطلوب';
+    if (!d.businessDescription.trim()) e.businessDescription = 'مطلوب';
+    if (!d.averagePrices.trim())  e.averagePrices = 'مطلوب';
     if (!d.experience)            e.experience = 'مطلوب';
     if (!d.hasEmployees)          e.hasEmployees = 'مطلوب';
     if (!d.monthlyIncome)         e.monthlyIncome = 'مطلوب';
@@ -159,7 +191,7 @@ function FormView({ onSubmit }) {
     if (d.challenges.length > 3)   e.challenges = 'الحد الأقصى 3 تحديات';
     if (!d.hasStrategy)           e.hasStrategy = 'مطلوب';
     if (!d.deepestPain.trim())    e.deepestPain = 'مطلوب';
-    if (!d.costOfDelay)           e.costOfDelay = 'مطلوب';
+    if (!d.costOfDelay.trim())    e.costOfDelay = 'مطلوب';
     if (!d.oneMoreYear.trim())    e.oneMoreYear = 'مطلوب';
     if (!d.urgency)               e.urgency = 'مطلوب';
     if (!d.investmentBudget)      e.investmentBudget = 'مطلوب';
@@ -173,7 +205,9 @@ function FormView({ onSubmit }) {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({top:0,behavior:'smooth'}); return; }
     const score = calcScore(d);
-    onSubmit({ ...d, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
+    // الرقم يصل كامل مع كود الدولة: +9725XXXXXXX
+    const phone = d.countryCode + ' ' + d.phone.replace(/^0+/, '').replace(/[\s-]/g, '');
+    onSubmit({ ...d, phone, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
   }
 
   const errStyle = { color:'var(--red)', fontSize:'.82em', marginTop:'5px', fontWeight:600 };
@@ -214,7 +248,13 @@ function FormView({ onSubmit }) {
               </div>
               <div className="field">
                 <label>رقم الهاتف (واتساب) *</label>
-                <input type="tel" placeholder="05X-XXXXXXX" value={d.phone} onChange={e => set('phone', e.target.value)} />
+                <div style={{ display:'flex', gap:'8px' }} dir="ltr">
+                  <select value={d.countryCode} onChange={e => set('countryCode', e.target.value)}
+                    style={{ width:'140px', flexShrink:0, background:'#f8faff', color:'var(--navy)' }}>
+                    {COUNTRY_CODES.map(c => <option key={c.code+c.name} value={c.code}>{c.code} {c.name}</option>)}
+                  </select>
+                  <input type="tel" placeholder="5X-XXXXXXX" value={d.phone} onChange={e => set('phone', e.target.value)} style={{ direction:'ltr', textAlign:'left' }} />
+                </div>
                 {errors.phone && <div style={errStyle}>{errors.phone}</div>}
               </div>
             </div>
@@ -225,8 +265,8 @@ function FormView({ onSubmit }) {
                 {errors.email && <div style={errStyle}>{errors.email}</div>}
               </div>
               <div className="field">
-                <label>المدينة / المنطقة</label>
-                <input type="text" placeholder="حيفا، تل أبيب، ناصرة..." value={d.location} onChange={e => set('location', e.target.value)} />
+                <label>المدينة / الدولة</label>
+                <input type="text" placeholder="اكتب المدينة والدولة" value={d.location} onChange={e => set('location', e.target.value)} />
               </div>
             </div>
           </div>
@@ -238,17 +278,25 @@ function FormView({ onSubmit }) {
             <div className="field">
               <label>ما هو نوع بزنسك وخدمتك؟ *</label>
               <RadioGroup name="businessType" value={d.businessType} onChange={v => set('businessType', v)} cols={2}
-                options={['استشارات وتدريب أعمال','صالون تجميل أو مركز رعاية','مدرب أو كوتش','خدمات رقمية وسوشيال ميديا','تصميم وإبداع','خدمات صحية وعلاجية','أخرى']}
+                options={['استشارات وتدريب أعمال','صالون تجميل أو مركز رعاية','مدرب أو كوتش','خدمات رقمية وسوشيال ميديا','خدمات صحية وعلاجية','أخرى']}
               />
               {errors.businessType && <div style={errStyle}>{errors.businessType}</div>}
             </div>
 
             {d.businessType === 'أخرى' && (
               <div className="field">
-                <label>اذكر نوع بزنسك</label>
-                <input type="text" placeholder="صف بزنسك..." value={d.businessTypeOther} onChange={e => set('businessTypeOther', e.target.value)} />
+                <label>اذكر نوع بزنسك *</label>
+                <input type="text" placeholder="اكتب نوع بزنسك هنا" value={d.businessTypeOther} onChange={e => set('businessTypeOther', e.target.value)} />
+                {errors.businessTypeOther && <div style={errStyle}>{errors.businessTypeOther}</div>}
               </div>
             )}
+
+            <div className="field">
+              <label>اكتب معلومات إضافية عن البزنس: وصف عن بزنسك والخدمات التي تقدمها *</label>
+              <textarea placeholder="ما الذي تقدمه بالضبط؟ لمن؟ ما هي خدماتك الأساسية؟ منذ متى؟"
+                value={d.businessDescription} onChange={e => set('businessDescription', e.target.value)} style={{ minHeight:'110px' }} />
+              {errors.businessDescription && <div style={errStyle}>{errors.businessDescription}</div>}
+            </div>
 
             <div className="field">
               <label>كم سنة من الخبرة في هذا المجال؟ *</label>
@@ -267,7 +315,7 @@ function FormView({ onSubmit }) {
             </div>
 
             <div className="field">
-              <label>ما هو دخلك الشهري الحالي من البزنس؟ *</label>
+              <label>ما هو دخلك الشهري المتوسط من البزنس؟ *</label>
               <RadioGroup name="monthlyIncome" value={d.monthlyIncome} onChange={v => set('monthlyIncome', v)} cols={2}
                 options={['أقل من $2,000','$2,000 إلى $4,000','$4,000 إلى $8,000','$8,000 إلى $14,000','أكثر من $14,000']}
               />
@@ -323,11 +371,25 @@ function FormView({ onSubmit }) {
               />
             </div>
 
+            {d.ownerSalary === 'نعم راتب ثابت' && (
+              <div className="field">
+                <label>كم مبلغ الراتب الذي تسحبه شهرياً؟</label>
+                <input type="text" placeholder="مثال: $2,500 شهرياً" value={d.ownerSalaryAmount} onChange={e => set('ownerSalaryAmount', e.target.value)} />
+              </div>
+            )}
+
             <div className="field">
               <label>كيف تحدد أسعار خدماتك اليوم؟</label>
               <RadioGroup name="pricingMethod" value={d.pricingMethod} onChange={v => set('pricingMethod', v)} cols={2}
                 options={['حسب قيمة النتيجة للعميل','حسب ساعات العمل','حسب أسعار السوق والمنافسين','بالإحساس بدون معادلة']}
               />
+            </div>
+
+            <div className="field">
+              <label>ما هي أسعار خدماتك بالمتوسط؟ *</label>
+              <textarea placeholder="اذكر خدماتك الأساسية وسعر كل واحدة، مثال: جلسة فردية $80، باقة شهرية $450"
+                value={d.averagePrices} onChange={e => set('averagePrices', e.target.value)} />
+              {errors.averagePrices && <div style={errStyle}>{errors.averagePrices}</div>}
             </div>
 
             <div className="field">
@@ -392,9 +454,15 @@ function FormView({ onSubmit }) {
             </div>
 
             <div className="field">
-              <label>هل سبق أن عملت مع مدرب أو مستشار أعمال؟</label>
+              <label>هل سبق أن عملت مع مستشار أو شركة تسويق؟</label>
               <RadioGroup name="previousCoaching" value={d.previousCoaching} onChange={v => set('previousCoaching', v)}
-                options={['نعم وكانت تجربة إيجابية','نعم لكن لم تكن التجربة جيدة','لا هذه المرة الأولى']}
+                options={[
+                  'نعم مع مستشار أعمال، وكانت تجربة إيجابية',
+                  'نعم مع مستشار أعمال، لكن لم تكن التجربة جيدة',
+                  'نعم مع شركة تسويق، وكانت تجربة إيجابية',
+                  'نعم مع شركة تسويق، لكن لم تكن التجربة جيدة',
+                  'لا هذه المرة الأولى',
+                ]}
               />
             </div>
           </div>
@@ -412,15 +480,8 @@ function FormView({ onSubmit }) {
 
             <div className="field">
               <label>كم تقدّر أنك خسرت خلال آخر 12 شهر بسبب عدم وجود نظام واضح؟ (فرص ضاعت، تسعير منخفض، عملاء ما رجعوا) *</label>
-              <RadioGroup name="costOfDelay" value={d.costOfDelay} onChange={v => set('costOfDelay', v)} cols={2}
-                options={[
-                  'أقل من $5,000',
-                  '$5,000 إلى $15,000',
-                  '$15,000 إلى $40,000',
-                  'أكثر من $40,000',
-                  'لم أحسبها من قبل',
-                ]}
-              />
+              <textarea placeholder="اكتب تقديرك بحرية، بالمبلغ أو بالوصف"
+                value={d.costOfDelay} onChange={e => set('costOfDelay', e.target.value)} />
               {errors.costOfDelay && <div style={errStyle}>{errors.costOfDelay}</div>}
             </div>
 
@@ -467,9 +528,7 @@ function FormView({ onSubmit }) {
               <RadioGroup name="commitment" value={d.commitment} onChange={v => set('commitment', v)}
                 options={[
                   'جاهز 100% للاستثمار والالتزام',
-                  'مستعد لكن أحتاج بعض التهيئة',
                   'لا زلت في مرحلة الاستكشاف',
-                  'أبحث عن حل مجاني أو منخفض التكلفة',
                 ]}
               />
               {errors.commitment && <div style={errStyle}>{errors.commitment}</div>}
