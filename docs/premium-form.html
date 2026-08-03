@@ -47,35 +47,22 @@
   .option-item input[type=checkbox],.option-item input[type=radio]{accent-color:var(--gold);width:16px;height:16px;flex-shrink:0}
   .progress-bar{height:6px;background:#d4dcee;border-radius:6px;overflow:hidden;margin-bottom:20px}
   .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:6px;transition:width .4s ease}
-  .stat-card{background:var(--white);border-radius:12px;padding:22px;display:flex;align-items:center;gap:15px;box-shadow:0 2px 12px rgba(15,30,61,.08)}
-  .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4em}
-  .lead-card{background:var(--white);border-radius:12px;padding:24px;margin-bottom:14px;box-shadow:0 2px 10px rgba(15,30,61,.07);border-right:6px solid transparent}
-  .lead-card.high{border-right-color:var(--green)}
-  .lead-card.mid{border-right-color:var(--orange)}
-  .lead-card.low{border-right-color:var(--red)}
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:600px){.field-row,.options-grid.cols-2,.options-grid.cols-3{grid-template-columns:1fr}}
   .disqualified-box{background:linear-gradient(135deg,#fffbf0,#fff8e6);border:2px solid var(--gold);border-radius:16px;padding:36px 28px;text-align:center;margin-top:16px;box-shadow:0 8px 30px rgba(201,168,76,.2)}
   .focus-cta-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),#a8862e);color:#fff;font-family:'Tajawal',sans-serif;font-size:1.15em;font-weight:800;padding:16px 36px;border-radius:14px;text-decoration:none;margin-top:18px;box-shadow:0 6px 20px rgba(201,168,76,.4);transition:all .2s}
   .focus-cta-btn:hover{transform:translateY(-2px)}
   .success-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-  .admin-bar{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-  .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
-  .empty-state .icon{font-size:3em;margin-bottom:16px;opacity:.3}
   input[type=text],input[type=email],input[type=tel]{direction:rtl}
-  .tag{background:#eef1f7;color:var(--navy2);padding:4px 10px;border-radius:20px;font-size:.82em;font-weight:600;border:1px solid var(--border)}
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useEffect } = React;
-const STORAGE_KEY = 'rima_premium_leads_v2';
+const { useState } = React;
 // كل استمارة تُرسل مباشرة إلى Google Sheet الخاص بريما
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg1lSFnveV1-kvw4XBqIeHuyU_10HGNBYXdZR0ClHcXDyNuQ1t5qShq-aCsNz_mAxWkA/exec';
-// لوحة النتائج تظهر فقط لريما: افتحي الرابط مضافاً إليه ?admin=rima
-const IS_ADMIN = new URLSearchParams(window.location.search).get('admin') === 'rima';
 
 function calcScore(d) {
   let s = 0;
@@ -94,34 +81,6 @@ function calcScore(d) {
   s += urg[d.urgency]             || 0;
   s += cost[d.costOfDelay]        || 0;
   return s;
-}
-
-function scoreClass(n){ return n >= 70 ? 'high' : n >= 50 ? 'mid' : 'low'; }
-function scoreLabel(n){ return n >= 70 ? '✅ مرشح ممتاز' : n >= 50 ? '🟡 مرشح متوسط' : '🔴 غير مناسب حالياً'; }
-
-function exportCSV(rows) {
-  const headers = ['التاريخ','النتيجة','المستوى','الاسم','الإيميل','الهاتف','الموقع','نوع البزنس','الخبرة','موظفين','الدخل الشهري','نظام محاسبة','هامش الربح','ميزانية التطوير','فصل الحسابات','نقطة التعادل','راتب صاحب البزنس','طريقة التسعير','وجود استراتيجية','الهدف المالي','التحديات','العوائق','مدة الجمود','الوجع الأكبر','كلفة التأجيل','سنة إضافية بنفس الوضع','ما جربه سابقاً','مستوى الإلحاح','تدريب سابق','وقت أسبوعي','الالتزام','ميزانية الاستثمار','الرؤية المستقبلية'];
-  const csv = [
-    headers.join(','),
-    ...rows.map(r => [
-      r.timestamp, r.score+'/100', scoreLabel(r.score),
-      r.fullName, r.email, r.phone, r.location,
-      r.businessType === 'أخرى' ? r.businessTypeOther : r.businessType,
-      r.experience, r.hasEmployees, r.monthlyIncome, r.accountingSystem,
-      r.profitMargin, r.developmentBudget,
-      r.separateAccounts, r.breakEven, r.ownerSalary, r.pricingMethod, r.hasStrategy,
-      r.financialGoal,
-      (r.challenges||[]).join(' | '), (r.barriers||[]).join(' | '),
-      r.stuckDuration, r.deepestPain, r.costOfDelay, r.oneMoreYear, r.triedBefore, r.urgency,
-      r.previousCoaching, r.weeklyTime, r.commitment,
-      r.investmentBudget, r.futureVision
-    ].map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(','))
-  ].join('\n');
-  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `leads-premium-${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
 }
 
 const emptyForm = {
@@ -170,148 +129,8 @@ function RadioGroup({ name, options, value, onChange, cols }) {
   );
 }
 
-// ─── ADMIN ────────────────────────────────────────────────────────────────────
-function AdminView({ leads, onBack }) {
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('all');
-
-  const visible = leads.filter(l => {
-    const ms = !search || l.fullName.includes(search) || l.email.toLowerCase().includes(search.toLowerCase()) || l.phone.includes(search);
-    const mf = filter === 'all' || (filter==='high' && l.score>=70) || (filter==='mid' && l.score>=50 && l.score<70) || (filter==='low' && l.score<50);
-    return ms && mf;
-  });
-
-  const total = leads.length;
-  const high  = leads.filter(l => l.score >= 70).length;
-  const mid   = leads.filter(l => l.score >= 50 && l.score < 70).length;
-  const low   = leads.filter(l => l.score < 50).length;
-
-  return (
-    <div style={{ minHeight:'100vh', background:'var(--bg)', padding:'20px' }}>
-      <div className="admin-bar">
-        <div>
-          <h1 style={{ fontSize:'1.7em', marginBottom:'6px' }}>👥 لوحة المتقدمين — Premium</h1>
-          <p style={{ opacity:.8, fontSize:'.95em' }}>تتبع ومتابعة المتقدمين للبرنامج</p>
-        </div>
-        <button className="btn btn-outline" onClick={onBack}>← العودة للاستمارة</button>
-      </div>
-
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))', gap:'16px', marginBottom:'20px' }}>
-        {[
-          { label:'إجمالي المتقدمين', val:total, emoji:'📋', bg:'#eef1f7', color:'var(--navy)' },
-          { label:'مرشحون ممتازون', val:high,  emoji:'🟢', bg:'#e6f4ed', color:'var(--green)' },
-          { label:'مرشحون متوسطون', val:mid,   emoji:'🟡', bg:'#fdf6e3', color:'var(--orange)' },
-          { label:'غير مناسبين',    val:low,   emoji:'🔴', bg:'#fdeaea', color:'var(--red)' },
-        ].map(s => (
-          <div className="stat-card" key={s.label}>
-            <div className="stat-icon" style={{ background:s.bg, color:s.color }}>{s.emoji}</div>
-            <div>
-              <div style={{ fontSize:'.85em', color:'var(--muted)', marginBottom:'3px' }}>{s.label}</div>
-              <div style={{ fontSize:'2em', fontWeight:800, color:s.color }}>{s.val}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="card" style={{ marginBottom:'18px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'12px' }}>
-        <div style={{ display:'flex', gap:'10px', flexWrap:'wrap', flex:1 }}>
-          <input type="text" placeholder="🔍 ابحث بالاسم أو الإيميل أو الهاتف..."
-            value={search} onChange={e => setSearch(e.target.value)}
-            style={{ padding:'10px 14px', border:'2px solid var(--border)', borderRadius:'10px', fontFamily:'Tajawal,sans-serif', fontSize:'.93em', minWidth:'240px', flex:1, background:'#f8faff', color:'var(--navy)' }}
-          />
-          <select value={filter} onChange={e => setFilter(e.target.value)}
-            style={{ padding:'10px 14px', border:'2px solid var(--border)', borderRadius:'10px', fontFamily:'Tajawal,sans-serif', fontSize:'.93em', cursor:'pointer', background:'#f8faff', color:'var(--navy)' }}>
-            <option value="all">كل المستويات</option>
-            <option value="high">ممتازون (70 وأكثر)</option>
-            <option value="mid">متوسطون (50 إلى 69)</option>
-            <option value="low">منخفض (أقل من 50)</option>
-          </select>
-        </div>
-        <button className="btn btn-gold" onClick={() => exportCSV(visible)} disabled={visible.length === 0}
-          style={{ opacity: visible.length === 0 ? .5 : 1 }}>
-          ⬇️ تصدير CSV ({visible.length})
-        </button>
-      </div>
-
-      {visible.length === 0 ? (
-        <div className="card empty-state">
-          <div className="icon">📋</div>
-          <h3>{leads.length === 0 ? 'لا يوجد متقدمون بعد' : 'لا توجد نتائج'}</h3>
-          <p style={{ fontSize:'.9em', marginTop:'8px' }}>{leads.length === 0 ? 'ستظهر الطلبات هنا فور تعبئة الاستمارة' : 'جرب تغيير كلمة البحث أو الفلتر'}</p>
-        </div>
-      ) : visible.map(l => (
-        <div key={l.id} className={`lead-card ${scoreClass(l.score)}`}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:'12px', marginBottom:'16px' }}>
-            <div>
-              <h3 style={{ fontSize:'1.25em', marginBottom:'4px', color:'var(--navy)' }}>{l.fullName}</h3>
-              <span style={{ fontSize:'.85em', color:'var(--muted)' }}>{l.timestamp}</span>
-            </div>
-            <div style={{ textAlign:'center', padding:'10px 18px', borderRadius:'10px',
-              background: l.score>=70?'#e6f4ed':l.score>=50?'#fdf6e3':'#fdeaea' }}>
-              <div style={{ fontSize:'1.8em', fontWeight:800,
-                color: l.score>=70?'var(--green)':l.score>=50?'var(--orange)':'var(--red)' }}>{l.score}/100</div>
-              <div style={{ fontSize:'.8em', fontWeight:700,
-                color: l.score>=70?'var(--green)':l.score>=50?'var(--orange)':'var(--red)' }}>{scoreLabel(l.score)}</div>
-            </div>
-          </div>
-
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:'12px', marginBottom:'14px' }}>
-            {[
-              ['📧 إيميل', l.email],
-              ['📱 هاتف',  l.phone],
-              ['📍 موقع',  l.location],
-              ['💼 نوع البزنس', l.businessType === 'أخرى' ? l.businessTypeOther : l.businessType],
-              ['💰 الدخل الشهري', l.monthlyIncome],
-              ['👥 موظفين', l.hasEmployees],
-              ['💎 ميزانية الاستثمار', l.investmentBudget],
-              ['🧭 استراتيجية 6 أشهر', l.hasStrategy],
-              ['🏦 نقطة التعادل', l.breakEven],
-              ['🏷️ طريقة التسعير', l.pricingMethod],
-              ['⏳ مدة الجمود', l.stuckDuration],
-              ['💸 كلفة التأجيل', l.costOfDelay],
-              ['🔥 الإلحاح', l.urgency],
-            ].map(([lbl, val]) => (
-              <div key={lbl}>
-                <div style={{ fontSize:'.8em', color:'var(--muted)', marginBottom:'2px' }}>{lbl}</div>
-                <div style={{ fontWeight:600, fontSize:'.92em', color:'var(--navy)' }}>{val||'—'}</div>
-              </div>
-            ))}
-          </div>
-
-          {l.challenges?.length > 0 && (
-            <div style={{ marginBottom:'10px' }}>
-              <div style={{ fontSize:'.8em', color:'var(--muted)', marginBottom:'6px' }}>🎯 التحديات</div>
-              <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
-                {l.challenges.map(c => <span key={c} className="tag">{c}</span>)}
-              </div>
-            </div>
-          )}
-
-          {(l.deepestPain || l.oneMoreYear || l.triedBefore) && (
-            <div style={{ background:'#fffbf0', borderRadius:'10px', padding:'14px', borderRight:'4px solid var(--orange)', marginBottom:'10px' }}>
-              {l.deepestPain && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>🔥 الوجع الأكبر</div>
-                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)', marginBottom:'10px' }}>{l.deepestPain}</p></>}
-              {l.oneMoreYear && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>⏳ سنة إضافية بنفس الوضع</div>
-                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)', marginBottom:'10px' }}>{l.oneMoreYear}</p></>}
-              {l.triedBefore && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>🔁 ما جربه سابقاً</div>
-                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)' }}>{l.triedBefore}</p></>}
-            </div>
-          )}
-
-          {l.futureVision && (
-            <div style={{ background:'#f8faff', borderRadius:'10px', padding:'14px', borderRight:'4px solid var(--gold)' }}>
-              <div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'5px' }}>💬 الرؤية المستقبلية</div>
-              <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)' }}>{l.futureVision}</p>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 // ─── FORM ─────────────────────────────────────────────────────────────────────
-function FormView({ onSubmit, onAdmin }) {
+function FormView({ onSubmit }) {
   const [d, setD] = useState(emptyForm);
   const [disqualified, setDisqualified] = useState(false);
   const [errors, setErrors] = useState({});
@@ -373,15 +192,6 @@ function FormView({ onSubmit, onAdmin }) {
             كل سؤال هنا مقصود: كل ما كانت إجاباتك أوضح، كل ما كان التشخيص أدق.
           </p>
         </div>
-
-        {/* Admin button — يظهر فقط عند فتح الرابط مع ?admin=rima */}
-        {IS_ADMIN && (
-          <div style={{ textAlign:'left', marginBottom:'16px' }}>
-            <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
-              👥 لوحة المتقدمين
-            </button>
-          </div>
-        )}
 
         {/* Progress */}
         <div style={{ marginBottom:'20px' }}>
@@ -737,17 +547,9 @@ function SuccessScreen() {
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
-  const [view, setView]   = useState('form');
-  const [leads, setLeads] = useState([]);
-
-  useEffect(() => {
-    try { const s = localStorage.getItem(STORAGE_KEY); if (s) setLeads(JSON.parse(s)); } catch {}
-  }, []);
+  const [view, setView] = useState('form');
 
   function saveLead(lead) {
-    const updated = [lead, ...leads];
-    setLeads(updated);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -757,9 +559,8 @@ function App() {
     setView('success');
   }
 
-  if (view === 'admin' && IS_ADMIN) return <AdminView leads={leads} onBack={() => setView('form')} />;
   if (view === 'success') return <SuccessScreen />;
-  return <FormView onSubmit={saveLead} onAdmin={() => setView('admin')} />;
+  return <FormView onSubmit={saveLead} />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
