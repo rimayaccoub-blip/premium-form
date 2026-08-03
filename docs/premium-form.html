@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>استمارة القبول — Premium ريما يعقوب</title>
+<title>من دخل غير ثابت إلى نظام دخل | استمارة الترشح Premium ريما يعقوب</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -72,20 +72,27 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 const STORAGE_KEY = 'rima_premium_leads_v2';
+// كل استمارة تُرسل مباشرة إلى Google Sheet الخاص بريما
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg1lSFnveV1-kvw4XBqIeHuyU_10HGNBYXdZR0ClHcXDyNuQ1t5qShq-aCsNz_mAxWkA/exec';
+// لوحة النتائج تظهر فقط لريما: افتحي الرابط مضافاً إليه ?admin=rima
+const IS_ADMIN = new URLSearchParams(window.location.search).get('admin') === 'rima';
 
 function calcScore(d) {
   let s = 0;
   const income = {'أكثر من $14,000':30,'$8,000 إلى $14,000':25,'$4,000 إلى $8,000':20,'$2,000 إلى $4,000':10,'أقل من $2,000':0};
-  const exp    = {'أقل من سنة':5,'1 إلى 2 سنوات':10,'3 إلى 5 سنوات':15,'5 سنوات وأكثر':20};
-  const budget = {'3000-5000 ₪':30,'1500-3000 ₪':15,'أقل من 1500 ₪':0};
-  const time   = {'أكثر من 10 ساعات':10,'5 إلى 10 ساعات':8,'3 إلى 5 ساعات':5,'أقل من 3 ساعات':2};
-  const commit = {'جاهز 100% للاستثمار والالتزام':10,'مستعد لكن أحتاج بعض التهيئة':7,'لا زلت في مرحلة الاستكشاف':3,'أبحث عن حل مجاني أو منخفض التكلفة':0};
+  const exp    = {'أقل من سنة':2,'1 إلى 2 سنوات':5,'3 إلى 5 سنوات':8,'5 سنوات وأكثر':10};
+  const budget = {'أكثر من $7,500':30,'$4,500 إلى $7,500':27,'$1,500 إلى $4,500':22,'أقل من $1,500':0};
+  const urg    = {'عاجل جداً، لا أستطيع الاستمرار بنفس الطريقة':10,'مهم، أريد أن أبدأ خلال شهر':8,'مهم لكن ليس مستعجلاً، خلال 3 إلى 6 أشهر':4,'أستكشف فقط في هذه المرحلة':0};
+  const cost   = {'أكثر من $40,000':10,'$15,000 إلى $40,000':8,'$5,000 إلى $15,000':5,'أقل من $5,000':2,'لم أحسبها من قبل':4};
+  const time   = {'أكثر من 10 ساعات':5,'5 إلى 10 ساعات':4,'3 إلى 5 ساعات':3,'أقل من 3 ساعات':1};
+  const commit = {'جاهز 100% للاستثمار والالتزام':5,'مستعد لكن أحتاج بعض التهيئة':4,'لا زلت في مرحلة الاستكشاف':2,'أبحث عن حل مجاني أو منخفض التكلفة':0};
   s += income[d.monthlyIncome]    || 0;
   s += exp[d.experience]          || 0;
   s += budget[d.investmentBudget] || 0;
   s += time[d.weeklyTime]         || 0;
   s += commit[d.commitment]       || 0;
+  s += urg[d.urgency]             || 0;
+  s += cost[d.costOfDelay]        || 0;
   return s;
 }
 
@@ -93,7 +100,7 @@ function scoreClass(n){ return n >= 70 ? 'high' : n >= 50 ? 'mid' : 'low'; }
 function scoreLabel(n){ return n >= 70 ? '✅ مرشح ممتاز' : n >= 50 ? '🟡 مرشح متوسط' : '🔴 غير مناسب حالياً'; }
 
 function exportCSV(rows) {
-  const headers = ['التاريخ','النتيجة','المستوى','الاسم','الإيميل','الهاتف','الموقع','نوع البزنس','الخبرة','موظفين','الدخل الشهري','نظام محاسبة','هامش الربح','ميزانية التطوير','الهدف المالي','التحديات','العوائق','تدريب سابق','وقت أسبوعي','الالتزام','ميزانية الاستثمار','الرؤية المستقبلية'];
+  const headers = ['التاريخ','النتيجة','المستوى','الاسم','الإيميل','الهاتف','الموقع','نوع البزنس','الخبرة','موظفين','الدخل الشهري','نظام محاسبة','هامش الربح','ميزانية التطوير','فصل الحسابات','نقطة التعادل','راتب صاحب البزنس','طريقة التسعير','وجود استراتيجية','الهدف المالي','التحديات','العوائق','مدة الجمود','الوجع الأكبر','كلفة التأجيل','سنة إضافية بنفس الوضع','ما جربه سابقاً','مستوى الإلحاح','تدريب سابق','وقت أسبوعي','الالتزام','ميزانية الاستثمار','الرؤية المستقبلية'];
   const csv = [
     headers.join(','),
     ...rows.map(r => [
@@ -101,8 +108,11 @@ function exportCSV(rows) {
       r.fullName, r.email, r.phone, r.location,
       r.businessType === 'أخرى' ? r.businessTypeOther : r.businessType,
       r.experience, r.hasEmployees, r.monthlyIncome, r.accountingSystem,
-      r.profitMargin, r.developmentBudget, r.financialGoal,
+      r.profitMargin, r.developmentBudget,
+      r.separateAccounts, r.breakEven, r.ownerSalary, r.pricingMethod, r.hasStrategy,
+      r.financialGoal,
       (r.challenges||[]).join(' | '), (r.barriers||[]).join(' | '),
+      r.stuckDuration, r.deepestPain, r.costOfDelay, r.oneMoreYear, r.triedBefore, r.urgency,
       r.previousCoaching, r.weeklyTime, r.commitment,
       r.investmentBudget, r.futureVision
     ].map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(','))
@@ -120,8 +130,11 @@ const emptyForm = {
   experience:'', hasEmployees:'',
   monthlyIncome:'',
   accountingSystem:'', profitMargin:'', developmentBudget:'',
+  separateAccounts:'', breakEven:'', ownerSalary:'', pricingMethod:'', hasStrategy:'',
   financialGoal:'',
   challenges:[], barriers:[],
+  stuckDuration:'',
+  deepestPain:'', costOfDelay:'', oneMoreYear:'', triedBefore:'', urgency:'',
   previousCoaching:'', weeklyTime:'',
   commitment:'', investmentBudget:'',
   futureVision:''
@@ -251,6 +264,12 @@ function AdminView({ leads, onBack }) {
               ['💰 الدخل الشهري', l.monthlyIncome],
               ['👥 موظفين', l.hasEmployees],
               ['💎 ميزانية الاستثمار', l.investmentBudget],
+              ['🧭 استراتيجية 6 أشهر', l.hasStrategy],
+              ['🏦 نقطة التعادل', l.breakEven],
+              ['🏷️ طريقة التسعير', l.pricingMethod],
+              ['⏳ مدة الجمود', l.stuckDuration],
+              ['💸 كلفة التأجيل', l.costOfDelay],
+              ['🔥 الإلحاح', l.urgency],
             ].map(([lbl, val]) => (
               <div key={lbl}>
                 <div style={{ fontSize:'.8em', color:'var(--muted)', marginBottom:'2px' }}>{lbl}</div>
@@ -265,6 +284,17 @@ function AdminView({ leads, onBack }) {
               <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
                 {l.challenges.map(c => <span key={c} className="tag">{c}</span>)}
               </div>
+            </div>
+          )}
+
+          {(l.deepestPain || l.oneMoreYear || l.triedBefore) && (
+            <div style={{ background:'#fffbf0', borderRadius:'10px', padding:'14px', borderRight:'4px solid var(--orange)', marginBottom:'10px' }}>
+              {l.deepestPain && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>🔥 الوجع الأكبر</div>
+                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)', marginBottom:'10px' }}>{l.deepestPain}</p></>}
+              {l.oneMoreYear && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>⏳ سنة إضافية بنفس الوضع</div>
+                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)', marginBottom:'10px' }}>{l.oneMoreYear}</p></>}
+              {l.triedBefore && <><div style={{ fontSize:'.82em', color:'var(--muted)', marginBottom:'4px' }}>🔁 ما جربه سابقاً</div>
+                <p style={{ fontSize:'.92em', lineHeight:1.7, color:'var(--navy)' }}>{l.triedBefore}</p></>}
             </div>
           )}
 
@@ -288,10 +318,10 @@ function FormView({ onSubmit, onAdmin }) {
 
   function set(field, val) {
     setD(prev => ({ ...prev, [field]: val }));
-    if (field === 'investmentBudget') setDisqualified(val === 'أقل من 1500 ₪');
+    if (field === 'investmentBudget') setDisqualified(val === 'أقل من $1,500');
   }
 
-  const totalFields = 19;
+  const totalFields = 30;
   const filled = Object.entries(d).filter(([k,v]) =>
     k === 'businessTypeOther' ? false : Array.isArray(v) ? v.length > 0 : !!v
   ).length;
@@ -308,6 +338,11 @@ function FormView({ onSubmit, onAdmin }) {
     if (!d.monthlyIncome)         e.monthlyIncome = 'مطلوب';
     if (d.challenges.length === 0) e.challenges = 'اختر تحدياً واحداً على الأقل';
     if (d.challenges.length > 3)   e.challenges = 'الحد الأقصى 3 تحديات';
+    if (!d.hasStrategy)           e.hasStrategy = 'مطلوب';
+    if (!d.deepestPain.trim())    e.deepestPain = 'مطلوب';
+    if (!d.costOfDelay)           e.costOfDelay = 'مطلوب';
+    if (!d.oneMoreYear.trim())    e.oneMoreYear = 'مطلوب';
+    if (!d.urgency)               e.urgency = 'مطلوب';
     if (!d.investmentBudget)      e.investmentBudget = 'مطلوب';
     if (!d.commitment)            e.commitment = 'مطلوب';
     return e;
@@ -331,17 +366,22 @@ function FormView({ onSubmit, onAdmin }) {
         {/* Header */}
         <div style={{ background:'linear-gradient(135deg,var(--navy),var(--navy2))', borderRadius:'20px', padding:'44px 36px', textAlign:'center', color:'#fff', marginBottom:'20px', boxShadow:'0 12px 40px rgba(15,30,61,.3)' }}>
           <div style={{ fontSize:'2.5em', marginBottom:'10px' }}>🎯</div>
-          <h1 style={{ fontSize:'1.9em', fontWeight:900, marginBottom:'12px', color:'#fff' }}>استمارة القبول — برنامج Premium</h1>
+          <h1 style={{ fontSize:'1.9em', fontWeight:900, marginBottom:'12px', color:'#fff' }}>من دخل غير ثابت… إلى نظام دخل واضح</h1>
           <div style={{ width:'60px', height:'3px', background:'var(--gold)', borderRadius:'2px', margin:'0 auto 16px' }}/>
-          <p style={{ opacity:.88, fontSize:'1.05em', lineHeight:1.8, color:'#d4dcf0' }}>هذه الاستمارة تساعدنا على فهم وضعك بشكل دقيق وتحديد إذا كنت مرشحاً مناسباً للمرافقة الشخصية</p>
+          <p style={{ opacity:.88, fontSize:'1.05em', lineHeight:1.8, color:'#d4dcf0' }}>
+            استمارة الترشح لبرنامج Premium: مرافقة شخصية لبناء استراتيجية ونظام دخل لبزنسك.<br/>
+            كل سؤال هنا مقصود: كل ما كانت إجاباتك أوضح، كل ما كان التشخيص أدق.
+          </p>
         </div>
 
-        {/* Admin button */}
-        <div style={{ textAlign:'left', marginBottom:'16px' }}>
-          <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
-            👥 لوحة المتقدمين
-          </button>
-        </div>
+        {/* Admin button — يظهر فقط عند فتح الرابط مع ?admin=rima */}
+        {IS_ADMIN && (
+          <div style={{ textAlign:'left', marginBottom:'16px' }}>
+            <button className="btn btn-navy" style={{ fontSize:'.88em', padding:'9px 18px' }} onClick={onAdmin}>
+              👥 لوحة المتقدمين
+            </button>
+          </div>
+        )}
 
         {/* Progress */}
         <div style={{ marginBottom:'20px' }}>
@@ -453,6 +493,47 @@ function FormView({ onSubmit, onAdmin }) {
             </div>
 
             <div className="field">
+              <label>هل تفصل بين حساب البزنس وحسابك الشخصي؟</label>
+              <RadioGroup name="separateAccounts" value={d.separateAccounts} onChange={v => set('separateAccounts', v)} cols={3}
+                options={['نعم بشكل كامل','جزئياً','لا كل شيء مختلط']}
+              />
+            </div>
+
+            <div className="field">
+              <label>هل تعرف نقطة التعادل الشهرية لبزنسك؟ (كم يجب أن تدخل حتى تغطي مصاريفك)</label>
+              <RadioGroup name="breakEven" value={d.breakEven} onChange={v => set('breakEven', v)} cols={3}
+                options={['نعم بالرقم','تقريباً','لا أعرف']}
+              />
+            </div>
+
+            <div className="field">
+              <label>هل تسحب لنفسك راتباً ثابتاً من البزنس؟</label>
+              <RadioGroup name="ownerSalary" value={d.ownerSalary} onChange={v => set('ownerSalary', v)} cols={3}
+                options={['نعم راتب ثابت','أسحب حسب الحاجة','لا أسحب شيئاً منتظماً']}
+              />
+            </div>
+
+            <div className="field">
+              <label>كيف تحدد أسعار خدماتك اليوم؟</label>
+              <RadioGroup name="pricingMethod" value={d.pricingMethod} onChange={v => set('pricingMethod', v)} cols={2}
+                options={['حسب قيمة النتيجة للعميل','حسب ساعات العمل','حسب أسعار السوق والمنافسين','بالإحساس بدون معادلة']}
+              />
+            </div>
+
+            <div className="field">
+              <label>هل لديك استراتيجية وخطة عمل واضحة للـ 6 أشهر القادمة؟ *</label>
+              <RadioGroup name="hasStrategy" value={d.hasStrategy} onChange={v => set('hasStrategy', v)}
+                options={[
+                  'نعم خطة مكتوبة بأهداف وأرقام وأتابعها',
+                  'خطة عامة في رأسي بدون تفاصيل مكتوبة',
+                  'أهداف فقط بدون خطة تنفيذ',
+                  'لا يوجد شيء واضح، أعمل يوم بيوم',
+                ]}
+              />
+              {errors.hasStrategy && <div style={errStyle}>{errors.hasStrategy}</div>}
+            </div>
+
+            <div className="field">
               <label>ما هو هدفك المالي خلال 6 أشهر؟</label>
               <input type="text" placeholder="مثال: الوصول لـ $10,000 شهرياً بثبات" value={d.financialGoal} onChange={e => set('financialGoal', e.target.value)} />
             </div>
@@ -494,6 +575,13 @@ function FormView({ onSubmit, onAdmin }) {
             </div>
 
             <div className="field">
+              <label>من متى وأنت في نفس هذه المرحلة تقريباً؟</label>
+              <RadioGroup name="stuckDuration" value={d.stuckDuration} onChange={v => set('stuckDuration', v)} cols={2}
+                options={['أقل من 6 أشهر','من 6 أشهر إلى سنة','من سنة إلى سنتين','أكثر من سنتين']}
+              />
+            </div>
+
+            <div className="field">
               <label>هل سبق أن عملت مع مدرب أو مستشار أعمال؟</label>
               <RadioGroup name="previousCoaching" value={d.previousCoaching} onChange={v => set('previousCoaching', v)}
                 options={['نعم وكانت تجربة إيجابية','نعم لكن لم تكن التجربة جيدة','لا هذه المرة الأولى']}
@@ -501,7 +589,59 @@ function FormView({ onSubmit, onAdmin }) {
             </div>
           </div>
 
-          {/* ── القسم 5: الجاهزية ── */}
+          {/* ── القسم 5: الوجع وكلفة التأجيل ── */}
+          <div className="card" style={{ marginBottom:'18px' }}>
+            <div className="section-title">🔥 ما الذي يكلفك بقاء الوضع كما هو</div>
+
+            <div className="field">
+              <label>ما هو الشيء الذي يتعبك أكثر من غيره في بزنسك اليوم؟ *</label>
+              <textarea placeholder="اكتب بصراحة… الشيء الذي يشغل بالك في نهاية كل شهر"
+                value={d.deepestPain} onChange={e => set('deepestPain', e.target.value)} />
+              {errors.deepestPain && <div style={errStyle}>{errors.deepestPain}</div>}
+            </div>
+
+            <div className="field">
+              <label>كم تقدّر أنك خسرت خلال آخر 12 شهر بسبب عدم وجود نظام واضح؟ (فرص ضاعت، تسعير منخفض، عملاء ما رجعوا) *</label>
+              <RadioGroup name="costOfDelay" value={d.costOfDelay} onChange={v => set('costOfDelay', v)} cols={2}
+                options={[
+                  'أقل من $5,000',
+                  '$5,000 إلى $15,000',
+                  '$15,000 إلى $40,000',
+                  'أكثر من $40,000',
+                  'لم أحسبها من قبل',
+                ]}
+              />
+              {errors.costOfDelay && <div style={errStyle}>{errors.costOfDelay}</div>}
+            </div>
+
+            <div className="field">
+              <label>لو بقي وضع بزنسك كما هو تماماً لسنة إضافية — ماذا يعني ذلك بالنسبة لك؟ *</label>
+              <textarea placeholder="على دخلك، على وقتك، على عائلتك، على شعورك تجاه البزنس…"
+                value={d.oneMoreYear} onChange={e => set('oneMoreYear', e.target.value)} />
+              {errors.oneMoreYear && <div style={errStyle}>{errors.oneMoreYear}</div>}
+            </div>
+
+            <div className="field">
+              <label>ما الذي جربته حتى الآن لحل هذا الوضع؟ ولماذا برأيك لم يعطِ نتيجة؟</label>
+              <textarea placeholder="دورات، إعلانات ممولة، سوشيال ميديا، توظيف… وشو صار"
+                value={d.triedBefore} onChange={e => set('triedBefore', e.target.value)} />
+            </div>
+
+            <div className="field">
+              <label>ما مدى إلحاح هذا الموضوع بالنسبة لك الآن؟ *</label>
+              <RadioGroup name="urgency" value={d.urgency} onChange={v => set('urgency', v)}
+                options={[
+                  'عاجل جداً، لا أستطيع الاستمرار بنفس الطريقة',
+                  'مهم، أريد أن أبدأ خلال شهر',
+                  'مهم لكن ليس مستعجلاً، خلال 3 إلى 6 أشهر',
+                  'أستكشف فقط في هذه المرحلة',
+                ]}
+              />
+              {errors.urgency && <div style={errStyle}>{errors.urgency}</div>}
+            </div>
+          </div>
+
+          {/* ── القسم 6: الجاهزية ── */}
           <div className="card" style={{ marginBottom:'18px' }}>
             <div className="section-title">🚀 مدى الجاهزية</div>
 
@@ -529,9 +669,10 @@ function FormView({ onSubmit, onAdmin }) {
               <label>ما الميزانية التي تستطيع تخصيصها للاستثمار في تطوير بزنسك؟ *</label>
               <RadioGroup name="investmentBudget" value={d.investmentBudget} onChange={v => set('investmentBudget', v)}
                 options={[
-                  'أقل من 1500 ₪',
-                  '1500-3000 ₪',
-                  '3000-5000 ₪',
+                  'أقل من $1,500',
+                  '$1,500 إلى $4,500',
+                  '$4,500 إلى $7,500',
+                  'أكثر من $7,500',
                 ]}
               />
               {errors.investmentBudget && <div style={errStyle}>{errors.investmentBudget}</div>}
@@ -540,16 +681,19 @@ function FormView({ onSubmit, onAdmin }) {
             {disqualified && (
               <div className="disqualified-box">
                 <div style={{ fontSize:'3em', marginBottom:'12px' }}>🌟</div>
-                <h3 style={{ color:'#8b6f4f', fontSize:'1.4em', marginBottom:'14px', fontWeight:900 }}>نعتذر</h3>
+                <h3 style={{ color:'#8b6f4f', fontSize:'1.4em', marginBottom:'14px', fontWeight:900 }}>الخطوة الأولى لك هي جلسة Focus</h3>
                 <p style={{ fontSize:'1em', lineHeight:1.9, color:'#555', maxWidth:'440px', margin:'0 auto 6px' }}>
-                  برامجنا التدريبية لا تلاءم امكانيات استثمارك.<br/>
-                  بأمكانك الاشتراك في <strong style={{ color:'#8b6f4f' }}>برامجنا القادمة</strong>.
+                  برنامج Premium مخصص لمرحلة أكثر تقدماً.<br/>
+                  <strong style={{ color:'#8b6f4f' }}>جلسة Focus</strong> هي البداية الصحيحة — تشخيص كامل لوضعك وخطة واضحة خلال ساعة واحدة.
                 </p>
+                <a href="https://rimayaqub.ravpage.co.il/focus" className="focus-cta-btn" target="_blank">
+                  🎯 احجز جلسة Focus الآن ←
+                </a>
               </div>
             )}
           </div>
 
-          {/* ── القسم 6: الرؤية ── */}
+          {/* ── القسم 7: الرؤية ── */}
           {!disqualified && (
             <div className="card" style={{ marginBottom:'24px' }}>
               <div className="section-title">💬 رؤيتك المستقبلية</div>
@@ -607,13 +751,13 @@ function App() {
     fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(lead)
     }).catch(() => {});
     setView('success');
   }
 
-  if (view === 'admin')   return <AdminView leads={leads} onBack={() => setView('form')} />;
+  if (view === 'admin' && IS_ADMIN) return <AdminView leads={leads} onBack={() => setView('form')} />;
   if (view === 'success') return <SuccessScreen />;
   return <FormView onSubmit={saveLead} onAdmin={() => setView('admin')} />;
 }
