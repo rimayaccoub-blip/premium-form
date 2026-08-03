@@ -205,8 +205,9 @@ function FormView({ onSubmit }) {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({top:0,behavior:'smooth'}); return; }
     const score = calcScore(d);
-    // الرقم يصل كامل مع كود الدولة: +9725XXXXXXX
-    const phone = d.countryCode + ' ' + d.phone.replace(/^0+/, '').replace(/[\s-]/g, '');
+    // الرقم يصل كامل مع كود الدولة بصيغة يقبلها الشيت وواتساب: 9725XXXXXXX
+    // بدون علامة + لأن Google Sheets يقرأها كمعادلة ويعطي ERROR
+    const phone = d.countryCode.replace('+', '') + d.phone.replace(/^0+/, '').replace(/[\s-]/g, '');
     onSubmit({ ...d, phone, score, timestamp: new Date().toLocaleString('ar-IL'), id: Date.now() });
   }
 
