@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة ربحية الخدمات | ريما يعقوب</title>
+<meta name="description" content="احسب ربحية كل خدمة في بزنسك خلال دقيقتين. اعرف أي خدمة بتربحك وأي خدمة بتستهلكك.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+  :root{
+    --navy:#0f1e3d;
+    --navy-soft:#1c3159;
+    --gold:#a8862e;
+    --gold-light:#c9a548;
+    --bg:#f8faff;
+    --card:#ffffff;
+    --line:#dde4f4;
+    --line-soft:#eef1f7;
+    --text:#0f1e3d;
+    --muted:#5f6c85;
+    --good:#1a7f5a;
+    --good-bg:#eaf7f1;
+    --warn:#a8862e;
+    --warn-bg:#fffbf0;
+    --bad:#b3352c;
+    --bad-bg:#fdf0ef;
+    --radius:14px;
+    --shadow:0 2px 10px rgba(15,30,61,.06);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Tajawal',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--bg);color:var(--text);
+    line-height:1.65;padding:0 0 60px;
+  }
+
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+
+  /* ---------- Header ---------- */
+  header{
+    background:linear-gradient(160deg,var(--navy) 0%,var(--navy-soft) 100%);
+    color:#fff;padding:38px 16px 34px;text-align:center;
+    border-bottom:3px solid var(--gold);
+  }
+  header .eyebrow{
+    font-size:13px;letter-spacing:1px;color:var(--gold-light);
+    font-weight:700;margin-bottom:10px;
+  }
+  header h1{font-size:27px;font-weight:800;line-height:1.35;margin-bottom:12px}
+  header p{font-size:16px;color:#c3cee5;max-width:520px;margin:0 auto;font-weight:400}
+  .privacy{
+    display:inline-block;margin-top:16px;font-size:13px;color:#9fb0cf;
+    background:rgba(255,255,255,.07);padding:6px 14px;border-radius:20px;
+  }
+
+  /* ---------- Sections ---------- */
+  section{margin-top:26px}
+  .sec-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:19px;font-weight:800;margin-bottom:6px;
+  }
+  .sec-title .num{
+    background:var(--navy);color:#fff;width:28px;height:28px;
+    border-radius:50%;display:grid;place-items:center;
+    font-size:14px;font-weight:700;flex:0 0 28px;
+  }
+  .sec-note{font-size:14.5px;color:var(--muted);margin-bottom:14px;padding-right:38px}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px;margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .svc-head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line-soft);
+  }
+  .svc-head h3{font-size:16px;font-weight:700;color:var(--navy)}
+  .del{
+    background:none;border:none;color:var(--muted);cursor:pointer;
+    font-size:13px;font-weight:500;padding:4px 8px;border-radius:6px;
+  }
+  .del:hover{color:var(--bad);background:var(--bad-bg)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .full{grid-column:1/-1}
+
+  label{display:block;font-size:13.5px;font-weight:500;color:var(--muted);margin-bottom:5px}
+  label .hint{font-weight:400;font-size:12.5px;color:#8b96ab}
+  input{
+    width:100%;padding:11px 13px;font-family:inherit;font-size:16px;font-weight:500;
+    border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--text);
+    transition:border-color .15s;
+  }
+  input:focus{outline:none;border-color:var(--gold)}
+  input::placeholder{color:#b6bfd0;font-weight:400}
+
+  .add-btn{
+    width:100%;padding:13px;background:#fff;border:1.5px dashed var(--line);
+    border-radius:var(--radius);color:var(--navy);font-family:inherit;
+    font-size:15px;font-weight:700;cursor:pointer;transition:.15s;
+  }
+  .add-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--warn-bg)}
+  .add-btn:disabled{opacity:.45;cursor:not-allowed}
+
+  .calc-btn{
+    width:100%;padding:16px;margin-top:22px;
+    background:var(--navy);color:#fff;border:none;border-radius:var(--radius);
+    font-family:inherit;font-size:17px;font-weight:800;cursor:pointer;
+    transition:.15s;box-shadow:0 4px 14px rgba(15,30,61,.22);
+  }
+  .calc-btn:hover{background:var(--navy-soft)}
+
+  /* ---------- Results ---------- */
+  #results{display:none;margin-top:34px}
+  #results.show{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px}
+  .kpi{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 14px;box-shadow:var(--shadow);
+  }
+  .kpi .k-label{font-size:12.5px;color:var(--muted);font-weight:500;margin-bottom:4px}
+  .kpi .k-val{font-size:23px;font-weight:800;letter-spacing:-.5px;line-height:1.2}
+  .kpi .k-sub{font-size:12px;color:#8b96ab;margin-top:2px}
+  .kpi.hero{grid-column:1/-1;background:var(--navy);border-color:var(--navy)}
+  .kpi.hero .k-label{color:var(--gold-light)}
+  .kpi.hero .k-val{color:#fff;font-size:31px}
+  .kpi.hero .k-sub{color:#9fb0cf}
+
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin-bottom:18px}
+  table{width:100%;border-collapse:collapse;min-width:560px}
+  th,td{padding:12px 13px;text-align:right;font-size:14px;white-space:nowrap}
+  thead th{
+    background:var(--navy);color:#fff;font-weight:700;font-size:13px;
+    position:sticky;top:0;
+  }
+  tbody tr{border-top:1px solid var(--line-soft)}
+  tbody td:first-child{font-weight:700;white-space:normal;min-width:120px}
+  .num-cell{font-variant-numeric:tabular-nums;font-weight:600}
+  .pill{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:12.5px;font-weight:700;
+  }
+  .p-good{background:var(--good-bg);color:var(--good)}
+  .p-warn{background:var(--warn-bg);color:var(--warn)}
+  .p-bad{background:var(--bad-bg);color:var(--bad)}
+
+  .insight{
+    border-radius:var(--radius);padding:15px 16px;margin-bottom:10px;
+    border-right:4px solid;font-size:15px;
+  }
+  .insight strong{display:block;font-size:15.5px;font-weight:800;margin-bottom:4px}
+  .i-good{background:var(--good-bg);border-color:var(--good);color:#126546}
+  .i-warn{background:var(--warn-bg);border-color:var(--warn);color:#7d6320}
+  .i-bad{background:var(--bad-bg);border-color:var(--bad);color:#8f2a22}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    margin-top:30px;background:linear-gradient(160deg,var(--navy) 0%,var(--navy-soft) 100%);
+    border-radius:18px;padding:30px 22px;text-align:center;color:#fff;
+    border-top:3px solid var(--gold);
+  }
+  .cta h2{font-size:22px;font-weight:800;margin-bottom:10px;line-height:1.4}
+  .cta p{font-size:15.5px;color:#c3cee5;max-width:460px;margin:0 auto 20px}
+  .cta a{
+    display:inline-block;background:var(--gold);color:#fff;text-decoration:none;
+    padding:15px 38px;border-radius:11px;font-size:16.5px;font-weight:800;
+    transition:.15s;box-shadow:0 4px 14px rgba(168,134,46,.35);
+  }
+  .cta a:hover{background:var(--gold-light)}
+
+  footer{text-align:center;margin-top:26px;font-size:13.5px;color:var(--muted)}
+  footer a{color:var(--navy);font-weight:700;text-decoration:none}
+
+  .err{
+    background:var(--bad-bg);color:var(--bad);border:1px solid #f0c9c5;
+    border-radius:10px;padding:12px 14px;margin-top:14px;font-size:14.5px;
+    font-weight:600;display:none;
+  }
+  .err.show{display:block}
+
+  @media(max-width:560px){
+    header h1{font-size:22px}
+    header p{font-size:15px}
+    .grid{grid-template-columns:1fr}
+    .kpi .k-val{font-size:20px}
+    .kpi.hero .k-val{font-size:26px}
+    .sec-note{padding-right:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ريما يعقوب | مدربة ومستشارة أعمال</div>
+  <h1>حاسبة ربحية الخدمات</h1>
+  <p>في فرق بين بزنس بيدخل مصاري وبزنس مربح. بدقيقتين بتعرف أي خدمة عندك بتربحك فعلًا، وأي خدمة بتستهلك وقتك بدون مقابل.</p>
+  <div class="privacy">🔒 أرقامك بتضل على جهازك. ما بتنحفظ ولا بتنبعت لأي مكان</div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-title"><span class="num">1</span> خدماتك</div>
+    <div class="sec-note">أضف كل خدمة بتقدمها. لو عندك أكثر من 6، ابدأ بالخدمات الأساسية اللي بتشكل معظم دخلك.</div>
+    <div id="services"></div>
+    <button class="add-btn" id="addBtn" type="button">+ أضف خدمة</button>
+  </section>
+
+  <section>
+    <div class="sec-title"><span class="num">2</span> المصاريف الثابتة الشهرية</div>
+    <div class="sec-note">كل اشي بتدفعه كل شهر بغض النظر عن عدد العملاء: إيجار، رواتب، اشتراكات، تسويق، محاسب، مواصلات.</div>
+    <div class="card">
+      <div class="grid">
+        <div class="full">
+          <label>مجموع المصاريف الثابتة بالشهر <span class="hint">(₪)</span></label>
+          <input type="number" id="fixed" min="0" step="100" placeholder="مثال: 8000" inputmode="decimal">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <button class="calc-btn" id="calcBtn" type="button">احسب ربحية البزنس</button>
+  <div class="err" id="err"></div>
+
+  <div id="results">
+    <section>
+      <div class="sec-title"><span class="num">3</span> النتيجة</div>
+      <div class="sec-note">هاي صورة بزنسك بالأرقام، مش بالإحساس.</div>
+      <div class="kpis" id="kpis"></div>
+    </section>
+
+    <section>
+      <div class="sec-title"><span class="num">4</span> ربحية كل خدمة</div>
+      <div class="sec-note">المصاريف الثابتة موزعة على كل خدمة حسب حصتها من الدخل. مرّر الجدول لليسار لتشوف باقي الأعمدة.</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>الخدمة</th><th>الدخل الشهري</th><th>الربح الصافي</th>
+          <th>هامش الربح</th><th>ربح الساعة</th><th>ساعات شهرية</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <div class="sec-title"><span class="num">5</span> شو بتقول الأرقام</div>
+      <div class="sec-note">قراءة مباشرة لوضعك الحالي.</div>
+      <div id="insights"></div>
+    </section>
+
+    <div class="cta">
+      <h2>الأرقام صارت واضحة. السؤال شو الخطوة الجاي؟</h2>
+      <p>بمقابلة Focus بنقعد ساعة على أرقامك انت بالذات، بنفحص أي خدمة تستحق تكبر وأي وحدة لازم تتغير، وبتطلع بخطة واضحة تشتغل عليها.</p>
+      <a href="https://rimayaqub.ravpage.co.il/focus" target="_blank" rel="noopener">احجز مقابلة Focus</a>
+    </div>
+
+    <footer>
+      تابعني على <a href="https://www.instagram.com/rima_yaqub/" target="_blank" rel="noopener">إنستغرام @rima_yaqub</a>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var MAX = 6;
+  var box = document.getElementById('services');
+  var addBtn = document.getElementById('addBtn');
+  var count = 0;
+
+  function addService(name){
+    if(count >= MAX) return;
+    count++;
+    var i = count;
+    var div = document.createElement('div');
+    div.className = 'card svc';
+    div.innerHTML =
+      '<div class="svc-head">' +
+        '<h3>خدمة ' + i + '</h3>' +
+        '<button class="del" type="button">حذف</button>' +
+      '</div>' +
+      '<div class="grid">' +
+        '<div class="full"><label>اسم الخدمة</label>' +
+          '<input type="text" class="f-name" placeholder="مثال: جلسة استشارة" value="' + (name || '') + '"></div>' +
+        '<div><label>سعر الخدمة <span class="hint">(₪)</span></label>' +
+          '<input type="number" class="f-price" min="0" step="10" placeholder="0" inputmode="decimal"></div>' +
+        '<div><label>عدد العملاء بالشهر</label>' +
+          '<input type="number" class="f-clients" min="0" step="1" placeholder="0" inputmode="numeric"></div>' +
+        '<div><label>تكلفة مباشرة للوحدة <span class="hint">(₪)</span></label>' +
+          '<input type="number" class="f-cost" min="0" step="10" placeholder="0" inputmode="decimal"></div>' +
+        '<div><label>ساعات عملك للوحدة</label>' +
+          '<input type="number" class="f-hours" min="0" step="0.5" placeholder="0" inputmode="decimal"></div>' +
+      '</div>';
+    box.appendChild(div);
+    div.querySelector('.del').addEventListener('click', function(){
+      div.remove(); renumber();
+    });
+    addBtn.disabled = (count >= MAX);
+  }
+
+  function renumber(){
+    var cards = box.querySelectorAll('.svc');
+    count = cards.length;
+    for(var i=0;i<cards.length;i++){
+      cards[i].querySelector('h3').textContent = 'خدمة ' + (i+1);
+    }
+    addBtn.disabled = (count >= MAX);
+  }
+
+  addBtn.addEventListener('click', function(){ addService(); });
+  addService(); addService();
+
+  function num(el){
+    var v = parseFloat(el.value);
+    return (isNaN(v) || v < 0) ? 0 : v;
+  }
+  function ils(v){
+    return '₪' + Math.round(v).toLocaleString('en-US');
+  }
+  function pct(v){
+    return (Math.round(v*10)/10) + '%';
+  }
+
+  var err = document.getElementById('err');
+  function fail(msg){
+    err.textContent = msg; err.classList.add('show');
+    err.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function(){
+    err.classList.remove('show');
+
+    var cards = box.querySelectorAll('.svc');
+    var svcs = [];
+
+    for(var i=0;i<cards.length;i++){
+      var c = cards[i];
+      var price   = num(c.querySelector('.f-price'));
+      var clients = num(c.querySelector('.f-clients'));
+      if(price <= 0 || clients <= 0) continue;
+
+      var nm = c.querySelector('.f-name').value.trim() || ('خدمة ' + (i+1));
+      var cost  = num(c.querySelector('.f-cost'));
+      var hours = num(c.querySelector('.f-hours'));
+
+      var revenue = price * clients;
+      var gross   = (price - cost) * clients;
+
+      svcs.push({
+        name: nm, price: price, clients: clients,
+        revenue: revenue, gross: gross,
+        hours: hours * clients
+      });
+    }
+
+    if(svcs.length === 0){
+      fail('عبّي على الأقل خدمة وحدة مع السعر وعدد العملاء بالشهر.');
+      return;
+    }
+
+    var fixed = num(document.getElementById('fixed'));
+
+    var totalRev = 0, totalGross = 0, totalHours = 0;
+    for(var j=0;j<svcs.length;j++){
+      totalRev   += svcs[j].revenue;
+      totalGross += svcs[j].gross;
+      totalHours += svcs[j].hours;
+    }
+
+    // توزيع المصاريف الثابتة حسب حصة كل خدمة من الدخل
+    for(var k=0;k<svcs.length;k++){
+      var s = svcs[k];
+      s.share  = totalRev > 0 ? s.revenue / totalRev : 0;
+      s.net    = s.gross - (fixed * s.share);
+      s.margin = s.revenue > 0 ? (s.net / s.revenue) * 100 : 0;
+      s.perHr  = s.hours > 0 ? s.net / s.hours : null;
+    }
+
+    var netProfit    = totalGross - fixed;
+    var netMargin    = totalRev > 0 ? (netProfit / totalRev) * 100 : 0;
+    var grossMargin  = totalRev > 0 ? totalGross / totalRev : 0;
+    var breakEven    = grossMargin > 0 ? fixed / grossMargin : null;
+    var overallPerHr = totalHours > 0 ? netProfit / totalHours : null;
+
+    render(svcs, {
+      totalRev: totalRev, netProfit: netProfit, netMargin: netMargin,
+      breakEven: breakEven, totalHours: totalHours, overallPerHr: overallPerHr,
+      fixed: fixed
+    });
+  });
+
+  function render(svcs, t){
+    // ---------- KPIs ----------
+    var netClass = t.netProfit >= 0 ? 'var(--good)' : 'var(--bad)';
+    var k = '';
+    k += '<div class="kpi hero"><div class="k-label">الربح الصافي الشهري</div>' +
+         '<div class="k-val">' + ils(t.netProfit) + '</div>' +
+         '<div class="k-sub">هامش ' + pct(t.netMargin) + ' من الدخل</div></div>';
+    k += '<div class="kpi"><div class="k-label">الدخل الشهري</div>' +
+         '<div class="k-val">' + ils(t.totalRev) + '</div></div>';
+    k += '<div class="kpi"><div class="k-label">نقطة التعادل</div>' +
+         '<div class="k-val">' + (t.breakEven === null ? '—' : ils(t.breakEven)) + '</div>' +
+         '<div class="k-sub">الدخل اللي لازمك تغطي مصاريفك</div></div>';
+    k += '<div class="kpi"><div class="k-label">ساعات عملك بالشهر</div>' +
+         '<div class="k-val">' + Math.round(t.totalHours) + '</div>' +
+         '<div class="k-sub">على الخدمات فقط</div></div>';
+    k += '<div class="kpi"><div class="k-label">ربح الساعة الفعلي</div>' +
+         '<div class="k-val" style="color:' + netClass + '">' +
+         (t.overallPerHr === null ? '—' : ils(t.overallPerHr)) + '</div>' +
+         '<div class="k-sub">بعد كل المصاريف</div></div>';
+    document.getElementById('kpis').innerHTML = k;
+
+    // ---------- Table (sorted by net profit) ----------
+    var sorted = svcs.slice().sort(function(a,b){ return b.net - a.net; });
+    var rows = '';
+    for(var i=0;i<sorted.length;i++){
+      var s = sorted[i];
+      var cls = s.margin >= 30 ? 'p-good' : (s.margin >= 10 ? 'p-warn' : 'p-bad');
+      rows += '<tr>' +
+        '<td>' + esc(s.name) + '</td>' +
+        '<td class="num-cell">' + ils(s.revenue) + '</td>' +
+        '<td class="num-cell" style="color:' + (s.net >= 0 ? 'var(--good)' : 'var(--bad)') + '">' + ils(s.net) + '</td>' +
+        '<td><span class="pill ' + cls + '">' + pct(s.margin) + '</span></td>' +
+        '<td class="num-cell">' + (s.perHr === null ? '—' : ils(s.perHr)) + '</td>' +
+        '<td class="num-cell">' + Math.round(s.hours) + '</td>' +
+      '</tr>';
+    }
+    document.getElementById('tbody').innerHTML = rows;
+
+    // ---------- Insights ----------
+    var out = [];
+
+    if(t.netProfit < 0){
+      out.push(['i-bad','بزنسك عم يخسر شهريًا',
+        'الدخل ' + ils(t.totalRev) + ' لكن بعد التكاليف والمصاريف الثابتة، الصافي ' + ils(t.netProfit) + '. لازمك دخل ' +
+        (t.breakEven === null ? '' : ils(t.breakEven) + ' ') + 'عشان توصل نقطة التعادل. المشكلة هون مش بالمبيعات، بالتسعير وبنية الخدمات.']);
+    } else if(t.netMargin < 15){
+      out.push(['i-warn','بتدخل مصاري، بس الربح ضعيف',
+        'هامش ربحك ' + pct(t.netMargin) + '. هاد الوضع اللي بخلي صاحب البزنس يشتغل كتير ويحس إنه ما بيبقى بإيده اشي آخر الشهر.']);
+    } else {
+      out.push(['i-good','بزنسك مربح',
+        'هامش ربح ' + pct(t.netMargin) + '. هلأ السؤال مش كيف تربح، بل أي خدمة تستحق تكبّرها.']);
+    }
+
+    var best = sorted[0], worst = sorted[sorted.length-1];
+
+    if(sorted.length > 1){
+      out.push(['i-good','أقوى خدمة عندك: ' + esc(best.name),
+        'بتجيبلك ' + ils(best.net) + ' صافي بالشهر، بهامش ' + pct(best.margin) +
+        '. هاي الخدمة اللي يستحق تبني حولها التسويق تبعك، مش اللي بتحبها أكثر.']);
+
+      if(worst.net < 0){
+        out.push(['i-bad','خدمة بتخسرك: ' + esc(worst.name),
+          'بعد توزيع المصاريف، هاي الخدمة بتكلفك ' + ils(Math.abs(worst.net)) +
+          ' بالشهر. عندك ثلاث خيارات: ترفع سعرها، تقلل تكلفتها، أو توقف تقدمها.']);
+      } else if(worst.margin < 15){
+        out.push(['i-warn','أضعف خدمة عندك: ' + esc(worst.name),
+          'هامشها ' + pct(worst.margin) + ' فقط. بتاخد من وقتك ' + Math.round(worst.hours) +
+          ' ساعة بالشهر وبترجعلك ' + ils(worst.net) + '. تستاهل مراجعة تسعير.']);
+      }
+    }
+
+    // خدمة بتستهلك وقت
+    var timeSink = null;
+    for(var m=0;m<svcs.length;m++){
+      var s2 = svcs[m];
+      if(s2.perHr === null) continue;
+      if(timeSink === null || s2.perHr < timeSink.perHr) timeSink = s2;
+    }
+    if(timeSink && best.perHr !== null && timeSink.perHr !== null &&
+       timeSink.name !== best.name && best.perHr > timeSink.perHr * 1.8){
+      out.push(['i-warn','فجوة كبيرة بقيمة ساعتك',
+        'ساعتك بخدمة "' + esc(best.name) + '" بتساوي ' + ils(best.perHr) +
+        '، وبخدمة "' + esc(timeSink.name) + '" بتساوي ' + ils(timeSink.perHr) +
+        '. نفس الساعة، فرق كبير بالمقابل. هون بتصير أول نقلة بالبزنس.']);
+    }
+
+    if(t.totalHours > 160){
+      out.push(['i-warn','ساعات عملك عالية',
+        Math.round(t.totalHours) + ' ساعة بالشهر على تقديم الخدمات لحالها. معناها ما بضل وقت لتطوير البزنس نفسه، وهاد بحدد سقف نموك.']);
+    }
+
+    if(svcs.length === 1){
+      out.push(['i-warn','كل دخلك من خدمة وحدة',
+        'دخلك كله معتمد على خدمة واحدة. أي تغيّر بالسوق أو بالطلب بيوقف البزنس. بناء ثلاث مستويات خدمة بيعطي استقرار.']);
+    }
+
+    var html = '';
+    for(var n=0;n<out.length;n++){
+      html += '<div class="insight ' + out[n][0] + '"><strong>' + out[n][1] + '</strong>' + out[n][2] + '</div>';
+    }
+    document.getElementById('insights').innerHTML = html;
+
+    var r = document.getElementById('results');
+    r.classList.add('show');
+    r.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
