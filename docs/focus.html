@@ -5,96 +5,162 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ريما يعقوب | مستشارة مالية وتسويقية لرواد الأعمال</title>
 <meta name="description" content="مرافقة مالية وتسويقية لأصحاب المصالح ومقدمي الخدمات. نظام دخل واضح بدل البيع يوم بيوم.">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta property="og:title" content="ريما يعقوب | استشارة Focus">
+<meta property="og:description" content="مرافقة مالية وتسويقية بتبني نظام دخل واضح لبزنسك.">
+<meta property="og:image" content="https://rimayaccoub-blip.github.io/premium-form/focus-assets/p01.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#101c3a; --navy-2:#1b2c55; --gold:#c9a227; --gold-soft:#e8d39a;
-  --bg:#f7f6f3; --card:#ffffff; --ink:#16203a; --muted:#5b6480; --line:#e6e3dc;
-  --max:1100px;
+  --navy:#0f1c3f; --navy-2:#16294f; --navy-3:#1d3562;
+  --gold:#c9a227; --gold-soft:#e9d8a6;
+  --bg:#f6f4ef; --card:#ffffff; --ink:#16203a; --muted:#5c6580; --line:#e7e3da;
+  --wa:#e9f3ea;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Tajawal',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:17px}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
-.btn{display:inline-block;background:var(--gold);color:#1a1405;font-weight:800;font-size:19px;
-  padding:17px 42px;border-radius:999px;text-decoration:none;transition:.25s;box-shadow:0 10px 26px rgba(201,162,39,.32)}
-.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,39,.45)}
-.btn-lg{font-size:21px;padding:20px 54px}
+body{font-family:'Tajawal',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  line-height:1.8;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.sec{padding:78px 0}
+.sec-head{margin-bottom:40px}
+.kicker{color:var(--gold);font-weight:800;font-size:15px;letter-spacing:1px;margin-bottom:10px}
+.sec-title{font-size:clamp(25px,3.8vw,36px);font-weight:800;line-height:1.35;text-wrap:balance}
+.sec-sub{color:var(--muted);max-width:620px;margin-top:12px;font-size:18px}
+.dark .sec-title{color:#fff} .dark .sec-sub{color:#c2cade} .dark .kicker{color:var(--gold-soft)}
 
-/* HERO */
-.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:78px 0 88px;position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;left:-140px;top:-140px;width:420px;height:420px;
-  background:radial-gradient(circle,rgba(201,162,39,.22),transparent 65%);border-radius:50%}
-.eyebrow{color:var(--gold-soft);font-weight:700;letter-spacing:.5px;font-size:16px;margin-bottom:14px}
-.hero h1{font-size:clamp(30px,5.2vw,50px);font-weight:800;line-height:1.35;max-width:820px}
-.hero h1 span{color:var(--gold-soft)}
-.hero p{font-size:clamp(17px,2.3vw,21px);color:#d5dbea;max-width:680px;margin:22px 0 34px}
-.hero .name{margin-top:26px;font-size:15px;color:#9fa9c4}
+.btn{display:inline-block;background:var(--gold);color:#181206;font-weight:800;font-size:19px;
+  padding:17px 44px;border-radius:999px;text-decoration:none;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 10px 26px rgba(201,162,39,.32)}
+.btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,39,.46)}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.btn-lg{font-size:21px;padding:20px 56px}
 
-/* PAIN */
-.sec{padding:74px 0}
-.sec-title{font-size:clamp(24px,3.6vw,34px);font-weight:800;margin-bottom:16px}
-.sec-sub{color:var(--muted);max-width:640px;margin-bottom:38px;font-size:18px}
+/* ---------- HERO ---------- */
+.hero{background:linear-gradient(155deg,var(--navy) 0%,var(--navy-3) 100%);color:#fff;
+  padding:64px 0 74px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;left:-160px;top:-120px;width:460px;height:460px;
+  background:radial-gradient(circle,rgba(201,162,39,.20),transparent 65%);border-radius:50%}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;position:relative}
+.eyebrow{color:var(--gold-soft);font-weight:700;font-size:16px;margin-bottom:16px}
+.hero h1{font-size:clamp(29px,4.8vw,49px);font-weight:900;line-height:1.32;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--gold-soft)}
+.hero p{font-size:clamp(17px,2.1vw,20px);color:#d3daea;margin:22px 0 32px;max-width:520px}
+.hero-meta{margin-top:26px;display:flex;gap:26px;flex-wrap:wrap;color:#9ea9c6;font-size:15px}
+.hero-meta b{display:block;color:var(--gold-soft);font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.portrait{aspect-ratio:450/645;border-radius:22px;box-shadow:0 26px 60px rgba(0,0,0,.42);
+  background-image:url('focus-assets/p01.png');background-size:303.6% auto;background-position:86.8% 52.8%;
+  background-repeat:no-repeat;background-color:#e9e5dd}
+
+/* ---------- PAIN ---------- */
 .pain{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.pain-list{display:grid;gap:14px;max-width:760px}
-.pain-item{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border-radius:14px;padding:18px 20px}
-.dot{flex:0 0 9px;height:9px;background:var(--gold);border-radius:50%;margin-top:12px}
-.reframe{margin-top:34px;border-right:4px solid var(--gold);background:#fffdf6;padding:22px 24px;border-radius:0 14px 14px 0;font-size:19px;font-weight:500;max-width:760px}
+.plist{display:grid;gap:14px;max-width:780px}
+.pitem{display:flex;gap:15px;align-items:flex-start;background:var(--bg);border-radius:14px;padding:18px 22px}
+.pitem .dot{flex:0 0 9px;height:9px;background:var(--gold);border-radius:50%;margin-top:13px}
+.reframe{margin-top:34px;border-right:4px solid var(--gold);background:#fffdf5;
+  padding:24px 26px;border-radius:0 14px 14px 0;font-size:19px;max-width:780px}
 
-/* SERVICES */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;transition:.25s}
-.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(16,28,58,.10)}
-.card .num{width:42px;height:42px;border-radius:12px;background:var(--navy);color:var(--gold-soft);
+/* ---------- SERVICES ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;
+  transition:transform .22s,box-shadow .22s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,28,63,.10)}
+.card .n{width:42px;height:42px;border-radius:12px;background:var(--navy);color:var(--gold-soft);
   display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:16px}
-.card h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.card h3{font-size:19px;font-weight:800;margin-bottom:8px;line-height:1.45}
 .card p{color:var(--muted);font-size:16px}
 
-/* RESULT STRIP */
-.result{background:var(--navy);color:#fff;padding:64px 0;text-align:center}
-.result .big{font-size:clamp(32px,6vw,58px);font-weight:800;color:var(--gold-soft);line-height:1.3;direction:ltr}
-.result .cap{color:#c3cbe0;margin-top:12px;font-size:18px}
+/* ---------- RESULT ---------- */
+.result{background:var(--navy);color:#fff}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.result .big{font-size:clamp(30px,5.4vw,54px);font-weight:900;color:var(--gold-soft);
+  direction:ltr;text-align:right;line-height:1.25;font-variant-numeric:tabular-nums}
+.result .cap{color:#c6cee2;margin-top:14px;font-size:19px}
+.shot{border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.10)}
 
-/* TESTIMONIALS */
-.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:20px}
-.t{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
-.t .q{font-size:38px;color:var(--gold);line-height:1;font-weight:800}
-.t h4{font-size:18px;font-weight:800;margin:10px 0 4px}
-.t .role{color:var(--muted);font-size:15px}
-.t .tag{display:inline-block;margin-top:14px;background:#f3f1ea;color:var(--navy);
-  font-size:14px;font-weight:700;border-radius:999px;padding:6px 14px}
+/* ---------- WHATSAPP QUOTES ---------- */
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px}
+.q{background:var(--wa);border:1px solid #d6e6d9;border-radius:18px;border-top-right-radius:4px;
+  padding:26px 26px 20px;position:relative}
+.q p{font-size:16.5px;line-height:1.95}
+.q .who{margin-top:18px;padding-top:16px;border-top:1px solid #cfe0d2;font-weight:800;font-size:16px}
+.q .role{font-weight:400;color:var(--muted);font-size:15px;display:block;margin-top:2px}
+.q .badge{display:inline-block;background:var(--navy);color:var(--gold-soft);font-size:13px;
+  font-weight:700;border-radius:999px;padding:5px 14px;margin-bottom:14px}
 
-/* CTA */
-.cta{background:linear-gradient(160deg,var(--navy-2),var(--navy));color:#fff;padding:84px 0;text-align:center}
-.cta h2{font-size:clamp(25px,4.4vw,40px);font-weight:800;max-width:760px;margin:0 auto 18px;line-height:1.45}
-.cta p{color:#cfd6e8;max-width:560px;margin:0 auto 34px;font-size:19px}
-.note{color:#8f9ab6;font-size:15px;margin-top:20px}
+/* ---------- VIDEO TESTIMONIALS ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.v{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;
+  transition:transform .22s,box-shadow .22s}
+.v:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(15,28,63,.12)}
+.v figcaption{padding:14px 18px;font-weight:700;font-size:16px}
+.v figcaption span{display:block;font-weight:400;color:var(--muted);font-size:14.5px}
 
-footer{background:#0b1329;color:#7f89a5;text-align:center;padding:30px 0;font-size:15px}
-footer a{color:#b8c1d8;text-decoration:none;margin:0 10px}
-@media(max-width:600px){ .sec{padding:56px 0} .hero{padding:58px 0 66px} .btn,.btn-lg{display:block;text-align:center} }
+/* ---------- PROOF STRIP ---------- */
+.proof{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pgrid .shot{box-shadow:0 14px 36px rgba(15,28,63,.14);border:1px solid var(--line)}
+
+/* ---------- CTA ---------- */
+.cta{background:linear-gradient(155deg,var(--navy-3),var(--navy));color:#fff}
+.cta-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
+.phone{aspect-ratio:560/620;border-radius:20px;
+  background-image:url('focus-assets/p12.png');background-size:244% auto;background-position:16.1% 70.9%;
+  background-repeat:no-repeat;background-color:#efece5;box-shadow:0 24px 56px rgba(0,0,0,.40)}
+.cta h2{font-size:clamp(25px,4.2vw,40px);font-weight:900;line-height:1.4;text-wrap:balance;margin-bottom:16px}
+.cta p{color:#ccd4e8;font-size:19px;margin-bottom:32px;max-width:520px}
+.note{color:#8d98b6;font-size:15px;margin-top:20px}
+
+footer{background:#0a1128;color:#7f89a5;text-align:center;padding:34px 0;font-size:15px}
+footer a{color:#c2cade;text-decoration:none;margin:0 10px}
+footer a:hover{color:var(--gold-soft)}
+
+@media(max-width:860px){
+  .hero-grid,.result-grid,.cta-grid,.pgrid{grid-template-columns:1fr}
+  .portrait{max-width:330px;margin:0 auto}
+  .phone{max-width:380px;margin:0 auto}
+  .result .big{text-align:center}
+}
+@media(max-width:600px){
+  .sec{padding:56px 0} .hero{padding:48px 0 58px}
+  .btn,.btn-lg{display:block;text-align:center;padding-left:20px;padding-right:20px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">مستشارة مالية وتسويقية لرواد الأعمال ومقدمي الخدمات</div>
-    <h1>بزنسك بده <span>استراتيجية ونظام</span>، مش شغل أكثر ولا حظ أحسن.</h1>
-    <p>مرافقة عملية بتبني معك نظام دخل واضح: تعرف من وين بيجي الزبون، وين بيروح المصروف، وكم بتربح فعليًا كل شهر.</p>
-    <a class="btn btn-lg" href="https://lp.rimayaqub.com/Focus_meeting">أحجز استشارة Focus</a>
-    <div class="name">ريما يعقوب · 7 سنوات مرافقة · أكثر من 40 صاحب بزنس</div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">مستشارة مالية وتسويقية لرواد الأعمال ومقدمي الخدمات</div>
+      <h1>بزنسك بده <em>استراتيجية ونظام</em>، مش شغل أكثر ولا حظ أحسن.</h1>
+      <p>مرافقة عملية بتبني معك نظام دخل واضح: تعرف من وين بيجي الزبون، وين بيروح المصروف، وكم بتربح فعليًا كل شهر.</p>
+      <a class="btn btn-lg" href="https://lp.rimayaqub.com/Focus_meeting">أحجز استشارة Focus</a>
+      <div class="hero-meta">
+        <div><b>7</b> سنوات مرافقة</div>
+        <div><b>40+</b> صاحب بزنس</div>
+        <div><b>×2</b> مضاعفة الدخل</div>
+      </div>
+    </div>
+    <div class="portrait" role="img" aria-label="ريما يعقوب، مستشارة مالية وتسويقية"></div>
   </div>
 </header>
 
+<!-- PAIN -->
 <section class="sec pain">
   <div class="wrap">
-    <h2 class="sec-title">إذا هاي حالتك، إنت مش لحالك</h2>
-    <p class="sec-sub">أغلب أصحاب الخدمات اللي بيجوني بيحكوا نفس الثلاث جمل.</p>
-    <div class="pain-list">
-      <div class="pain-item"><span class="dot"></span><div>الدخل غير مستقر. شهر ممتاز وشهر الكالندر فاضي، وما في تفسير واضح ليش.</div></div>
-      <div class="pain-item"><span class="dot"></span><div>الدخل عالي بس الربح قليل. الفلوس بتدخل وبتطلع وما بتعرف على وين راحت.</div></div>
-      <div class="pain-item"><span class="dot"></span><div>جربت إعلانات ممولة وسوشيال ميديا، وصرفت، وما إجت نتيجة تستاهل.</div></div>
+    <div class="sec-head">
+      <div class="kicker">الوضع اليوم</div>
+      <h2 class="sec-title">إذا هاي حالتك، إنت مش لحالك</h2>
+      <p class="sec-sub">أغلب أصحاب الخدمات اللي بيجوني بيحكوا نفس الثلاث جمل.</p>
+    </div>
+    <div class="plist">
+      <div class="pitem"><span class="dot"></span><div>الدخل غير مستقر. شهر ممتاز وشهر الكالندر فاضي، وما في تفسير واضح ليش.</div></div>
+      <div class="pitem"><span class="dot"></span><div>الدخل عالي بس الربح قليل. الفلوس بتدخل وبتطلع وما بتعرف على وين راحت.</div></div>
+      <div class="pitem"><span class="dot"></span><div>جربت إعلانات ممولة وسوشيال ميديا، وصرفت، وما إجت نتيجة تستاهل.</div></div>
     </div>
     <div class="reframe">
       المشكلة نادرًا بتكون بالخدمة نفسها. المشكلة إنه ما في نظام: تسعير مبني على قيمة النتيجة، متابعة مالية شهرية، ومسار واضح بيوصل الزبون من أول ما بيسمع فيك لحد ما بيدفع.
@@ -102,70 +168,160 @@ footer a{color:#b8c1d8;text-decoration:none;margin:0 10px}
   </div>
 </section>
 
+<!-- SERVICES -->
 <section class="sec">
   <div class="wrap">
-    <h2 class="sec-title">خدماتنا</h2>
-    <p class="sec-sub">كل خدمة بتشتغل على قطعة من نفس النظام.</p>
+    <div class="sec-head">
+      <div class="kicker">خدماتنا</div>
+      <h2 class="sec-title">أربع مجالات، ونفس النظام</h2>
+      <p class="sec-sub">كل خدمة بتشتغل على قطعة من نفس الصورة المالية والتسويقية.</p>
+    </div>
     <div class="grid">
-      <div class="card"><div class="num">1</div><h3>استشارات مالية للمصالح التجارية</h3><p>بناء ملف إداري مالي للبزنس: تدفق نقدي، نقطة التعادل، وقراءة أرقامك بوضوح كل شهر.</p></div>
-      <div class="card"><div class="num">2</div><h3>تطوير وزيادة الربح لمقدمي الخدمات</h3><p>إعادة بناء التسعير وهيكل الخدمات، وبناء باقات مرافقة بترفع الربح من نفس عدد الزبائن.</p></div>
-      <div class="card"><div class="num">3</div><h3>خطة مالية وتسويقية للمشاريع</h3><p>خطة مبنية على أرقامك وأهدافك، للمشاريع الكبيرة والصغيرة، بمراحل تنفيذ واضحة.</p></div>
-      <div class="card"><div class="num">4</div><h3>إدارة حملات تسويق إلكتروني</h3><p>إدارة حملات فيسبوك وانستغرام لأصحاب المصالح، مربوطة بهدف مبيعات مش بمشاهدات.</p></div>
+      <div class="card"><div class="n">1</div><h3>استشارات مالية للمصالح التجارية</h3><p>بناء ملف إداري مالي للبزنس: تدفق نقدي، نقطة التعادل، وقراءة أرقامك بوضوح كل شهر.</p></div>
+      <div class="card"><div class="n">2</div><h3>تطوير وزيادة الربح لمقدمي الخدمات</h3><p>إعادة بناء التسعير وهيكل الخدمات، وباقات مرافقة بترفع الربح من نفس عدد الزبائن.</p></div>
+      <div class="card"><div class="n">3</div><h3>خطة مالية وتسويقية للمشاريع</h3><p>خطة مبنية على أرقامك وأهدافك، للمشاريع الكبيرة والصغيرة، بمراحل تنفيذ واضحة.</p></div>
+      <div class="card"><div class="n">4</div><h3>إدارة حملات تسويق إلكتروني</h3><p>إدارة حملات فيسبوك وانستغرام لأصحاب المصالح، مربوطة بهدف مبيعات مش بمشاهدات.</p></div>
     </div>
   </div>
 </section>
 
-<section class="result">
-  <div class="wrap">
-    <div class="big">3,250 ₪ → 23,300 ₪</div>
-    <div class="cap">مركز علاجي في الجولان. الدخل الشهري خلال 4 أشهر مرافقة.</div>
+<!-- BIG RESULT -->
+<section class="sec result">
+  <div class="wrap result-grid">
+    <div>
+      <div class="kicker">مركز علاجي, الجولان</div>
+      <div class="big">3,250 ₪ → 23,300 ₪</div>
+      <div class="cap">الدخل الشهري خلال 4 أشهر مرافقة. الرسائل على اليمين من صاحب المركز نفسه.</div>
+    </div>
+    <img class="shot" src="focus-assets/p08.png" alt="رسائل واتساب من صاحب مركز علاجي في الجولان توثّق ارتفاع الدخل الشهري إلى 23,370 شيكل" loading="lazy">
   </div>
 </section>
 
+<!-- WHATSAPP QUOTES -->
 <section class="sec">
   <div class="wrap">
-    <h2 class="sec-title">نتائج من داخل المرافقة</h2>
-    <p class="sec-sub">مصالح من مجالات مختلفة، ونفس الطريقة بالشغل.</p>
-    <div class="tgrid">
-      <div class="t"><div class="q">”</div><h4>د. نغم</h4><div class="role">مركز تجميل</div><div class="tag">الهدف: مضاعفة الدخل</div></div>
-      <div class="t"><div class="q">”</div><h4>ندين ق.</h4><div class="role">مستشارة مهنية ومبادِرة</div><div class="tag">بناء نظام دخل</div></div>
-      <div class="t"><div class="q">”</div><h4>مركز Spa وعلاجات</h4><div class="role">مرافقة مالية وتسويقية</div><div class="tag">تنظيم مالي</div></div>
-      <div class="t"><div class="q">”</div><h4>نادي رياضي</h4><div class="role">مرافقة مالية وتسويقية</div><div class="tag">زيادة الربح</div></div>
-      <div class="t"><div class="q">”</div><h4>مروة</h4><div class="role">مديرة مكتب تصوير وإنتاج، Marwa Production</div><div class="tag">تسعير حسب القيمة</div></div>
-      <div class="t"><div class="q">”</div><h4>سماح</h4><div class="role">صاحبة استوديو S.K.W.A.Y ومدربة يوغا</div><div class="tag">سنة ثانية نتائج</div></div>
-      <div class="t"><div class="q">”</div><h4>المحامية حنان حليلحل</h4><div class="role">مكتب محاماة</div><div class="tag">هيكلة خدمات</div></div>
-      <div class="t"><div class="q">”</div><h4>مدربة علاقات</h4><div class="role">مقدمة خدمة</div><div class="tag">مسار مبيعات واضح</div></div>
+    <div class="sec-head">
+      <div class="kicker">آراء العملاء</div>
+      <h2 class="sec-title">كلامهم هم، مش كلامي أنا</h2>
+      <p class="sec-sub">رسائل وصلتني بعد المرافقة, منقولة كما هي.</p>
+    </div>
+    <div class="qgrid">
+
+      <div class="q">
+        <span class="badge">مركز تجميل</span>
+        <p>تجربتي معك بنتطبق عليها جملة التوجه بالوقت الصح للإنسان الصح. وجودك كان كثير مهم إلي بفترة كانت صعبة عالجميع، وكنت عنجد بحاجة لشخص مهني مثلك يوجهني لأحافظ على سيرورة شغلي بمهنية. معك قدرت أشوف الصورة بنظرة أوسع، وبتوجيهك قدرنا نعرف الأرقام وحددنا أهدافنا ورسمنا خطة، وهيك وصلنا لنجاحات ملحوظة. كل الضغط النفسي والمخاوف معك اختفت وأعطت طاقة للتقدم بزيادة. شكرًا ريما ❤️</p>
+        <div class="who">د. نغم<span class="role">صاحبة مركز تجميل</span></div>
+      </div>
+
+      <div class="q">
+        <span class="badge">الهدف: مضاعفة الدخل</span>
+        <p>ومعاشي ما كان يتعدى الـ 12,000 ولا مرة. أنا اليوم مستقلة ومديرة نفسي تمامًا، وأول شهر من أشهر سنتي بعد مرافقتك وصلت قريب الـ 20,000 بهدوء من دون تعب، وبعدني مش عاملة ربع نصائحك.</p>
+        <div class="who">صاحبة بزنس خدمات<span class="role">بعد أول شهر مرافقة</span></div>
+      </div>
+
+      <div class="q">
+        <span class="badge">توسيع الخدمات ×3</span>
+        <p>بدأت مشوار مع ريما بداية سنة الـ 2024. كنت بحاجة أرتب خدماتي وأعرف كيف أسعرهن وأقيمهن. ريما ساعدتني أدقق الخدمات، أصنّف المهم والأهم، وساعدتني أبدأ طريق منظمة وسهلة وواضحة، ووسّع خدماتي بـ 3 مرات أكثر من قبل. مع ريما شعرت إنه في عنوان مساند، شخصي قبل الوظيفي، وهذا اللي بميزها. بنصح كل إنسان مهني يستشير ريما ويبدأ طريقه معها. شكرًا كثير ريما 🌹</p>
+        <div class="who">نادين قسّوم<span class="role">مديرة شركة لاند للحلول الإدارية للمصالح والشركات، ومؤسِسة مشروع رحلتي الفلسطيني</span></div>
+      </div>
+
+      <div class="q">
+        <span class="badge">استشارة مالية</span>
+        <p>بلقاء الاستشارة مع ريما حسيت بضغط كبير. كنت حاسة إنه في خلل بللي بعملوا، ومع سنين هاد الخلل تراكم، ولبين ما عرفت وقررت أتوجه لاستشارة. وعلى قد ما كانت الاستشارة مفيدة، وفتنا بأصغر تفاصيل وحطينا حتى أهداف، كل كلمة بالاستشارة ضوّت على إشي مهم لي بيساعد البزنس يتطور ويكبر. لهيك قررت آخد مسار كامل معك لنطور البزنس ونعمل نقلة نوعية إن شاء الله.</p>
+        <div class="who">صاحبة مصلحة تجارية<span class="role">بعد لقاء استشارة</span></div>
+      </div>
+
+      <div class="q">
+        <span class="badge">تنظيم مالي</span>
+        <p>أنا حسيت أحسن. مكنتش متابعة ولا قادرة أفهم شو الوضع بالزبط، ولا حتى أحدد شو المشكلة إللي خلّت الأمور توصل لهون. بس إسا كلشي واضح: الوضع والحلول والخطوات. بلّشت أنا أسجّل المدخولات اليومية وأتابع مع حساب البنك، وإن شاء الله بتمشي الأمور على خير.</p>
+        <div class="who">صاحبة مصلحة تجارية<span class="role">استشارة مالية</span></div>
+      </div>
+
+      <div class="q">
+        <span class="badge">قفزة بالمشروع</span>
+        <p>حبيبتي ريما تسلمي يا غالية، كثير أشياء تقدمت عندي وتطورت كثير من بعد لقاءات الاستشارة. كان أحسن استثمار ❤️<br><br>كل سنة وإنت لعطائك ريما. من لما كنت معك عملت قفزة كبيرة بمشروعي، ولليوم بلامس أثرها ❤️</p>
+        <div class="who">رسائل من عميلات<span class="role">إنستغرام</span></div>
+      </div>
+
     </div>
   </div>
 </section>
 
+<!-- SCREENSHOT PROOF -->
+<section class="sec proof">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">التوثيق</div>
+      <h2 class="sec-title">نفس الرسائل، بلقطات الشاشة الأصلية</h2>
+    </div>
+    <div class="pgrid">
+      <img class="shot" src="focus-assets/p03.png" alt="لقطات شاشة لرسائل من د. نغم ونادين قسوم" loading="lazy">
+      <img class="shot" src="focus-assets/p09.png" alt="لقطات شاشة لرسائل عن استشارات مالية للمصالح" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO TESTIMONIALS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">من داخل المرافقة</div>
+      <h2 class="sec-title">مصالح من مجالات مختلفة</h2>
+      <p class="sec-sub">مقابلات مع أصحاب مصالح رافقتهم, من مراكز علاج لمكاتب محاماة.</p>
+    </div>
+    <div class="vgrid">
+      <figure class="v"><img src="focus-assets/p04.png" alt="شهادة صاحب مركز Spa وعلاجات" loading="lazy">
+        <figcaption>مركز Spa وعلاجات<span>مرافقة مالية وتسويقية</span></figcaption></figure>
+      <figure class="v"><img src="focus-assets/p05.png" alt="شهادة صاحب نادي رياضي" loading="lazy">
+        <figcaption>نادي رياضي<span>مرافقة مالية وتسويقية</span></figcaption></figure>
+      <figure class="v"><img src="focus-assets/p06.png" alt="شهادة مديرة مكتب تصوير وإنتاج Marwa Production" loading="lazy">
+        <figcaption>Marwa Production<span>مديرة مكتب تصوير وإنتاج</span></figcaption></figure>
+      <figure class="v"><img src="focus-assets/p07.png" alt="شهادة سماح صاحبة استوديو s.k.w.a.y ومدربة يوغا" loading="lazy">
+        <figcaption>سماح, استوديو s.k.w.a.y<span>مدربة يوغا, السنة الثانية بنتائج</span></figcaption></figure>
+      <figure class="v"><img src="focus-assets/p10.png" alt="شهادة المحامية حنان حليلحل" loading="lazy">
+        <figcaption>المحامية حنان حليلحل<span>مكتب محاماة</span></figcaption></figure>
+      <figure class="v"><img src="focus-assets/p11.png" alt="شهادة مدربة علاقات" loading="lazy">
+        <figcaption>مدربة علاقات<span>مقدمة خدمة</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS IN FOCUS -->
 <section class="sec pain">
   <div class="wrap">
-    <h2 class="sec-title">شو بصير باستشارة Focus</h2>
-    <p class="sec-sub">جلسة واحدة، مباشرة، بتطلع منها بخطوات مكتوبة.</p>
-    <div class="pain-list">
-      <div class="pain-item"><span class="dot"></span><div>قراءة وضعك الحالي: دخل، مصاريف، وربح حقيقي.</div></div>
-      <div class="pain-item"><span class="dot"></span><div>تحديد الفجوة الأكبر اللي بتوقف نمو الدخل عندك.</div></div>
-      <div class="pain-item"><span class="dot"></span><div>مسار عملي بأولويات: شو تعمل هالشهر، وشو بعده.</div></div>
+    <div class="sec-head">
+      <div class="kicker">استشارة Focus</div>
+      <h2 class="sec-title">شو بصير باللقاء</h2>
+      <p class="sec-sub">جلسة واحدة، مباشرة، بتطلع منها بخطوات مكتوبة.</p>
+    </div>
+    <div class="plist">
+      <div class="pitem"><span class="dot"></span><div>قراءة وضعك الحالي: دخل، مصاريف، وربح حقيقي.</div></div>
+      <div class="pitem"><span class="dot"></span><div>تحديد الفجوة الأكبر اللي بتوقف نمو الدخل عندك.</div></div>
+      <div class="pitem"><span class="dot"></span><div>مسار عملي بأولويات: شو تعمل هالشهر، وشو بعده.</div></div>
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="wrap">
-    <h2>الفجوة بين وين إنت اليوم ووين بدك تكون هي خطوة وحدة</h2>
-    <p>تبدأ تاخد مرافقة وتبني نظام دخل ما بيعتمد على الصدفة.</p>
-    <a class="btn btn-lg" href="https://lp.rimayaqub.com/Focus_meeting">أحجز استشارتك الآن</a>
-    <div class="note">عدد الجلسات محدود كل شهر</div>
+<!-- CTA -->
+<section class="sec cta">
+  <div class="wrap cta-grid">
+    <div class="phone" role="img" aria-label="رسائل من عميلات ريما"></div>
+    <div>
+      <h2>تريد أيضًا تحقيق الأرباح من إدارتك لأموالك؟</h2>
+      <p>الفجوة بين وين إنت اليوم ووين بدك تكون هي خطوة وحدة: تبدأ تاخد مرافقة وتبني نظام دخل ما بيعتمد على الصدفة.</p>
+      <a class="btn btn-lg" href="https://lp.rimayaqub.com/Focus_meeting">أحجز استشارة Focus</a>
+      <div class="note">عدد الجلسات محدود كل شهر</div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    ريما يعقوب · مدربة ومستشارة أعمال
+    ريما يعقوب · RV Business Consulting
     <div style="margin-top:10px">
-      <a href="https://www.instagram.com/rima_yaqub/">انستغرام</a>
+      <a href="https://www.instagram.com/rima_yaqub/">إنستغرام</a>
       <a href="https://rimayaqub.ravpage.co.il/master">الموقع</a>
+      <a href="https://lp.rimayaqub.com/Focus_meeting">احجز استشارة</a>
     </div>
   </div>
 </footer>
