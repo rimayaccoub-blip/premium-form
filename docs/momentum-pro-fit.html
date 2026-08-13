@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استبيان الملاءمة — Momentum Pro 90 يوم</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      padding: 30px 16px 60px;
+      color: #fff;
+    }
+
+    .container { max-width: 680px; margin: 0 auto; }
+
+    .header { text-align: center; margin-bottom: 36px; }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #f7c59f, #e8875a);
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 6px 20px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .header h1 {
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .header h1 span { color: #f7c59f; }
+    .header p {
+      font-size: 15px;
+      opacity: 0.8;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .progress-wrap {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      height: 6px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #f7c59f, #e8875a);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .progress-label { font-size: 12px; opacity: 0.6; text-align: center; margin-bottom: 8px; }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 28px;
+      margin-bottom: 20px;
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+    .card.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num { font-size: 11px; opacity: 0.5; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .question { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
+    .sub { font-size: 13px; opacity: 0.6; margin-bottom: 20px; line-height: 1.5; }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.5;
+      transition: all 0.2s ease;
+      text-align: right;
+    }
+    .option:hover { background: rgba(247,197,159,0.15); border-color: #f7c59f; }
+    .option.selected {
+      background: linear-gradient(90deg, rgba(247,197,159,0.25), rgba(232,135,90,0.2));
+      border-color: #f7c59f;
+      font-weight: 600;
+    }
+
+    .hint { font-size: 12px; opacity: 0.5; margin-bottom: 14px; }
+
+    .consent {
+      font-size: 12px;
+      opacity: 0.55;
+      line-height: 1.6;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .field-label { font-size: 13px; opacity: 0.75; margin-bottom: 8px; font-weight: 600; }
+    .field-hint  { font-size: 12px; opacity: 0.5; margin: -4px 0 14px; direction: ltr; text-align: right; }
+
+    .phone-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .phone-row select {
+      flex: 0 0 40%;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 14px 12px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.5) 50%),
+                        linear-gradient(135deg, rgba(255,255,255,0.5) 50%, transparent 50%);
+      background-position: 14px calc(50% - 2px), 19px calc(50% - 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-left: 32px;
+    }
+    .phone-row select:focus { border-color: #f7c59f; }
+    .phone-row select option { background: #24243e; color: #fff; }
+    .phone-row input { flex: 1; margin-bottom: 0; direction: ltr; text-align: left; }
+
+    textarea, input[type="text"], input[type="tel"], input[type="email"] {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      direction: rtl;
+      margin-bottom: 12px;
+    }
+    textarea:focus, input:focus { border-color: #f7c59f; }
+    textarea::placeholder, input::placeholder { color: rgba(255,255,255,0.35); }
+
+    .range-wrap { padding: 8px 0; }
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.2);
+      outline: none;
+      direction: ltr;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f7c59f, #e8875a);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(247,197,159,0.5);
+    }
+    .range-labels { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.55; margin-top: 8px; }
+    .range-value { text-align: center; font-size: 28px; font-weight: 800; color: #f7c59f; margin: 10px 0 4px; }
+
+    .btn-next {
+      margin-top: 24px;
+      width: 100%;
+      background: linear-gradient(90deg, #f7c59f, #e8875a);
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 16px;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 30px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+    .final-card { text-align: center; padding: 40px 28px; }
+    .final-card .icon { font-size: 52px; margin-bottom: 16px; }
+    .final-card h2 { font-size: 26px; font-weight: 900; margin-bottom: 14px; line-height: 1.4; }
+    .final-card h2 span { color: #f7c59f; }
+    .final-card p { font-size: 15px; opacity: 0.85; line-height: 1.8; margin-bottom: 12px; }
+    .final-card .highlight {
+      background: rgba(247,197,159,0.12);
+      border: 1px solid rgba(247,197,159,0.3);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 600;
+      text-align: right;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #f7c59f, #e8875a);
+      color: #1a1a2e;
+      font-weight: 900;
+      font-size: 17px;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: opacity 0.2s;
+    }
+    .cta-btn.secondary {
+      background: transparent;
+      color: #f7c59f;
+      border: 1.5px solid rgba(247,197,159,0.5);
+      font-size: 15px;
+      padding: 13px 32px;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+
+    #summaryTable { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    #summaryTable td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    #summaryTable td:first-child { opacity: 0.6; width: 45%; }
+    #summaryTable td:last-child { font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .card { padding: 22px 18px; }
+      .question { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">Momentum Pro · 90 يوم</div>
+    <h1>هل برنامج<br><span>Momentum Pro</span> مناسب لك؟</h1>
+    <p>البرنامج مرافقة 90 يوم لبناء نظام دخل ثابت. مش كل واحدة بتقدّم طلب بتكون جاهزة، وهاد الاستبيان بيوضح لك ولإلي إذا هاي اللحظة الصح.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <p class="progress-label" id="progressLabel">سؤال 1 من 14</p>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- Q1 -->
+  <div class="card active" id="q1">
+    <p class="step-num">سؤال 1 / 14</p>
+    <p class="question">ما نوع البزنس الذي تديرينه؟</p>
+    <p class="sub">اختاري الأقرب لطبيعة شغلك</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="10">مقدمة خدمات (تغذية، لياقة، صحة نفسية، علاج...)</div>
+      <div class="option" data-score="10">مدربة / مستشارة أعمال أو كوتش</div>
+      <div class="option" data-score="10">صاحبة صالون أو سبا أو مركز تجميل</div>
+      <div class="option" data-score="8">خدمة مهنية أخرى (تصميم، محاسبة، تسويق...)</div>
+      <div class="option" data-score="0" data-disqualify="1">بيع منتجات أو شغل من البيت فقط</div>
+    </div>
+    <button class="btn-next" id="next1" disabled onclick="nextStep(1)">التالي ←</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card" id="q2">
+    <p class="step-num">سؤال 2 / 14</p>
+    <p class="question">من متى وانتِ شغالة في هذا البزنس؟</p>
+    <p class="sub">البرنامج مبني على بزنس شغّال، مش على بداية من الصفر</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="2">أقل من 6 أشهر</div>
+      <div class="option" data-score="6">من 6 أشهر إلى سنة</div>
+      <div class="option" data-score="10">من سنة إلى 3 سنوات</div>
+      <div class="option" data-score="10">أكثر من 3 سنوات</div>
+    </div>
+    <button class="btn-next" id="next2" disabled onclick="nextStep(2)">التالي ←</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card" id="q3">
+    <p class="step-num">سؤال 3 / 14</p>
+    <p class="question">ما هو دخلك الشهري الحالي من البزنس؟</p>
+    <p class="sub">هذه المعلومة سرية وبستخدمها فقط لتقييم الملاءمة</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="3">أقل من $1,500</div>
+      <div class="option" data-score="10">$1,500 – $4,000</div>
+      <div class="option" data-score="20">$4,000 – $8,000</div>
+      <div class="option" data-score="20">$8,000 – $16,000</div>
+      <div class="option" data-score="16">أكثر من $16,000</div>
+    </div>
+    <button class="btn-next" id="next3" disabled onclick="nextStep(3)">التالي ←</button>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card" id="q4">
+    <p class="step-num">سؤال 4 / 14</p>
+    <p class="question">كيف بتوصفي وضع الدخل عندك؟</p>
+    <p class="sub">كوني صريحة، ما في جواب غلط هون</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="8">دخل غير منتظم، بعتمد على اللي بيجي شهر بشهر</div>
+      <div class="option" data-score="10">في دخل بس أقل بكثير من اللي بستحقه</div>
+      <div class="option" data-score="10">دخل ثابت بس ما بعرف كيف أكبّره</div>
+      <div class="option" data-score="10">دخل منيح بس الربح الصافي منخفض</div>
+    </div>
+    <button class="btn-next" id="next4" disabled onclick="nextStep(4)">التالي ←</button>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card" id="q5">
+    <p class="step-num">سؤال 5 / 14</p>
+    <p class="question">ما سعر خدمتك الأساسية اليوم؟</p>
+    <p class="sub">تقريباً، بالدولار، لكل جلسة أو باقة</p>
+    <div class="range-wrap">
+      <div class="range-value" id="priceVal">$150</div>
+      <input type="range" id="priceRange" min="50" max="3000" step="50" value="150"
+        oninput="document.getElementById('priceVal').textContent = '$' + parseInt(this.value).toLocaleString()">
+      <div class="range-labels"><span>$50</span><span>$3,000+</span></div>
+    </div>
+    <button class="btn-next" onclick="nextStep(5)">التالي ←</button>
+  </div>
+
+  <!-- Q6 -->
+  <div class="card" id="q6">
+    <p class="step-num">سؤال 6 / 14</p>
+    <p class="question">شو أكبر تحدٍ عندك بالبزنس هلق؟</p>
+    <p class="sub">ممكن تختاري أكثر من إجابة</p>
+    <p class="hint">اضغطي على كل ما ينطبق عليك</p>
+    <div class="options" data-type="multi">
+      <div class="option">جذب عملاء جدد باستمرار</div>
+      <div class="option">التسعير وإقناع العميل بالسعر</div>
+      <div class="option">إدارة الوقت والطاقة (إرهاق دائم)</div>
+      <div class="option">بيع خدمات High-Ticket بثقة</div>
+      <div class="option">بناء نظام دخل ثابت بدون اعتماد على التسويق اليومي</div>
+      <div class="option">فهم أرقام البزنس والأرباح الصافية</div>
+    </div>
+    <button class="btn-next" id="next6" disabled onclick="nextStep(6)">التالي ←</button>
+  </div>
+
+  <!-- Q7 -->
+  <div class="card" id="q7">
+    <p class="step-num">سؤال 7 / 14</p>
+    <p class="question">شو جربتِ قبل هيك، وليش ما نجح؟</p>
+    <p class="sub">اكتبي بكلماتك، هاد بيساعدني أفهم من وين نبدأ معك</p>
+    <textarea id="triedInput" rows="4" data-required="1" placeholder="مثال: اشتركت بكورس ديجيتال، تفرجت عليه بس ما طبّقت لأنه ما كان في حدا بيتابعني..."></textarea>
+    <button class="btn-next" id="next7" disabled onclick="nextStep(7)">التالي ←</button>
+  </div>
+
+  <!-- Q8 -->
+  <div class="card" id="q8">
+    <p class="step-num">سؤال 8 / 14</p>
+    <p class="question">لو ضلّ الوضع زي ما هو 12 شهر كمان، شو بيصير؟</p>
+    <p class="sub">فكري بالكلفة الحقيقية: مصاري، وقت، طاقة، راحة بال</p>
+    <textarea id="costInput" rows="4" data-required="1" placeholder="مثال: بضل أشتغل نفس الساعات بنفس الدخل، وبفوّت فرصة أفتح فرع تاني..."></textarea>
+    <button class="btn-next" id="next8" disabled onclick="nextStep(8)">التالي ←</button>
+  </div>
+
+  <!-- Q9 -->
+  <div class="card" id="q9">
+    <p class="step-num">سؤال 9 / 14</p>
+    <p class="question">قدّيش الموضوع مستعجل عندك؟</p>
+    <p class="sub">البرنامج بيبدأ بمجموعة محدودة، والتوقيت جزء من القرار</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="15">جاهزة أبدأ فوراً، ما بدي أضيّع وقت</div>
+      <div class="option" data-score="11">جاهزة خلال شهر</div>
+      <div class="option" data-score="5">مهتمة بس لسا بفكر</div>
+      <div class="option" data-score="1">بس بتفرج وبجمع معلومات</div>
+    </div>
+    <button class="btn-next" id="next9" disabled onclick="nextStep(9)">التالي ←</button>
+  </div>
+
+  <!-- Q10 -->
+  <div class="card" id="q10">
+    <p class="step-num">سؤال 10 / 14</p>
+    <p class="question">البرنامج 90 يوم مرافقة وتطبيق. قدّيش وقت بتقدري تخصصي أسبوعياً؟</p>
+    <p class="sub">هاد سؤال جدي، لأنه بدون تطبيق ما في نتيجة</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="10">3 ساعات أو أكثر أسبوعياً</div>
+      <div class="option" data-score="8">ساعتين أسبوعياً</div>
+      <div class="option" data-score="4">ساعة واحدة، بس رح أحاول أزيد</div>
+      <div class="option" data-score="1">أقل من ساعة، وقتي ضيق جداً</div>
+    </div>
+    <button class="btn-next" id="next10" disabled onclick="nextStep(10)">التالي ←</button>
+  </div>
+
+  <!-- Q11 -->
+  <div class="card" id="q11">
+    <p class="step-num">سؤال 11 / 14</p>
+    <p class="question">إذا لقيتِ برنامج مرافقة مناسب يساعدك تحوّلي خبرتك لبزنس أوضح، مربح ومنظّم — قدّيش عندك جاهزية تستثمري بتطوير البزنس خلال الأشهر القادمة؟</p>
+    <p class="sub">بسأل بصراحة عشان ما نضيّع وقت الطرفين</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="8">حتى $1,000</div>
+      <div class="option" data-score="22">$1,000 – $2,000</div>
+      <div class="option" data-score="25">$2,000 – $2,700</div>
+      <div class="option" data-score="0">حالياً مش جاهزة للاستثمار</div>
+    </div>
+    <button class="btn-next" id="next11" disabled onclick="nextStep(11)">التالي ←</button>
+  </div>
+
+  <!-- Q12 -->
+  <div class="card" id="q12">
+    <p class="step-num">سؤال 12 / 14</p>
+    <p class="question">إذا حسّيتي إنه Momentum هو الخطوة المناسبة إلك، شو أكثر إشي ممكن يمنعك من البدء؟</p>
+    <p class="sub">كوني صادقة مع حالك</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="6">الوقت</div>
+      <div class="option" data-score="4">الاستثمار المادي</div>
+      <div class="option" data-score="7">مش متأكدة إنه مناسب إلي</div>
+      <div class="option" data-score="6">بدي أستشير شخص آخر</div>
+      <div class="option" data-score="10">ما في شي بيمنعني إذا اقتنعت بالبرنامج</div>
+    </div>
+    <button class="btn-next" id="next12" disabled onclick="nextStep(12)">التالي ←</button>
+  </div>
+
+  <!-- Q13 -->
+  <div class="card" id="q13">
+    <p class="step-num">سؤال 13 / 14</p>
+    <p class="question">وين بدك يكون دخلك بعد 90 يوم؟</p>
+    <p class="sub">كوني طموحة وواقعية بنفس الوقت</p>
+    <div class="options" data-type="single">
+      <div class="option">$3,000 – $6,000 شهرياً</div>
+      <div class="option">$6,000 – $12,000 شهرياً</div>
+      <div class="option">$12,000 – $20,000 شهرياً</div>
+      <div class="option">أكثر من $20,000 شهرياً</div>
+    </div>
+    <button class="btn-next" id="next13" disabled onclick="nextStep(13)">التالي ←</button>
+  </div>
+
+  <!-- Q14 -->
+  <div class="card" id="q14">
+    <p class="step-num">سؤال 14 / 14</p>
+    <p class="question">آخر خطوة — اكتبي بياناتك</p>
+    <p class="sub">عشان نتواصل معك بخصوص طلبك</p>
+    <input type="text" id="nameInput" placeholder="اسمك الكامل" />
+
+    <p class="field-label">رقم الواتساب</p>
+    <div class="phone-row">
+      <select id="countrySelect">
+        <option value="972" data-flag="🇮🇱" selected>🇮🇱 إسرائيل +972</option>
+        <option value="970" data-flag="🇵🇸">🇵🇸 فلسطين +970</option>
+        <option value="962" data-flag="🇯🇴">🇯🇴 الأردن +962</option>
+        <option value="971" data-flag="🇦🇪">🇦🇪 الإمارات +971</option>
+        <option value="966" data-flag="🇸🇦">🇸🇦 السعودية +966</option>
+        <option value="974" data-flag="🇶🇦">🇶🇦 قطر +974</option>
+        <option value="965" data-flag="🇰🇼">🇰🇼 الكويت +965</option>
+        <option value="973" data-flag="🇧🇭">🇧🇭 البحرين +973</option>
+        <option value="968" data-flag="🇴🇲">🇴🇲 عُمان +968</option>
+        <option value="961" data-flag="🇱🇧">🇱🇧 لبنان +961</option>
+        <option value="963" data-flag="🇸🇾">🇸🇾 سوريا +963</option>
+        <option value="964" data-flag="🇮🇶">🇮🇶 العراق +964</option>
+        <option value="20"  data-flag="🇪🇬">🇪🇬 مصر +20</option>
+        <option value="212" data-flag="🇲🇦">🇲🇦 المغرب +212</option>
+        <option value="213" data-flag="🇩🇿">🇩🇿 الجزائر +213</option>
+        <option value="216" data-flag="🇹🇳">🇹🇳 تونس +216</option>
+        <option value="218" data-flag="🇱🇾">🇱🇾 ليبيا +218</option>
+        <option value="249" data-flag="🇸🇩">🇸🇩 السودان +249</option>
+        <option value="967" data-flag="🇾🇪">🇾🇪 اليمن +967</option>
+        <option value="90"  data-flag="🇹🇷">🇹🇷 تركيا +90</option>
+        <option value="1"   data-flag="🇺🇸">🇺🇸 أمريكا / كندا +1</option>
+        <option value="44"  data-flag="🇬🇧">🇬🇧 بريطانيا +44</option>
+        <option value="49"  data-flag="🇩🇪">🇩🇪 ألمانيا +49</option>
+        <option value="33"  data-flag="🇫🇷">🇫🇷 فرنسا +33</option>
+        <option value="39"  data-flag="🇮🇹">🇮🇹 إيطاليا +39</option>
+        <option value="34"  data-flag="🇪🇸">🇪🇸 إسبانيا +34</option>
+        <option value="46"  data-flag="🇸🇪">🇸🇪 السويد +46</option>
+        <option value="31"  data-flag="🇳🇱">🇳🇱 هولندا +31</option>
+        <option value="32"  data-flag="🇧🇪">🇧🇪 بلجيكا +32</option>
+        <option value="61"  data-flag="🇦🇺">🇦🇺 أستراليا +61</option>
+      </select>
+      <input type="tel" id="phoneInput" inputmode="numeric" placeholder="0501234567" />
+    </div>
+    <p class="field-hint" id="phonePreview">الرقم الكامل: +972 …</p>
+
+    <input type="email" id="emailInput" placeholder="بريدك الإلكتروني" style="margin-bottom:0" />
+    <p class="consent">بإرسالك النموذج، بتوافقي إنّا نتواصل معك على الواتساب بخصوص طلبك.</p>
+    <button class="btn-next" onclick="submitForm()" style="margin-top:14px">قدّمي طلبك لبرنامج Momentum ←</button>
+  </div>
+
+  <!-- FINAL -->
+  <div class="card" id="qFinal">
+    <div class="final-card">
+      <div class="icon" id="resIcon">✅</div>
+      <h2 id="resTitle"></h2>
+      <div class="highlight" id="resBody"></div>
+      <p id="resNote" style="font-size:14px; opacity:0.7"></p>
+      <a class="cta-btn" id="resCta" href="#" target="_blank"></a>
+
+      <div style="margin-top:32px; text-align:right">
+        <p style="font-size:13px; opacity:0.5; margin-bottom:12px">ملخص إجاباتك:</p>
+        <table id="summaryTable"></table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 14;
+  const FORM_NAME = 'Momentum Pro 90 — استبيان ملاءمة';
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxpuYoZ5d1r7IhMP0eeu-XUSLdPM7aOMveZiJC3LEF7j35v1QZ_elOEH41kU2GFLAE/exec';
+
+  const WHATSAPP_NUMBER = '972559311440';
+  const WA_TRIGGER      = 'قدّمت طلبي لبرنامج Momentum';
+  const LINK_WHATSAPP   = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(WA_TRIGGER);
+  const LINK_INSTAGRAM  = 'https://www.instagram.com/rima_yaqub/';
+  // الرسالة بتوصل تلقائياً عبر قالب ManyChat، فما في داعي نحوّل العميلة للواتساب
+  const AUTO_WHATSAPP   = false;
+
+  let answers = {};
+  let score = 0;
+  let disqualified = false;
+
+  const LABELS = {
+    1: 'نوع البزنس',
+    2: 'سنوات الخبرة',
+    3: 'الدخل الشهري الحالي',
+    4: 'وضع الدخل',
+    5: 'سعر الخدمة الأساسية',
+    6: 'أكبر تحدٍ',
+    7: 'شو جربت وليش ما نجح',
+    8: 'كلفة التأجيل 12 شهر',
+    9: 'مستوى الاستعجال',
+    10: 'الوقت الأسبوعي المتاح',
+    11: 'ميزانية الاستثمار المتاحة',
+    12: 'العائق الأكبر أمام البدء',
+    13: 'هدف الدخل بعد 90 يوم',
+  };
+
+  document.querySelectorAll('.options').forEach(group => {
+    const type = group.dataset.type;
+    group.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (type === 'single') {
+          group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+        } else {
+          opt.classList.toggle('selected');
+        }
+        const card = group.closest('.card');
+        const btn = card.querySelector('.btn-next');
+        if (btn) btn.disabled = group.querySelectorAll('.option.selected').length === 0;
+      });
+    });
+  });
+
+  // الأسئلة المفتوحة إجبارية أيضاً — 15 حرف كحد أدنى
+  document.querySelectorAll('textarea[data-required]').forEach(ta => {
+    const btn = ta.closest('.card').querySelector('.btn-next');
+    ta.addEventListener('input', () => { btn.disabled = ta.value.trim().length < 15; });
+  });
+
+  function collect(stepId) {
+    const card = document.getElementById('q' + stepId);
+    const group = card.querySelector('.options');
+    if (!group) return '—';
+    const selected = [...group.querySelectorAll('.option.selected')];
+    selected.forEach(o => {
+      score += parseInt(o.dataset.score || 0, 10);
+      if (o.dataset.disqualify) disqualified = true;
+    });
+    return selected.map(o => o.textContent.trim()).join(' / ') || '—';
+  }
+
+  function nextStep(current) {
+    if (current === 5) {
+      const p = parseInt(document.getElementById('priceRange').value, 10);
+      answers[LABELS[5]] = '$' + p.toLocaleString();
+      if (p >= 600) score += 10;
+      else if (p >= 300) score += 7;
+      else if (p >= 150) score += 4;
+      else score += 1;
+    } else if (current === 7) {
+      answers[LABELS[7]] = document.getElementById('triedInput').value.trim() || '—';
+    } else if (current === 8) {
+      const txt = document.getElementById('costInput').value.trim();
+      answers[LABELS[8]] = txt || '—';
+      if (txt.length >= 40) score += 2; // وعي واضح بكلفة التأجيل
+    } else {
+      answers[LABELS[current]] = collect(current);
+    }
+
+    document.getElementById('q' + current).classList.remove('active');
+    const next = current + 1;
+    if (next <= TOTAL) document.getElementById('q' + next).classList.add('active');
+
+    document.getElementById('progressBar').style.width = Math.round((current / TOTAL) * 100) + '%';
+    if (next <= TOTAL) document.getElementById('progressLabel').textContent = `سؤال ${next} من ${TOTAL}`;
+  }
+
+  // ===== حقل الهاتف مع مفتاح الدولة =====
+  function countryCode() {
+    return document.getElementById('countrySelect').value;
+  }
+  function updatePhonePreview() {
+    const local = document.getElementById('phoneInput').value.replace(/\D/g, '').replace(/^0+/, '');
+    document.getElementById('phonePreview').textContent =
+      'الرقم الكامل: +' + countryCode() + ' ' + (local || '…');
+  }
+  document.getElementById('countrySelect').addEventListener('change', updatePhonePreview);
+  document.getElementById('phoneInput').addEventListener('input', updatePhonePreview);
+  updatePhonePreview();
+
+  function resultFor(pts) {
+    // التصنيف داخلي فقط — بينحفظ بالشيت وما بينعرض للعميلة
+    if (disqualified) {
+      return {
+        tier: 'غير مناسبة',
+        icon: '🤍',
+        title: 'شكراً على <span>وقتك وصدقك</span>',
+        body: 'استلمنا إجاباتك.<br><br>حسب اللي كتبتيه، هاي المرافقة مبنية لواقع شغل مختلف عن واقعك حالياً، وما منحب ناخدك بخطوة مش وقتها.',
+        note: 'بينتها تابعيني على انستغرام، بنشر محتوى مجاني كل أسبوع.',
+        ctaText: 'تابعيني على انستغرام ←',
+        ctaLink: LINK_INSTAGRAM
+      };
+    }
+    const tier = pts >= 70 ? 'ملاءمة عالية' : (pts >= 50 ? 'ملاءمة متوسطة' : 'ملاءمة منخفضة');
+    return {
+      tier: tier,
+      icon: '✅',
+      title: 'وصلني <span>طلبك</span>',
+      body: 'شكراً على وقتك وصدقك بكل سؤال.<br><br>طاقم المكتب رح يراجع إجاباتك، وإذا كان في ملاءمة رح يتواصلوا معك قريباً على الواتساب.',
+      note: 'إذا عندك أي سؤال، تقدري تراسلينا من الزر تحت.',
+      ctaText: 'تواصلي معنا على الواتساب ←',
+      ctaLink: LINK_WHATSAPP
+    };
+  }
+
+  function submitForm() {
+    const name  = document.getElementById('nameInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+
+    if (!name || !phone || !email) {
+      alert('من فضلك اكملي جميع البيانات (الاسم، الواتساب، الإيميل)');
+      return;
+    }
+
+    const local = phone.replace(/\D/g, '').replace(/^0+/, '');
+    if (local.length < 6) {
+      alert('من فضلك اكتبي رقم واتساب صحيح');
+      return;
+    }
+    // تنسيق آمن للشيت: بدون + في البداية حتى ما يقرأه Google Sheets كصيغة
+    const waPhone = countryCode() + ' ' + local;
+
+    const MAX_RAW = 122; // مجموع أعلى نتيجة ممكنة من كل الأسئلة المحسوبة
+    const finalScore = Math.round((score / MAX_RAW) * 100);
+    const res = resultFor(finalScore);
+
+    answers['الاسم']   = name;
+    answers['واتساب']  = waPhone;
+    answers['الإيميل'] = email;
+    answers['النتيجة'] = finalScore + '/100';
+    answers['التصنيف'] = res.tier;
+    answers['النموذج'] = FORM_NAME;
+
+    document.getElementById('q14').classList.remove('active');
+    document.getElementById('qFinal').classList.add('active');
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'مكتمل ✓';
+
+    document.getElementById('resIcon').textContent = res.icon;
+    document.getElementById('resTitle').innerHTML  = res.title;
+    document.getElementById('resBody').innerHTML   = res.body;
+    document.getElementById('resNote').textContent = res.note;
+    const cta = document.getElementById('resCta');
+    cta.textContent = res.ctaText;
+    cta.href = res.ctaLink;
+
+    // الملخص المعروض للعميلة بدون النتيجة الرقمية
+    const publicKeys = Object.keys(answers).filter(k => k !== 'النتيجة' && k !== 'التصنيف' && k !== 'النموذج');
+    document.getElementById('summaryTable').innerHTML = publicKeys
+      .map(k => `<tr><td>${k}</td><td>${answers[k]}</td></tr>`).join('');
+
+    console.log('Momentum Pro Fit:', JSON.stringify(answers, null, 2));
+    fetch(ENDPOINT + '?data=' + encodeURIComponent(JSON.stringify(answers)), { method: 'GET', mode: 'no-cors' }).catch(() => {});
+
+    // تحويل تلقائي للواتساب — بيفتح محادثة برسالة جاهزة، وManyChat بيرد فوراً
+    if (AUTO_WHATSAPP && !disqualified) {
+      const note = document.getElementById('resNote');
+      let left = 3;
+      note.textContent = `رح نحوّلك للواتساب خلال ${left}...`;
+      const t = setInterval(() => {
+        left--;
+        if (left > 0) {
+          note.textContent = `رح نحوّلك للواتساب خلال ${left}...`;
+        } else {
+          clearInterval(t);
+          note.textContent = 'إذا ما فتح الواتساب لحاله، اضغطي الزر تحت.';
+          window.location.href = LINK_WHATSAPP;
+        }
+      }, 1000);
+    }
+  }
+</script>
+</body>
+</html>
