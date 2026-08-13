@@ -36,6 +36,9 @@ img{max-width:100%;display:block}
 .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,39,.46)}
 .btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .btn-lg{font-size:21px;padding:20px 56px}
+.btn-ghost{display:inline-block;color:#e2e8f7;text-decoration:none;font-weight:700;font-size:17px;
+  padding:20px 8px;margin-right:18px;border-bottom:1px solid rgba(233,216,166,.45)}
+.btn-ghost:hover,.btn-ghost:focus-visible{color:var(--gold-soft);border-bottom-color:var(--gold-soft)}
 
 /* ---------- HERO ---------- */
 .hero{background:linear-gradient(155deg,var(--navy) 0%,var(--navy-3) 100%);color:#fff;
@@ -89,28 +92,14 @@ img{max-width:100%;display:block}
 .q .badge{display:inline-block;background:var(--navy);color:var(--gold-soft);font-size:13px;
   font-weight:700;border-radius:999px;padding:5px 14px;margin-bottom:14px}
 
-/* ---------- CLIENT LIST ---------- */
-.vlist{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.vlist li{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px;
-  border-right:3px solid var(--gold)}
-.vlist b{display:block;font-size:17px;font-weight:800}
-.vlist span{color:var(--muted);font-size:15px}
-
-/* ---------- FORM ---------- */
-#leadForm{display:grid;gap:16px;max-width:460px;margin-bottom:8px}
-.field{display:grid;gap:7px}
-.field label{font-size:15.5px;font-weight:700;color:#dbe2f2}
-.field input,.field select{font-family:inherit;font-size:17px;padding:14px 16px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.07);color:#fff;width:100%}
-.field select option{color:#16203a}
-.field input::placeholder{color:#93a0bd}
-.field input:focus,.field select:focus{outline:none;border-color:var(--gold);
-  background:rgba(255,255,255,.13);box-shadow:0 0 0 3px rgba(201,162,39,.22)}
-.field input.err,.field select.err{border-color:#f08c8c;box-shadow:0 0 0 3px rgba(240,140,140,.20)}
-#leadForm .btn{justify-self:start;border:none;cursor:pointer;font-family:inherit}
-#leadForm .btn[disabled]{opacity:.6;cursor:default;transform:none}
-.form-msg{font-size:16px;min-height:1.2em;font-weight:700}
-.form-msg.ok{color:var(--gold-soft)} .form-msg.bad{color:#f5b0b0}
+/* ---------- VIDEO TESTIMONIALS ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.v{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;
+  transition:transform .22s,box-shadow .22s}
+.v:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(15,28,63,.12)}
+.v video{width:100%;aspect-ratio:16/9;background:#0f1c3f;display:block}
+.v figcaption{padding:14px 18px;font-weight:700;font-size:16px}
+.v figcaption span{display:block;font-weight:400;color:var(--muted);font-size:14.5px}
 
 /* ---------- PROOF STRIP ---------- */
 .proof{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -154,6 +143,7 @@ footer a:hover{color:var(--gold-soft)}
       <h1>بزنسك بده <em>استراتيجية ونظام</em>، مش شغل أكثر ولا حظ أحسن.</h1>
       <p>مرافقة عملية بتبني معك نظام دخل واضح: تعرف من وين بيجي الزبون، وين بيروح المصروف، وكم بتربح فعليًا كل شهر.</p>
       <a class="btn btn-lg" href="#form">أنا بدي أبدأ</a>
+      <a class="btn-ghost" href="#videos">شوف تجارب أصحاب المصالح</a>
       <div class="hero-meta">
         <div><b>7</b> سنوات مرافقة</div>
         <div><b>40+</b> صاحب بزنس</div>
@@ -277,79 +267,78 @@ footer a:hover{color:var(--gold-soft)}
 </section>
 
 <!-- VIDEO TESTIMONIALS -->
-<section class="sec">
+<section class="sec" id="videos">
   <div class="wrap">
     <div class="sec-head">
       <div class="kicker">من داخل المرافقة</div>
       <h2 class="sec-title">مصالح من مجالات مختلفة</h2>
-      <p class="sec-sub">أصحاب مصالح رافقتهم, من مراكز علاج لمكاتب محاماة.</p>
+      <p class="sec-sub">مقابلات مع أصحاب مصالح رافقتهم, من مراكز علاج لمكاتب محاماة. اضغط على أي فيديو لتشغيله.</p>
     </div>
-    <ul class="vlist">
-      <li><b>مركز Spa وعلاجات</b><span>مرافقة مالية وتسويقية</span></li>
-      <li><b>نادي رياضي</b><span>مرافقة مالية وتسويقية</span></li>
-      <li><b>Marwa Production</b><span>مكتب تصوير وإنتاج</span></li>
-      <li><b>استوديو s.k.w.a.y</b><span>سماح, مدربة يوغا</span></li>
-      <li><b>مكتب محاماة</b><span>المحامية حنان حليلحل</span></li>
-      <li><b>مدربة علاقات</b><span>مقدمة خدمة</span></li>
-      <li><b>مركز تجميل</b><span>د. نغم</span></li>
-      <li><b>لاند للحلول الإدارية</b><span>نادين قسّوم</span></li>
-    </ul>
+    <div class="vgrid">
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p04.png">
+          <source src="focus-assets/video/v04.mp4" type="video/mp4">
+        </video>
+        <figcaption>مركز Spa وعلاجات<span>مرافقة مالية وتسويقية</span></figcaption>
+      </figure>
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p05.png">
+          <source src="focus-assets/video/v05.mp4" type="video/mp4">
+        </video>
+        <figcaption>نادي رياضي<span>مرافقة مالية وتسويقية</span></figcaption>
+      </figure>
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p06.png">
+          <source src="focus-assets/video/v06.mp4" type="video/mp4">
+        </video>
+        <figcaption>Marwa Production<span>مديرة مكتب تصوير وإنتاج</span></figcaption>
+      </figure>
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p07.png">
+          <source src="focus-assets/video/v07.mp4" type="video/mp4">
+        </video>
+        <figcaption>سماح, استوديو s.k.w.a.y<span>مدربة يوغا, السنة الثانية بنتائج</span></figcaption>
+      </figure>
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p10.png">
+          <source src="focus-assets/video/v10.mp4" type="video/mp4">
+        </video>
+        <figcaption>المحامية حنان حليلحل<span>مكتب محاماة</span></figcaption>
+      </figure>
+      <figure class="v">
+        <video controls preload="none" playsinline poster="focus-assets/p11.png">
+          <source src="focus-assets/video/v11.mp4" type="video/mp4">
+        </video>
+        <figcaption>مدربة علاقات<span>مقدمة خدمة</span></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- WHAT YOU GET -->
+<!-- HOW I WORK -->
 <section class="sec pain">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">لما تسجّل</div>
-      <h2 class="sec-title">شو بتستفيد</h2>
-      <p class="sec-sub">محتوى عملي عن الأرقام والتسعير ونظام الدخل، من داخل المرافقة.</p>
+      <div class="kicker">طريقة الشغل</div>
+      <h2 class="sec-title">المرافقة بتبني ثلاث إشيا</h2>
+      <p class="sec-sub">مش نصائح عامة, نظام بيضل شغال بعد ما تخلص المرافقة.</p>
     </div>
     <div class="plist">
-      <div class="pitem"><span class="dot"></span><div>خطوات عملية لقراءة أرقام بزنسك: دخل، مصاريف، وربح حقيقي.</div></div>
-      <div class="pitem"><span class="dot"></span><div>طريقة تسعير مبنية على قيمة النتيجة، مش على ساعات شغلك.</div></div>
-      <div class="pitem"><span class="dot"></span><div>أول خبر عن الووركشوبات والأماكن اللي بتفتح للمرافقة.</div></div>
+      <div class="pitem"><span class="dot"></span><div>صورة مالية واضحة: دخل، مصاريف، وربح حقيقي بتشوفهم كل شهر.</div></div>
+      <div class="pitem"><span class="dot"></span><div>تسعير وهيكل خدمات مبني على قيمة النتيجة، مش على ساعات شغلك.</div></div>
+      <div class="pitem"><span class="dot"></span><div>مسار واضح بيوصل الزبون من أول ما بيسمع فيك لحد ما بيدفع.</div></div>
     </div>
   </div>
 </section>
 
-<!-- FORM -->
+<!-- CLOSE -->
 <section class="sec cta" id="form">
   <div class="wrap cta-grid">
     <div class="phone" role="img" aria-label="رسائل من عميلات ريما"></div>
     <div>
       <h2>تريد أيضًا تحقيق الأرباح من إدارتك لأموالك؟</h2>
-      <p>سجّل بياناتك وبتوصلك مواد عملية عن بناء نظام دخل لبزنسك، وأول خبر عن كل شي بنفتحه.</p>
-
-      <form id="leadForm" novalidate>
-        <div class="field">
-          <label for="f-name">الاسم الكامل</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required>
-        </div>
-        <div class="field">
-          <label for="f-phone">رقم الهاتف</label>
-          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
-        </div>
-        <div class="field">
-          <label for="f-email">البريد الإلكتروني</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="field">
-          <label for="f-biz">مجال البزنس</label>
-          <select id="f-biz" name="business">
-            <option value="">اختر مجالك</option>
-            <option>مركز تجميل / علاج</option>
-            <option>مقدمة خدمة / مدربة</option>
-            <option>عيادة أو مكتب مهني</option>
-            <option>نادي رياضي / استوديو</option>
-            <option>مصلحة تجارية</option>
-            <option>غير هيك</option>
-          </select>
-        </div>
-        <button class="btn btn-lg" type="submit" id="f-submit">سجّلني بالقائمة</button>
-        <p class="form-msg" id="f-msg" role="status" aria-live="polite"></p>
-      </form>
-      <div class="note">بياناتك بتضل عندي. بتقدر تلغي الاشتراك بأي وقت.</div>
+      <p>الفجوة بين وين إنت اليوم ووين بدك تكون هي خطوة وحدة: تبدأ تاخد مرافقة وتبني نظام دخل ما بيعتمد على الصدفة.</p>
+      <a class="btn btn-lg" href="https://www.instagram.com/rima_yaqub/">راسلني على الخاص</a>
     </div>
   </div>
 </section>
@@ -360,63 +349,9 @@ footer a:hover{color:var(--gold-soft)}
     <div style="margin-top:10px">
       <a href="https://www.instagram.com/rima_yaqub/">إنستغرام</a>
       <a href="https://rimayaqub.ravpage.co.il/master">الموقع</a>
-      <a href="#form">سجّل بالقائمة</a>
+      <a href="#form">تواصل معي</a>
     </div>
   </div>
 </footer>
-
-<script>
-// عنوان Google Apps Script اللي بيكتب للشيت. بدّله بالرابط تبع الـ deployment.
-var ENDPOINT = "PASTE_APPS_SCRIPT_URL_HERE";
-
-(function () {
-  var form = document.getElementById('leadForm');
-  var msg  = document.getElementById('f-msg');
-  var btn  = document.getElementById('f-submit');
-
-  function show(text, kind) { msg.textContent = text; msg.className = 'form-msg ' + kind; }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    var fields = ['f-name', 'f-phone', 'f-email'];
-    var bad = null;
-    fields.forEach(function (id) {
-      var el = document.getElementById(id);
-      var empty = !el.value.trim();
-      var badEmail = id === 'f-email' && el.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value);
-      el.classList.toggle('err', empty || badEmail);
-      if ((empty || badEmail) && !bad) bad = el;
-    });
-    if (bad) { show('عبّي الحقول المطلوبة بشكل صحيح.', 'bad'); bad.focus(); return; }
-
-    var data = {
-      name: form.name.value.trim(),
-      phone: form.phone.value.trim(),
-      email: form.email.value.trim(),
-      business: form.business.value,
-      source: 'focus-lp',
-      submittedAt: new Date().toISOString()
-    };
-
-    btn.disabled = true;
-    show('لحظة, عم نسجّلك...', 'ok');
-
-    fetch(ENDPOINT, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(data)
-    }).then(function () {
-      form.reset();
-      show('تم! سجّلناك بالقائمة. بشوفك قريب 🌹', 'ok');
-    }).catch(function () {
-      btn.disabled = false;
-      show('صار خلل بالإرسال. جرّب كمان مرة أو راسلني على إنستغرام.', 'bad');
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
