@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>استبيان التأهيل — جلسة الاستراتيجية | ريما يعقوب</title>
+  <title>الفحص التشخيصي — وين الفجوة ببزنسك؟ | ريما يعقوب</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -115,6 +115,17 @@
     .field-label { font-size: 13px; opacity: 0.78; margin-bottom: 8px; font-weight: 600; }
     .field-hint  { font-size: 12px; opacity: 0.5; margin: -4px 0 14px; text-align: right; }
 
+    .num-wrap { position: relative; }
+    .num-wrap .unit {
+      position: absolute;
+      left: 16px; top: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .num-wrap input { padding-left: 46px; font-size: 20px; font-weight: 700; }
+
     .phone-row { display: flex; gap: 8px; margin-bottom: 12px; }
     .phone-row select {
       flex: 0 0 40%;
@@ -154,9 +165,10 @@
       direction: rtl;
       margin-bottom: 12px;
     }
+    input[type="number"] { direction: ltr; text-align: left; }
     textarea:focus, input:focus { border-color: #e8c07d; }
-    textarea::placeholder, input::placeholder { color: rgba(255,255,255,0.35); }
-    .char-count { font-size: 11px; opacity: 0.45; margin: -6px 0 4px; }
+    textarea::placeholder, input::placeholder { color: rgba(255,255,255,0.35); font-weight: 400; font-size: 15px; }
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
     .range-wrap { padding: 8px 0; }
     input[type="range"] {
@@ -196,22 +208,11 @@
       border-radius: 50px;
       padding: 15px 30px;
       cursor: pointer;
+      font-family: inherit;
       transition: opacity 0.2s, transform 0.15s;
     }
     .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
     .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-    .btn-skip {
-      display: block;
-      width: 100%;
-      margin-top: 10px;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-family: inherit;
-      font-size: 13px;
-      cursor: pointer;
-      text-decoration: underline;
-    }
 
     .consent {
       font-size: 12px;
@@ -222,18 +223,131 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
+    /* ===== شاشة النتيجة ===== */
+    .result-head { text-align: center; margin-bottom: 26px; }
+    .result-head .eyebrow { font-size: 12px; letter-spacing: 2px; opacity: 0.55; margin-bottom: 10px; }
+    .result-head h2 { font-size: clamp(22px, 4.6vw, 30px); font-weight: 900; line-height: 1.4; }
+    .result-head h2 span { color: #e8c07d; }
+
+    .gap-hero {
+      background: linear-gradient(135deg, rgba(209,78,78,0.16), rgba(209,78,78,0.06));
+      border: 1px solid rgba(232,120,120,0.35);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .gap-hero.good {
+      background: linear-gradient(135deg, rgba(78,168,119,0.16), rgba(78,168,119,0.06));
+      border-color: rgba(127,209,163,0.35);
+    }
+    .gap-hero .label { font-size: 13px; opacity: 0.75; margin-bottom: 8px; line-height: 1.6; }
+    .gap-hero .big { font-size: clamp(34px, 8vw, 48px); font-weight: 900; color: #ff9b9b; line-height: 1.1; direction: ltr; }
+    .gap-hero.good .big { color: #9be0b8; }
+    .gap-hero .note { font-size: 13px; opacity: 0.75; margin-top: 12px; line-height: 1.75; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px 14px;
+      text-align: center;
+    }
+    .stat .k { font-size: 11px; opacity: 0.6; margin-bottom: 6px; line-height: 1.4; }
+    .stat .v { font-size: 20px; font-weight: 800; color: #e8c07d; direction: ltr; }
+    .stat .v.warn { color: #ff9b9b; }
+
+    .bars-title { font-size: 15px; font-weight: 700; margin: 26px 0 4px; }
+    .bars-sub { font-size: 12.5px; opacity: 0.6; margin-bottom: 16px; line-height: 1.6; }
+    .bar-row { margin-bottom: 16px; }
+    .bar-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; margin-bottom: 7px; }
+    .bar-head .nm { font-weight: 700; }
+    .bar-head .pc { font-weight: 800; direction: ltr; }
+    .bar-track { background: rgba(255,255,255,0.1); border-radius: 20px; height: 10px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 20px; width: 0; transition: width 0.9s cubic-bezier(.2,.8,.3,1); }
+    .bar-fill.hi  { background: linear-gradient(90deg, #ff8a8a, #d14e4e); }
+    .bar-fill.mid { background: linear-gradient(90deg, #e8c07d, #d19a4e); }
+    .bar-fill.lo  { background: linear-gradient(90deg, #7fd1a3, #4ea877); }
+    .bar-note { font-size: 12px; opacity: 0.6; margin-top: 6px; line-height: 1.6; }
+
+    .verdict {
+      background: rgba(232,192,125,0.1);
+      border: 1px solid rgba(232,192,125,0.3);
+      border-radius: 16px;
+      padding: 22px;
+      margin: 24px 0;
+    }
+    .verdict h3 { font-size: 17px; font-weight: 800; color: #e8c07d; margin-bottom: 12px; line-height: 1.5; }
+    .verdict p { font-size: 14.5px; line-height: 1.95; opacity: 0.92; margin-bottom: 10px; }
+    .verdict p:last-child { margin-bottom: 0; }
+    .verdict b { color: #e8c07d; }
+
+    .mismatch {
+      background: rgba(255,255,255,0.05);
+      border-right: 3px solid #e8c07d;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .mismatch b { color: #e8c07d; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 16px 0 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checkbox-row:hover { border-color: rgba(232,192,125,0.5); }
+    .checkbox-row.checked { border-color: #e8c07d; background: rgba(232,192,125,0.1); }
+    .checkbox-row input { width: 19px; height: 19px; margin: 2px 0 0; accent-color: #e8c07d; flex-shrink: 0; cursor: pointer; }
+    .checkbox-row label { font-size: 13.5px; line-height: 1.75; cursor: pointer; opacity: 0.9; }
+
+    /* ===== البونص ===== */
+    .bonus {
+      background: linear-gradient(135deg, rgba(232,192,125,0.16), rgba(209,154,78,0.06));
+      border: 1px solid rgba(232,192,125,0.4);
+      border-radius: 16px;
+      padding: 24px 22px;
+      margin: 24px 0;
+      text-align: right;
+    }
+    .bonus .tag {
+      display: inline-block;
+      background: #e8c07d;
+      color: #0b1a2e;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+    .bonus h4 { font-size: 16.5px; font-weight: 800; margin-bottom: 12px; line-height: 1.6; color: #fff; }
+    .bonus p { font-size: 14.5px; line-height: 1.95; opacity: 0.9; margin-bottom: 10px; }
+    .bonus p:last-child { margin-bottom: 0; }
+    .bonus b { color: #e8c07d; }
+
     .final-card { text-align: center; padding: 44px 28px; }
     .final-card .icon { font-size: 52px; margin-bottom: 16px; }
     .final-card h2 { font-size: 27px; font-weight: 900; margin-bottom: 16px; line-height: 1.4; }
     .final-card h2 span { color: #e8c07d; }
-    .final-card p { font-size: 15px; opacity: 0.87; line-height: 1.9; margin-bottom: 12px; }
+    .final-card > p { font-size: 15px; opacity: 0.87; line-height: 1.9; margin-bottom: 12px; }
     .final-card .highlight {
-      background: rgba(232,192,125,0.1);
-      border: 1px solid rgba(232,192,125,0.28);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 14px;
       padding: 20px 22px;
       margin: 22px 0;
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.9;
       text-align: right;
     }
@@ -244,7 +358,7 @@
       color: #0b1a2e;
       font-weight: 900;
       font-size: 16px;
-      padding: 16px 38px;
+      padding: 17px 38px;
       border-radius: 50px;
       text-decoration: none;
       margin-top: 18px;
@@ -274,249 +388,230 @@
 
   <!-- ===== HEADER ===== -->
   <div class="header">
-    <div class="badge">جلسة الاستراتيجية · ريما يعقوب</div>
-    <h1>قبل ما نحجز<br><span>جلسة الاستراتيجية</span></h1>
-    <p>هاي الجلسة مش جلسة تعارف. بنشتغل فيها على أرقام بزنسك وبنطلع بخطة واضحة، وعشان هيك بحضّر لكل جلسة قبلها. الأسئلة الجاي بتاخد أقل من 5 دقايق، وبتساعدني أعرف إذا فعلاً هاي الجلسة هي الخطوة الصح إلك بهاي المرحلة.</p>
+    <div class="badge">الفحص التشخيصي · ريما يعقوب</div>
+    <h1>وين الفجوة الحقيقية<br><span>ببزنسك؟</span></h1>
+    <p>أغلب أصحاب الخدمات بشتغلوا على الشي الغلط، لأنهم بحسّوا وين المشكلة بدل ما بحسبوها. 12 سؤال، وبتطلع بالرقم اللي بيفصل بين وين انت اليوم ووين بدك توصل، ووين بالضبط الخلل.</p>
   </div>
 
-  <p class="progress-label" id="progressLabel">سؤال 1 من 17</p>
+  <p class="progress-label" id="progressLabel">سؤال 1 من 12</p>
   <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-
-  <!-- ===== القسم 1: معلومات عن البزنس ===== -->
 
   <!-- Q1 -->
   <div class="card active" id="q1">
-    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
-    <p class="step-num">سؤال 1 / 17</p>
-    <p class="question">شو نوع الخدمة اللي بتقدميها؟</p>
-    <p class="sub">بجملة وحدة. مثال: "مركز عناية بالبشرة" أو "استشارات تغذية" أو "تصميم داخلي".</p>
-    <input type="text" id="serviceInput" placeholder="اكتبي نوع خدمتك هون" />
-    <button class="btn-next" id="next1" disabled onclick="nextStep(1)">التالي ←</button>
+    <span class="section-tag">البزنس</span>
+    <p class="step-num">سؤال 1 / 12</p>
+    <p class="question">شو نوع الخدمة اللي بتقدمها؟</p>
+    <p class="sub">بجملة وحدة. مثال: "مركز عناية بالبشرة" أو "استشارات تغذية".</p>
+    <input type="text" id="serviceInput" placeholder="اكتب نوع خدمتك هون" />
+    <button class="btn-next" disabled onclick="nextStep(1)">التالي ←</button>
   </div>
 
   <!-- Q2 -->
   <div class="card" id="q2">
-    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
-    <p class="step-num">سؤال 2 / 17</p>
-    <p class="question">من قديش وانتي شغالة بهاد البزنس؟</p>
+    <span class="section-tag">البزنس</span>
+    <p class="step-num">سؤال 2 / 12</p>
+    <p class="question">من قديش وانت شغال بهاد البزنس؟</p>
     <div class="options" data-type="single">
-      <div class="option" data-score="2">أقل من سنة</div>
-      <div class="option" data-score="6">من سنة لسنتين</div>
-      <div class="option" data-score="10">من سنتين لخمس سنين</div>
-      <div class="option" data-score="10">أكثر من 5 سنين</div>
+      <div class="option">أقل من سنة</div>
+      <div class="option">من سنة لسنتين</div>
+      <div class="option">من سنتين لخمس سنين</div>
+      <div class="option">أكثر من 5 سنين</div>
     </div>
     <button class="btn-next" disabled onclick="nextStep(2)">التالي ←</button>
   </div>
 
   <!-- Q3 -->
   <div class="card" id="q3">
-    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
-    <p class="step-num">سؤال 3 / 17</p>
-    <p class="question">مين بيشتغل معك بالبزنس اليوم؟</p>
-    <div class="options" data-type="single">
-      <div class="option" data-score="4">لحالي بالكامل</div>
-      <div class="option" data-score="7">أنا + مساعدة أو موظفة وحدة</div>
-      <div class="option" data-score="10">عندي فريق من 2 لـ 4</div>
-      <div class="option" data-score="10">عندي فريق أكبر من 4</div>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 3 / 12</p>
+    <p class="question">متوسط دخلك الشهري من البزنس بآخر 3 شهور؟</p>
+    <p class="sub">أرقامك بتضلّ بيني وبينك، وبدونها ما في تشخيص. رقم تقريبي بالدولار بكفّي.</p>
+    <div class="num-wrap">
+      <span class="unit">$</span>
+      <input type="number" id="incomeInput" placeholder="7000" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(3)">التالي ←</button>
   </div>
 
-  <!-- ===== القسم 2: الوضع الحالي بالأرقام ===== -->
-
   <!-- Q4 -->
   <div class="card" id="q4">
-    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
-    <p class="step-num">سؤال 4 / 17</p>
-    <p class="question">متوسط الدخل الشهري للبزنس بآخر 3 شهور</p>
-    <p class="sub">الأرقام هون بتضلّ بيني وبينك. بحتاجها عشان أجهّز الجلسة على وضعك انتي بالذات مش على وضع عام.</p>
-    <div class="options" data-type="single">
-      <div class="option" data-score="2" data-flag="low-income">أقل من 10,000 ₪</div>
-      <div class="option" data-score="8">10,000 لـ 20,000 ₪</div>
-      <div class="option" data-score="16">20,000 لـ 40,000 ₪</div>
-      <div class="option" data-score="20">40,000 لـ 70,000 ₪</div>
-      <div class="option" data-score="20">أكثر من 70,000 ₪</div>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 4 / 12</p>
+    <p class="question">شو الدخل الشهري اللي بدك توصله خلال سنة؟</p>
+    <p class="sub">الرقم اللي لو وصلته بتحس إنه البزنس صار بالمكان اللي بدك إياه.</p>
+    <div class="num-wrap">
+      <span class="unit">$</span>
+      <input type="number" id="goalInput" placeholder="15000" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(4)">التالي ←</button>
   </div>
 
   <!-- Q5 -->
   <div class="card" id="q5">
-    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
-    <p class="step-num">سؤال 5 / 17</p>
-    <p class="question">قديش عميل جديد بيجيك بالشهر؟</p>
-    <p class="sub">رقم تقريبي بالمتوسط</p>
-    <div class="options" data-type="single">
-      <div class="option" data-score="3">أقل من 3</div>
-      <div class="option" data-score="7">من 3 لـ 7</div>
-      <div class="option" data-score="10">من 8 لـ 15</div>
-      <div class="option" data-score="10">أكثر من 15</div>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 5 / 12</p>
+    <p class="question">قديش متوسط سعر خدمتك الأساسية؟</p>
+    <p class="sub">اللي بيدفعه العميل بالمعاملة الوحدة أو بالباقة.</p>
+    <div class="num-wrap">
+      <span class="unit">$</span>
+      <input type="number" id="priceInput" placeholder="250" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(5)">التالي ←</button>
   </div>
 
   <!-- Q6 -->
   <div class="card" id="q6">
-    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
-    <p class="step-num">سؤال 6 / 17</p>
-    <p class="question">من وين بيجوكي العملاء اليوم؟</p>
-    <p class="sub">بتقدري تختاري أكثر من إجابة</p>
-    <div class="options" data-type="multi">
-      <div class="option" data-score="3">توصية من عملاء حاليين</div>
-      <div class="option" data-score="2">انستغرام أو فيسبوك (محتوى مجاني)</div>
-      <div class="option" data-score="3">إعلانات ممولة</div>
-      <div class="option" data-score="3">عملاء راجعين ومتكرّرين</div>
-      <div class="option" data-score="0">ما بعرف بالضبط من وين بيجوا</div>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 6 / 12</p>
+    <p class="question">قديش عميل جديد بيشتري منك بالشهر؟</p>
+    <p class="sub">اللي فعلاً بدفعوا، مش اللي بسألوا.</p>
+    <div class="num-wrap">
+      <span class="unit">👤</span>
+      <input type="number" id="clientsInput" placeholder="12" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(6)">التالي ←</button>
   </div>
 
   <!-- Q7 -->
   <div class="card" id="q7">
-    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
-    <p class="step-num">سؤال 7 / 17</p>
-    <p class="question">متوسط سعر الخدمة الأساسية عندك اليوم؟</p>
-    <p class="sub">رقم تقريبي بالشيكل</p>
-    <input type="number" id="priceInput" placeholder="مثال: 1200" min="0" />
-    <button class="btn-next" id="next7" disabled onclick="nextStep(7)">التالي ←</button>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 7 / 12</p>
+    <p class="question">قديش استفسار بيجيك بالشهر؟</p>
+    <p class="sub">كل واحد سأل عن السعر أو الخدمة، سواء اشترى أو لأ. رسائل، تلفونات، كومنتات.</p>
+    <div class="num-wrap">
+      <span class="unit">💬</span>
+      <input type="number" id="leadsInput" placeholder="40" min="0" />
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(7)">التالي ←</button>
   </div>
 
   <!-- Q8 -->
   <div class="card" id="q8">
-    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
-    <p class="step-num">سؤال 8 / 17</p>
-    <p class="question">بتعرفي قديش ربحك الصافي بالشهر؟</p>
-    <p class="sub">قصدي الربح بعد المصاريف، مش الدخل</p>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 8 / 12</p>
+    <p class="question">قديش بيضلّ بإيدك من كل 100 دولار دخل، بعد كل المصاريف؟</p>
+    <p class="sub">لو ما بتعرف بالضبط، اختار الأقرب لإحساسك.</p>
     <div class="options" data-type="single">
-      <div class="option" data-score="10">إيه، بعرف الرقم بدقة</div>
-      <div class="option" data-score="6">تقريباً، بس مش متأكدة</div>
-      <div class="option" data-score="3">لأ، ما عندي متابعة مالية منظمة</div>
+      <div class="option" data-val="0.15">أقل من 20 دولار</div>
+      <div class="option" data-val="0.28">من 20 لـ 35 دولار</div>
+      <div class="option" data-val="0.42">من 35 لـ 50 دولار</div>
+      <div class="option" data-val="0.60">أكثر من 50 دولار</div>
+      <div class="option" data-val="0.25">ما بعرف، ما عندي متابعة مالية</div>
     </div>
     <button class="btn-next" disabled onclick="nextStep(8)">التالي ←</button>
   </div>
 
-  <!-- ===== القسم 3: التحديات ===== -->
-
   <!-- Q9 -->
   <div class="card" id="q9">
-    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
-    <p class="step-num">سؤال 9 / 17</p>
-    <p class="question">شو أكبر تحدي بواجهك بالبزنس اليوم؟</p>
-    <div class="options" data-type="single">
-      <div class="option" data-score="8">الدخل غير مستقر، شهر منيح وشهر فاضي</div>
-      <div class="option" data-score="8">الدخل منيح بس الربح قليل، ما بعرف وين بيروح المصروف</div>
-      <div class="option" data-score="7">ما بوصل عملاء جداد كفاية</div>
-      <div class="option" data-score="8">بجيني استفسارات بس ما بتتحول لحجوزات</div>
-      <div class="option" data-score="7">شغلي كله معتمد عليّ، ما بقدر أوسّع</div>
-      <div class="option" data-score="8">التسعير، حاسة إني بتقاضى أقل من قيمة شغلي</div>
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 9 / 12</p>
+    <p class="question">قديش ساعة بتشتغل بالأسبوع على البزنس؟</p>
+    <p class="sub">كل شي: الخدمة نفسها، الرد على الرسائل، المحتوى، الحسابات.</p>
+    <div class="num-wrap">
+      <span class="unit">⏱</span>
+      <input type="number" id="hoursInput" placeholder="45" min="1" max="120" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(9)">التالي ←</button>
   </div>
 
   <!-- Q10 -->
   <div class="card" id="q10">
-    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
-    <p class="step-num">سؤال 10 / 17</p>
-    <p class="question">احكيلي أكثر عن هاد التحدي. من إمتى صار موجود وشو جربتي عشان تحليه؟</p>
-    <p class="sub">3 لـ 4 أسطر بكفّوا. هاد السؤال هو الأهم بالاستبيان، وعليه بتنبنى الجلسة.</p>
-    <textarea id="challengeInput" rows="5" data-required="30" placeholder="اكتبي بحرية..."></textarea>
-    <p class="char-count" id="count10">0 حرف</p>
+    <span class="section-tag">إحساسك</span>
+    <p class="step-num">سؤال 10 / 12</p>
+    <p class="question">بإحساسك انت، وين المشكلة الأساسية؟</p>
+    <p class="sub">جاوب بحدسك قبل ما تشوف الأرقام. هاد السؤال بيقارن إحساسك بالنتيجة.</p>
+    <div class="options" data-type="single">
+      <div class="option" data-key="price">بالتسعير، حاسس إني بتقاضى أقل من قيمة شغلي</div>
+      <div class="option" data-key="sales">بالمبيعات، بيجيني استفسارات بس ما بتتحول لحجوزات</div>
+      <div class="option" data-key="marketing">بالتسويق، ما بوصل لعدد كافي من الناس</div>
+      <div class="option" data-key="unknown">صراحة ما بعرف، هاد سبب تعبئتي للفحص</div>
+    </div>
     <button class="btn-next" disabled onclick="nextStep(10)">التالي ←</button>
   </div>
 
   <!-- Q11 -->
   <div class="card" id="q11">
-    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
-    <p class="step-num">سؤال 11 / 17</p>
-    <p class="question">شو الشي اللي جربتيه قبل هيك وما زبط معك؟</p>
-    <p class="sub">بتقدري تختاري أكثر من إجابة</p>
-    <div class="options" data-type="multi">
-      <div class="option" data-score="2">إعلانات ممولة</div>
-      <div class="option" data-score="2">محتوى يومي على السوشيال</div>
-      <div class="option" data-score="2">كورس أو دورة رقمية</div>
-      <div class="option" data-score="2">مرافقة أو استشارة مع حدا تاني</div>
-      <div class="option" data-score="1">ما جربت اشي منظّم لهلق</div>
-    </div>
-    <button class="btn-next" disabled onclick="nextStep(11)">التالي ←</button>
-  </div>
-
-  <!-- ===== القسم 4: الأهداف ===== -->
-
-  <!-- Q12 -->
-  <div class="card" id="q12">
-    <span class="section-tag">القسم 4 · وين بدك توصلي</span>
-    <p class="step-num">سؤال 12 / 17</p>
-    <p class="question">لو اشتغلنا سوا 3 شهور، شو الرقم أو النتيجة اللي بدك توصليلها؟</p>
-    <p class="sub">كوني محددة قد ما بتقدري. "بدي أطوّر البزنس" مش هدف. "بدي أوصل 45,000 ₪ بالشهر بربح 40%" هدف.</p>
-    <textarea id="goalInput" rows="4" data-required="20" placeholder="اكتبي هدفك بالأرقام..."></textarea>
-    <p class="char-count" id="count12">0 حرف</p>
-    <button class="btn-next" disabled onclick="nextStep(12)">التالي ←</button>
-  </div>
-
-  <!-- Q13 -->
-  <div class="card" id="q13">
-    <span class="section-tag">القسم 4 · وين بدك توصلي</span>
-    <p class="step-num">سؤال 13 / 17</p>
-    <p class="question">من 1 لـ 10، قديش انتي مستعدة تغيّري بطريقة شغلك الحالية؟</p>
+    <span class="section-tag">الجاهزية</span>
+    <p class="step-num">سؤال 11 / 12</p>
+    <p class="question">من 1 لـ 10، قديش انت مستعد تغيّر بطريقة شغلك الحالية؟</p>
     <div class="range-wrap">
       <div class="range-value" id="readyValue">5</div>
       <input type="range" id="readyRange" min="1" max="10" step="1" value="5" />
       <div class="range-labels">
-        <span>1 · مرتاحة بطريقتي، بدور على تحسينات صغيرة</span>
-        <span>10 · جاهزة أغيّر كل شي إذا كان هو الصح</span>
+        <span>1 · مرتاح بطريقتي</span>
+        <span>10 · جاهز أغيّر كل شي</span>
       </div>
     </div>
-    <button class="btn-next" onclick="nextStep(13)">التالي ←</button>
+    <button class="btn-next" onclick="nextStep(11)">التالي ←</button>
   </div>
 
-  <!-- ===== القسم 5: الالتزام والجاهزية ===== -->
-
-  <!-- Q14 -->
-  <div class="card" id="q14">
-    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
-    <p class="step-num">سؤال 14 / 17</p>
-    <p class="question">قديش وقت بتقدري تخصصي بالأسبوع للشغل على البزنس؟</p>
-    <p class="sub">المرافقة بتتطلب وقت شغل أسبوعي، مش بس المشاركة بالجلسات.</p>
+  <!-- Q12 -->
+  <div class="card" id="q12">
+    <span class="section-tag">الجاهزية</span>
+    <p class="step-num">سؤال 12 / 12</p>
+    <p class="question">لو طلع إنه الحل بده مرافقة مهنية، عندك استعداد للاستثمار بحاله خلال الشهور الثلاثة الجاية؟</p>
+    <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا هاي اللحظة الصح إلك أو لأ.</p>
     <div class="options" data-type="single">
-      <div class="option" data-score="2">أقل من ساعتين بالأسبوع</div>
-      <div class="option" data-score="5">من 2 لـ 4 ساعات</div>
-      <div class="option" data-score="8">من 4 لـ 6 ساعات</div>
-      <div class="option" data-score="10">أكثر من 6 ساعات</div>
+      <div class="option">إيه، جاهز أستثمر إذا كان الحل مناسب لوضعي</div>
+      <div class="option">مبدئياً إيه، بس بدي أعرف التفاصيل والمبلغ قبل ما أقرر</div>
+      <div class="option">مهتم، بس التوقيت المالي مش مناسب هلق</div>
+      <div class="option">بفضّل نحكي بهاد الموضوع بجلسة</div>
     </div>
-    <button class="btn-next" disabled onclick="nextStep(14)">التالي ←</button>
+    <button class="btn-next" disabled onclick="showResults()">شوف نتيجتك ←</button>
   </div>
 
-  <!-- Q15 -->
-  <div class="card" id="q15">
-    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
-    <p class="step-num">سؤال 15 / 17</p>
-    <p class="question">إذا استنتجنا بالجلسة إنه برنامج مرافقة هو الحل الأنسب لوضعك، هل عندك استعداد للاستثمار بحاله خلال الشهور الثلاثة الجاية؟</p>
-    <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا الجلسة بهاد التوقيت بتخدمك، أو الأفضل نأجلها لوقت أنسب إلك.</p>
-    <div class="options" data-type="single">
-      <div class="option" data-score="20">إيه، جاهزة أستثمر إذا كان الحل مناسب لوضعي</div>
-      <div class="option" data-score="14">مبدئياً إيه، بس بدي أعرف التفاصيل والمبلغ قبل ما أقرر</div>
-      <div class="option" data-score="3" data-flag="not-now">مهتمة، بس التوقيت المالي مش مناسب هلق</div>
-      <div class="option" data-score="8">بفضّل نحكي بهاد الموضوع بالجلسة</div>
+  <!-- ============ شاشة النتيجة ============ -->
+  <div class="card" id="qResult">
+    <div class="result-head">
+      <p class="eyebrow">نتيجة الفحص التشخيصي</p>
+      <h2 id="resHeadline"></h2>
     </div>
-    <button class="btn-next" disabled onclick="nextStep(15)">التالي ←</button>
+
+    <div class="gap-hero" id="gapHero">
+      <p class="label" id="gapLabel">الفرق بين وين انت اليوم ووين بدك توصل، خلال 12 شهر</p>
+      <p class="big" id="yearGap">$0</p>
+      <p class="note" id="gapNote"></p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><p class="k">دخلك الشهري اليوم</p><p class="v" id="stIncome">—</p></div>
+      <div class="stat"><p class="k">هدفك الشهري</p><p class="v" id="stGoal">—</p></div>
+      <div class="stat"><p class="k">نسبة الإغلاق عندك<br><span style="opacity:0.6">المعيار 35%</span></p><p class="v" id="stClose">—</p></div>
+      <div class="stat"><p class="k">قيمة ساعة شغلك<br><span style="opacity:0.6">ربح صافي</span></p><p class="v" id="stHourly">—</p></div>
+    </div>
+
+    <p class="bars-title">وين بالضبط الخلل؟</p>
+    <p class="bars-sub">كل شريط بيقيس قد إيش هاد المحور بعيد عن اللي بتحتاجه عشان توصل لهدفك. كل ما الشريط أطول، كل ما هاد المحور بيوقفك أكثر.</p>
+
+    <div class="bar-row">
+      <div class="bar-head"><span class="nm">💰 التسعير</span><span class="pc" id="pcPrice">0%</span></div>
+      <div class="bar-track"><div class="bar-fill" id="barPrice"></div></div>
+      <p class="bar-note" id="notePrice"></p>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-head"><span class="nm">🤝 المبيعات والإغلاق</span><span class="pc" id="pcSales">0%</span></div>
+      <div class="bar-track"><div class="bar-fill" id="barSales"></div></div>
+      <p class="bar-note" id="noteSales"></p>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-head"><span class="nm">📣 التسويق والوصول</span><span class="pc" id="pcMarket">0%</span></div>
+      <div class="bar-track"><div class="bar-fill" id="barMarket"></div></div>
+      <p class="bar-note" id="noteMarket"></p>
+    </div>
+
+    <div class="mismatch" id="mismatchBox"></div>
+    <div class="verdict" id="verdictBox"></div>
+
+    <button class="btn-next" onclick="goToDetails()">تمام، بدي أسكّر هاي الفجوة ←</button>
   </div>
 
-  <!-- Q16 -->
-  <div class="card" id="q16">
-    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
-    <p class="step-num">سؤال 16 / 17</p>
-    <p class="question">في أي اشي حابة أعرفه قبل الجلسة؟</p>
-    <p class="sub">اختياري. لو ما في اشي بتقدري تتخطي.</p>
-    <textarea id="notesInput" rows="4" placeholder="اكتبي هون..."></textarea>
-    <button class="btn-next" onclick="nextStep(16)">التالي ←</button>
-  </div>
-
-  <!-- Q17 — بيانات التواصل -->
-  <div class="card" id="q17">
+  <!-- ============ بيانات التواصل ============ -->
+  <div class="card" id="qDetails">
     <span class="section-tag">آخر خطوة</span>
-    <p class="step-num">سؤال 17 / 17</p>
-    <p class="question">وين برجعلك بالرد؟</p>
-    <p class="sub">برجعلك شخصياً خلال 24 ساعة على الواتساب.</p>
+    <p class="question">وين ببعتلك التحليل ونتيجتك؟</p>
+    <p class="sub">ببعتلك نتيجة الفحص كاملة، مع ملاحظاتي الشخصية على أرقامك انت بالذات، وخطوة عملية بتقدر تبلش فيها هاد الأسبوع.</p>
 
     <p class="field-label">الاسم الكامل</p>
     <input type="text" id="nameInput" placeholder="اسمك الأول والعائلة" />
@@ -547,27 +642,41 @@
     <p class="field-label">البريد الإلكتروني</p>
     <input type="email" id="emailInput" placeholder="name@email.com" />
 
-    <button class="btn-next" onclick="submitForm()">إرسال الطلب للمراجعة ←</button>
-    <p class="consent">معلوماتك بتضلّ سرية وبتنحفظ عندي بس. ما بتنشارك ولا بتنستعمل لأي شي غير تحضير جلستك.</p>
-  </div>
-
-  <!-- ===== صفحة الشكر ===== -->
-  <div class="card final-card" id="qFinal">
-    <div class="icon" id="resIcon">✓</div>
-    <h2 id="resTitle">وصلني <span>طلبك</span></h2>
-    <p id="resBody">شكراً إنك خصصتي الوقت وجاوبتي بجدية.</p>
-
-    <div class="highlight" id="resHighlight">
-      <strong>شو بصير هلق؟</strong>
-      برجع بقرا إجاباتك شخصياً. مش بشكل آلي، وما في تأكيد تلقائي للحجز.<br><br>
-      خلال 24 ساعة برجعلك على الواتساب برد من اثنين: إما رابط لتثبيت موعد الجلسة مع ملاحظات أولية على وضعك، أو توضيح إنه هاي الجلسة مش الخطوة الأنسب إلك بهاي المرحلة مع اقتراح شو الخطوة الأنسب.<br><br>
-      بفضّل أكون صريحة معك من البداية على إنه ناخد جلسة مش بمحلها.
+    <div class="checkbox-row" id="consentRow">
+      <input type="checkbox" id="consentBox" />
+      <label for="consentBox">
+        بوافق أستقبل من ريما يعقوب رسائل ومحتوى مهني وعروض عن خدماتها على الواتساب والإيميل.
+        بقدر أوقفها بأي وقت برسالة وحدة.
+      </label>
     </div>
 
-    <p id="resNote" style="font-size:14px; opacity:0.7;">لحد ما أرجعلك، بتقدري تشوفي كيف بشتغل مع أصحاب البزنس.</p>
+    <button class="btn-next" id="submitBtn" disabled onclick="submitForm()">ابعتلي نتيجتي ←</button>
+    <p class="consent">أرقامك بتضلّ سرية وما بتنشارك مع أي حدا. بتنستعمل بس لتحضير تحليلك.</p>
+  </div>
 
-    <a class="cta-btn" id="resCta" href="#" target="_blank" rel="noopener">تابعيني على انستغرام ←</a><br>
-    <a class="cta-btn secondary" id="resCta2" href="#" target="_blank" rel="noopener">لو في اشي مستعجل، راسليني ←</a>
+  <!-- ============ الشاشة الأخيرة + البونص ============ -->
+  <div class="card final-card" id="qFinal">
+    <div class="icon">✓</div>
+    <h2>وصلتني <span>أرقامك</span></h2>
+    <p>شكراً إنك خصصت الوقت وجاوبت بصدق. أصعب خطوة إنك تشوف الرقم بدل ما تحسه، وانت عملتها.</p>
+
+    <!-- البونص -->
+    <div class="bonus" id="bonusBox"></div>
+
+    <div class="highlight">
+      <strong>بس خليني أكون صريحة معك</strong>
+      الخطوة اللي فوق بتحرّك محور واحد. النتيجة بتقولك <b style="color:#e8c07d">وين</b> الفجوة، بس ما بتقولك <b style="color:#e8c07d">كيف</b> تبني نظام يسكّرها ويضل شغال بعدين.
+      <br><br>
+      هاد اللي بنعمله بجلسة Focus: ساعة على أرقامك انت، وبتطلع منها بخطة مكتوبة لأول 90 يوم، خطوة خطوة.
+    </div>
+
+    <a class="cta-btn" id="focusCta" href="#" target="_blank" rel="noopener">احجز جلسة Focus ←</a>
+
+    <p style="font-size:13px; opacity:0.6; margin-top:18px;">
+      الجلسة بعدد محدود بالشهر. لو ما لقيت مكان، برجعلك على الواتساب أول ما يفضى موعد.
+    </p>
+
+    <a class="cta-btn secondary" id="waCta" href="#" target="_blank" rel="noopener">عندي سؤال قبل الحجز ←</a>
 
     <p class="signature">ريما يعقوب<br>مدربة ومستشارة أعمال</p>
   </div>
@@ -576,83 +685,61 @@
 
 <script>
   // ============================================================
-  //  الإعدادات — عدّلي هون بس
+  //  الإعدادات
   // ============================================================
-  const ENDPOINT       = 'https://script.google.com/macros/s/AKfycbztxXKfPrMwKGVh_PTvsWlA92i6FIFIdx-cvtfuLo0_EIHcpw6TIIZQtNzGx1yu1Sgn/exec';
-  const LINK_INSTAGRAM = 'https://www.instagram.com/rima_yaqub/';
-  const LINK_WHATSAPP  = 'https://wa.me/972559311440';
-  const FORM_NAME      = 'استبيان التأهيل — جلسة الاستراتيجية';
+  const ENDPOINT      = 'https://script.google.com/macros/s/AKfycbztxXKfPrMwKGVh_PTvsWlA92i6FIFIdx-cvtfuLo0_EIHcpw6TIIZQtNzGx1yu1Sgn/exec';
+  const LINK_FOCUS    = 'https://rimayaqub.ravpage.co.il/Focus';
+  const LINK_WHATSAPP = 'https://wa.me/972559311440';
+  const FORM_NAME     = 'الفحص التشخيصي — فجوة البزنس';
 
-  const TOTAL = 17;
-
-  const LABELS = {
-    1:  'نوع الخدمة',
-    2:  'سنوات العمل',
-    3:  'حجم الفريق',
-    4:  'الدخل الشهري',
-    5:  'عملاء جدد بالشهر',
-    6:  'مصادر العملاء',
-    7:  'سعر الخدمة الأساسية',
-    8:  'معرفة الربح الصافي',
-    9:  'أكبر تحدٍ',
-    10: 'تفصيل التحدي',
-    11: 'شو جربت وما زبط',
-    12: 'الهدف خلال 3 شهور',
-    13: 'الاستعداد للتغيير (1-10)',
-    14: 'الوقت الأسبوعي المتاح',
-    15: 'الجاهزية للاستثمار',
-    16: 'أسئلة قبل الجلسة'
-  };
-
-  const MAX_RAW = 147; // مجموع أعلى نتيجة ممكنة
+  const TOTAL = 12;
+  const CLOSE_BENCHMARK = 0.35; // نسبة إغلاق مرجعية لأصحاب الخدمات
 
   let answers = {};
-  let score = 0;
-  let flagLowIncome = false;
-  let flagNotNow = false;
+  let D = {};
+  let perceived = '';
+  let investment = '';
 
-  // ===== تفعيل الخيارات =====
+  const nf  = n => Math.round(n).toLocaleString('en-US');
+  const usd = n => '$' + nf(n);
+
+  // ===== الخيارات =====
   document.querySelectorAll('.options').forEach(group => {
-    const type = group.dataset.type;
     group.querySelectorAll('.option').forEach(opt => {
       opt.addEventListener('click', () => {
-        if (type === 'single') {
-          group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-          opt.classList.add('selected');
-        } else {
-          opt.classList.toggle('selected');
-        }
+        group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
         const btn = group.closest('.card').querySelector('.btn-next');
-        if (btn) btn.disabled = group.querySelectorAll('.option.selected').length === 0;
+        if (btn) btn.disabled = false;
       });
     });
   });
 
-  // ===== الحقول النصية الإجبارية =====
-  document.querySelectorAll('textarea[data-required]').forEach(ta => {
-    const card  = ta.closest('.card');
-    const btn   = card.querySelector('.btn-next');
-    const count = card.querySelector('.char-count');
-    const min   = parseInt(ta.dataset.required, 10);
-    ta.addEventListener('input', () => {
-      const len = ta.value.trim().length;
-      btn.disabled = len < min;
-      if (count) count.textContent = len < min ? (len + ' حرف · بحتاج ' + min + ' على الأقل') : (len + ' حرف ✓');
-    });
-  });
+  // ===== الحقول الإجبارية =====
+  function bindRequired(inputId, validator) {
+    const el  = document.getElementById(inputId);
+    const btn = el.closest('.card').querySelector('.btn-next');
+    el.addEventListener('input', () => { btn.disabled = !validator(el.value); });
+  }
+  bindRequired('serviceInput', v => v.trim().length >= 3);
+  ['incomeInput','goalInput','priceInput','clientsInput','leadsInput','hoursInput']
+    .forEach(id => bindRequired(id, v => v !== '' && parseFloat(v) >= 0));
 
-  document.getElementById('serviceInput').addEventListener('input', function () {
-    document.getElementById('next1').disabled = this.value.trim().length < 3;
-  });
-
-  document.getElementById('priceInput').addEventListener('input', function () {
-    document.getElementById('next7').disabled = !(parseInt(this.value, 10) > 0);
-  });
-
-  const readyRange = document.getElementById('readyRange');
-  readyRange.addEventListener('input', function () {
+  document.getElementById('readyRange').addEventListener('input', function () {
     document.getElementById('readyValue').textContent = this.value;
   });
+
+  function num(id) { return parseFloat(document.getElementById(id).value) || 0; }
+  function pick(stepId) { return document.getElementById('q' + stepId).querySelector('.option.selected'); }
+
+  function nextStep(current) {
+    document.getElementById('q' + current).classList.remove('active');
+    const next = current + 1;
+    document.getElementById('q' + next).classList.add('active');
+    document.getElementById('progressLabel').textContent = 'سؤال ' + next + ' من ' + TOTAL;
+    document.getElementById('progressBar').style.width = Math.round((current / TOTAL) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   // ===== حقل الهاتف =====
   function countryCode() { return document.getElementById('countrySelect').value; }
@@ -665,71 +752,235 @@
   document.getElementById('phoneInput').addEventListener('input', updatePhonePreview);
   updatePhonePreview();
 
-  // ===== جمع إجابات الخيارات =====
-  function collect(stepId) {
-    const group = document.getElementById('q' + stepId).querySelector('.options');
-    if (!group) return '—';
-    const selected = [...group.querySelectorAll('.option.selected')];
-    selected.forEach(o => {
-      score += parseInt(o.dataset.score || 0, 10);
-      if (o.dataset.flag === 'low-income') flagLowIncome = true;
-      if (o.dataset.flag === 'not-now')    flagNotNow = true;
-    });
-    return selected.map(o => o.textContent.trim()).join(' / ') || '—';
+  // ===== الموافقة التسويقية =====
+  const consentBox = document.getElementById('consentBox');
+  consentBox.addEventListener('change', function () {
+    document.getElementById('consentRow').classList.toggle('checked', this.checked);
+    document.getElementById('submitBtn').disabled = !this.checked;
+  });
+
+  // ============================================================
+  //  محرك التشخيص
+  // ============================================================
+  function diagnose() {
+    const income  = num('incomeInput');
+    const goal    = num('goalInput');
+    const price   = Math.max(num('priceInput'), 1);
+    const clients = Math.max(num('clientsInput'), 0);
+    const leads   = Math.max(num('leadsInput'), 0);
+    const hours   = Math.max(num('hoursInput'), 1);
+    const margin  = parseFloat(pick(8).dataset.val);
+
+    const clamp = x => Math.max(0, Math.min(1, x));
+
+    const closeRate = leads > 0 ? Math.min(clients / leads, 1) : 0;
+    const monthGap  = Math.max(goal - income, 0);
+    const yearGap   = monthGap * 12;
+    const hourly    = (income * margin) / (hours * 4.33);
+
+    // 1. التسعير — السعر المطلوب لهدفك مع نمو معقول 30% بعدد العملاء
+    const targetClients = Math.max(clients * 1.3, 1);
+    const requiredPrice = goal / targetClients;
+    const priceScore    = clamp(1 - (price / requiredPrice)) * 100;
+
+    // 2. المبيعات — بدون استفسارات ما بنقدر نقيس الإغلاق، فبنحيّد المحور
+    const salesScore = leads > 0 ? clamp((CLOSE_BENCHMARK - closeRate) / CLOSE_BENCHMARK) * 100 : 0;
+
+    // 3. التسويق — بتنقاس على سعر صحي وإغلاق صحي، عشان مشكلة التسعير ما تتنكّر كمشكلة تسويق
+    const healthyPrice   = Math.max(price, requiredPrice);
+    const healthyClients = goal / healthyPrice;
+    const neededLeads    = healthyClients / CLOSE_BENCHMARK;
+    const marketScore    = leads > 0 ? clamp(1 - (leads / neededLeads)) * 100 : 100;
+
+    const neededClients = goal / price;
+    const extraClients  = Math.max(neededClients - clients, 0);
+    const gainFromClose = Math.max(leads * CLOSE_BENCHMARK - clients, 0);
+    const priceLeapTooBig = requiredPrice > price * 2;
+
+    const scores = { sales: salesScore, price: priceScore, marketing: marketScore };
+    let primary = 'sales';
+    ['price', 'marketing'].forEach(k => { if (scores[k] > scores[primary]) primary = k; });
+
+    return {
+      income, goal, price, clients, leads, hours, margin,
+      closeRate, monthGap, yearGap, hourly, onTrack: monthGap <= 0,
+      requiredPrice, neededClients, neededLeads, extraClients, gainFromClose,
+      healthyPrice, priceLeapTooBig,
+      priceScore, salesScore, marketScore, primary
+    };
   }
 
-  function nextStep(current) {
-    if (current === 1) {
-      answers[LABELS[1]] = document.getElementById('serviceInput').value.trim();
+  const GAP_NAMES = { price: 'بالتسعير', sales: 'بالمبيعات', marketing: 'بالتسويق' };
+  const GAP_WORDS = { price: 'التسعير', sales: 'المبيعات', marketing: 'التسويق' };
 
-    } else if (current === 7) {
-      const p = parseInt(document.getElementById('priceInput').value, 10) || 0;
-      answers[LABELS[7]] = p.toLocaleString() + ' ₪';
-      if (p >= 2000) score += 10;
-      else if (p >= 800) score += 8;
-      else if (p >= 300) score += 5;
-      else score += 2;
+  function barClass(s) { return s >= 55 ? 'hi' : (s >= 30 ? 'mid' : 'lo'); }
 
-    } else if (current === 10) {
-      const txt = document.getElementById('challengeInput').value.trim();
-      answers[LABELS[10]] = txt;
-      if (txt.length >= 120) score += 4;
-      else if (txt.length >= 60) score += 2;
+  function setBar(idPc, idBar, idNote, score, note) {
+    document.getElementById(idPc).textContent = Math.round(score) + '%';
+    const bar = document.getElementById(idBar);
+    bar.className = 'bar-fill ' + barClass(score);
+    setTimeout(() => { bar.style.width = Math.max(score, 3) + '%'; }, 120);
+    document.getElementById(idNote).textContent = note;
+  }
 
-    } else if (current === 12) {
-      const txt = document.getElementById('goalInput').value.trim();
-      answers[LABELS[12]] = txt;
-      if (/\d{3,}/.test(txt)) score += 6;      // ذكرت رقم واضح
-      else if (txt.length >= 60) score += 3;
+  // ===== الخلاصة =====
+  function verdictHTML(d) {
+    if (d.onTrack) {
+      return '<h3>انت واصل لهدفك، والسؤال هلق مختلف</h3>' +
+        '<p>دخلك <b>' + usd(d.income) + '</b> وهدفك <b>' + usd(d.goal) + '</b>. يعني مش ناقصك دخل، ناقصك <b>ثبات</b>.</p>' +
+        '<p>قيمة ساعة شغلك اليوم <b>' + usd(d.hourly) + '</b> وانت بتشتغل <b>' + nf(d.hours) + ' ساعة بالأسبوع</b>. ' +
+        'السؤال الحقيقي: لو وقفت شهر، شو بيصير بالدخل؟ إذا الجواب "بينهار"، فانت مش صاحب بزنس، انت الموظف الوحيد فيه.</p>' +
+        '<p>الشغل الجاي مش على زيادة الدخل، هو على <b>فصل الدخل عن ساعاتك</b>: ريتينر شهري، خدمات ما بتتطلب حضورك، وفريق بيشتغل بنظام مكتوب.</p>';
+    }
+    if (d.primary === 'price') {
+      let html = '<h3>سعرك هو اللي بيوقفك، مش عدد عملائك</h3>' +
+        '<p>انت بتخدم <b>' + nf(d.clients) + ' عميل بالشهر</b> بسعر <b>' + usd(d.price) + '</b>. ' +
+        'عشان توصل لهدفك بنفس هاد السعر، لازم تخدم <b>' + nf(d.neededClients) + ' عميل بالشهر</b>، ' +
+        'يعني <b>' + nf(d.extraClients) + ' عميل زيادة</b>. وانت أصلاً بتشتغل ' + nf(d.hours) + ' ساعة بالأسبوع.</p>' +
+        '<p>الرياضيات بتقول إنه هاد الطريق مسدود. مش لأنك مش شاطر، لأنه ما في ساعات كافية باليوم.</p>';
+      html += d.priceLeapTooBig
+        ? '<p>السعر اللي بيوصلك لهدفك هو <b>' + usd(d.requiredPrice) + '</b>، وهاي قفزة كبيرة من سعرك الحالي. ' +
+          'يعني ما بتنعمل برفع سعر بس، بتنعمل ببناء <b>عرض مختلف</b>: باقة بنتيجة واضحة بدل خدمة بالساعة. ' +
+          'نفس الشغل، مغلّف بشكل بيبرر السعر.</p>'
+        : '<p>لو سعر خدمتك صار <b>' + usd(d.requiredPrice) + '</b>، بتوصل لهدفك بنمو معقول بعدد العملاء بدل ما تضاعفهم. ' +
+          'وهون السؤال مش "كيف بجيب عملاء أكثر" بل <b>"كيف بوصّل قيمة تستاهل هاد السعر"</b>.</p>';
+      return html;
+    }
+    if (d.primary === 'sales') {
+      return '<h3>عندك ناس كفاية بتسأل، بس بتضيّعهم بالطريق</h3>' +
+        '<p>بيجيك <b>' + nf(d.leads) + ' استفسار بالشهر</b>، وبتسكّر <b>' + nf(d.clients) + '</b> منهم. ' +
+        'يعني نسبة إغلاق <b>' + Math.round(d.closeRate * 100) + '%</b>، والمعيار لأصحاب الخدمات <b>35%</b>.</p>' +
+        '<p>لو بس وصلت للمعيار، بتضيف <b>' + nf(d.gainFromClose) + ' عميل بالشهر</b>، ' +
+        'يعني <b>' + usd(d.gainFromClose * d.price) + ' زيادة شهرياً</b> و<b>' + usd(d.gainFromClose * d.price * 12) + ' بالسنة</b>، ' +
+        'بدون ولا دولار إعلانات وبدون ولا بوست إضافي.</p>' +
+        '<p>هاد أرخص وأسرع مكان تبلش منه، لأن الناس أصلاً واصلينلك. المشكلة بشو بيصير بعد ما يوصلوا: ' +
+        '<b>كيف بتحكي عن السعر، كيف بترد على الاعتراضات، وشو بيصير لما حدا يقول "بفكر وبرجعلك"</b>.</p>';
+    }
+    return '<h3>شغلك منيح، بس مش واصل لعدد كافي من الناس</h3>' +
+      '<p>بسعر صحي لخدمتك ونسبة إغلاق سليمة، عشان توصل لهدفك بتحتاج حوالي <b>' + nf(d.neededLeads) + ' استفسار بالشهر</b>. ' +
+      'اليوم بيجيك <b>' + nf(d.leads) + '</b>.</p>' +
+      '<p>هاي مش مشكلة محتوى أكثر ولا نشر أكثر. أغلب أصحاب الخدمات بينشروا كل يوم وبيضلوا بنفس المكان، ' +
+      'لأنه ما في <b>نظام</b> بياخد الشخص من أول ما يشوفك لحد ما يصير جاهز يشتري.</p>' +
+      '<p>الفرق بين بزنس بيعتمد على الصدفة وبزنس عنده نظام، ما بينشاف بالأيام العادية. بينشاف بالشهر اللي بيفضى فيه الكالندر.</p>';
+  }
 
-    } else if (current === 13) {
-      const v = parseInt(readyRange.value, 10);
-      answers[LABELS[13]] = v + ' / 10';
-      score += v;
+  function mismatchHTML(d) {
+    if (perceived === 'unknown') {
+      return 'انت قلت إنك ما بتعرف وين المشكلة، وهاد أصدق جواب ممكن. ' +
+             'أرقامك بتقول إنه أكبر فجوة عندك <b>' + GAP_WORDS[d.primary] + '</b>. هلق بتعرف من وين تبلش.';
+    }
+    if (perceived === d.primary) {
+      return 'حدسك كان صح. انت حسيت إنه المشكلة <b>' + GAP_WORDS[perceived] + '</b>، وأرقامك بتأكد نفس الشي. ' +
+             'يعني مش ناقصك تشخيص، ناقصك <b>خطة تنفيذ</b>.';
+    }
+    return 'انتبه لهاي النقطة: انت حاسس إنه المشكلة <b>' + GAP_WORDS[perceived] + '</b>، ' +
+           'بس أرقامك بتقول إنه أكبر فجوة عندك <b>' + GAP_WORDS[d.primary] + '</b>. ' +
+           'هاد بالضبط اللي بيخلي ناس تشتغل سنة كاملة على المحور الغلط، تتعب، وما تتحرك.';
+  }
 
-    } else if (current === 16) {
-      answers[LABELS[16]] = document.getElementById('notesInput').value.trim() || '—';
+  // ===== البونص: خطوة وحدة حسب الفجوة =====
+  function bonusHTML(d) {
+    if (d.onTrack) {
+      return '<span class="tag">بونص إلك</span>' +
+        '<h4>خطوة وحدة تبلش فيها هاد الأسبوع</h4>' +
+        '<p>افتح كالندر آخر شهر وعلّم كل ساعة اشتغلتها. بعدين اسأل عن كل بند سؤال واحد: ' +
+        '<b>هل هاد بضل يصير لو أنا مش موجود؟</b></p>' +
+        '<p>البنود اللي جوابها "لأ" هي بالضبط سقف بزنسك. اختار <b>واحد</b> منهم بس، واكتب له خطوات مكتوبة ' +
+        'حدا تاني يقدر ينفذها. مش تفوّضه هلق، بس تكتبه. أول مرة بتكتبه بتكتشف إنه أبسط مما بتفكر.</p>';
+    }
+    if (d.primary === 'price') {
+      return '<span class="tag">بونص إلك</span>' +
+        '<h4>خطوة وحدة تبلش فيها هاد الأسبوع</h4>' +
+        '<p>لا تغيّر أسعارك بالموقع ولا تعلن عن أي اشي. خذ بس <b>أول 5 عملاء جداد</b> بيجوك، ' +
+        'واعطيهم سعر أعلى <b>20%</b> من سعرك الحالي، يعني <b>' + usd(d.price * 1.2) + '</b> بدل ' + usd(d.price) + '.</p>' +
+        '<p>وبعدين عدّ: كم واحد منهم فعلاً اعترض على السعر؟ بالعادة الجواب بيصدم أصحاب البزنس، ' +
+        'لأنه الاعتراض اللي بيخافوا منه بيكون <b>بروسهم هم</b> مش بروس عملائهم.</p>' +
+        '<p>هاي التجربة بتكلفك صفر، وبتعطيك معلومة ما بتشتريها بمصاري: <b>وين سقف سعرك الحقيقي</b>.</p>';
+    }
+    if (d.primary === 'sales') {
+      return '<span class="tag">بونص إلك</span>' +
+        '<h4>خطوة وحدة تبلش فيها هاد الأسبوع</h4>' +
+        '<p>ارجع لآخر <b>10 استفسارات</b> ما تحولوا لعملاء، وابعتلهم رسالة وحدة قصيرة: ' +
+        '<b>"مرحبا، بدون أي بيع، بحب أسألك سؤال واحد يساعدني أتحسّن: شو كان الشي اللي وقفك وقتها؟"</b></p>' +
+        '<p>ما تعرض عليهم اشي. ما تحكي عن سعر. بس اسأل واسكت.</p>' +
+        '<p>الأجوبة اللي بتوصلك هي <b>سكربت مبيعاتك الجاي</b>، مكتوب بكلمات عملائك هم مش بكلماتك انت. ' +
+        'وبنسبة كبيرة رح تلاقي إنه السبب ما كان السعر، كان شي حكيته أو ما حكيته بالوقت الغلط.</p>';
+    }
+    return '<span class="tag">بونص إلك</span>' +
+      '<h4>خطوة وحدة تبلش فيها هاد الأسبوع</h4>' +
+      '<p>خذ <b>أقوى نتيجة</b> حققتها لعميل، واكتب عنها بوست واحد فيه تلات أشياء بس: ' +
+      'الوضع قبل، الوضع بعد، وشو تغيّر بالطريق.</p>' +
+      '<p>بدون نصايح عامة، بدون "5 خطوات لـ...". قصة وحدة بأرقام حقيقية.</p>' +
+      '<p>بوست واحد بنتيجة ملموسة بيوصل أبعد من 30 بوست نصايح، لأنه الناس ما بتشتري معلومة، ' +
+      '<b>بتشتري دليل إنك بتعرف توصّل نتيجة</b>. جرّبه وقارن الأرقام بنفسك.</p>';
+  }
 
+  function showResults() {
+    const invOpt = pick(12);
+    investment = invOpt ? invOpt.textContent.trim() : '';
+
+    D = diagnose();
+
+    document.getElementById('resHeadline').innerHTML = D.onTrack
+      ? 'أرقامك بتقول إنك <span>واصل لهدفك</span>'
+      : 'الفجوة الأكبر عندك <span>' + GAP_NAMES[D.primary] + '</span>';
+
+    const hero = document.getElementById('gapHero');
+    if (D.onTrack) {
+      hero.classList.add('good');
+      document.getElementById('gapLabel').textContent = 'قيمة ساعة شغلك اليوم، بالربح الصافي';
+      document.getElementById('yearGap').textContent  = usd(D.hourly);
+      document.getElementById('gapNote').textContent  =
+        'وصلت لهدفك بالدخل، وهاد إنجاز. بس الرقم اللي فوق هو اللي بيحدد إذا البزنس بيكبر معك أو بيتعبك. التحدي الجاي مش الدخل، هو الثبات والاستقلال عن ساعاتك.';
     } else {
-      answers[LABELS[current]] = collect(current);
+      document.getElementById('yearGap').textContent = usd(D.yearGap);
+      document.getElementById('gapNote').textContent =
+        'هاد الفرق بين دخلك اليوم وهدفك، مضروب بـ 12 شهر. مش خسارة، هو دخل موجود بمتناولك وما بتوصله بالطريقة الحالية.';
     }
 
-    document.getElementById('q' + current).classList.remove('active');
-    const next = current + 1;
-    if (next <= TOTAL) {
-      document.getElementById('q' + next).classList.add('active');
-      document.getElementById('progressLabel').textContent = 'سؤال ' + next + ' من ' + TOTAL;
-    }
-    document.getElementById('progressBar').style.width = Math.round((current / TOTAL) * 100) + '%';
+    document.getElementById('stIncome').textContent = usd(D.income);
+    document.getElementById('stGoal').textContent   = usd(D.goal);
+
+    const closeEl = document.getElementById('stClose');
+    closeEl.textContent = Math.round(D.closeRate * 100) + '%';
+    if (D.closeRate < CLOSE_BENCHMARK) closeEl.classList.add('warn');
+
+    const hourEl = document.getElementById('stHourly');
+    hourEl.textContent = usd(D.hourly);
+    if (D.hourly < 30) hourEl.classList.add('warn');
+
+    setBar('pcPrice', 'barPrice', 'notePrice', D.priceScore,
+      D.priceScore >= 50
+        ? 'سعرك بعيد عن السعر اللي بيوصلك لهدفك بعدد عملاء واقعي.'
+        : 'تسعيرك بموقع معقول مقارنة بهدفك.');
+
+    setBar('pcSales', 'barSales', 'noteSales', D.salesScore,
+      D.leads === 0
+        ? 'ما بنقدر نقيس الإغلاق بدون استفسارات، فهاد المحور محيّد بالتشخيص.'
+        : (D.salesScore >= 50
+            ? 'نسبة إغلاقك تحت المعيار، يعني في دخل بيضيع من ناس واصلينلك أصلاً.'
+            : 'بتسكّر نسبة منيحة من الاستفسارات اللي بتجيك.'));
+
+    setBar('pcMarket', 'barMarket', 'noteMarket', D.marketScore,
+      D.marketScore >= 50
+        ? 'عدد الاستفسارات اللي بيجيك أقل من اللي بيلزمك لهدفك.'
+        : 'وصولك للناس كافي نسبياً لهدفك الحالي.');
+
+    document.getElementById('mismatchBox').innerHTML = mismatchHTML(D);
+    document.getElementById('verdictBox').innerHTML  = verdictHTML(D);
+    document.getElementById('bonusBox').innerHTML    = bonusHTML(D);
+
+    document.getElementById('q12').classList.remove('active');
+    document.getElementById('qResult').classList.add('active');
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'نتيجتك جاهزة ✓';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ===== التصنيف الداخلي — ما بينعرض للعميلة =====
-  function tierFor(pts) {
-    if (flagLowIncome && flagNotNow) return 'غير مناسبة الآن';
-    if (pts >= 75) return 'ملاءمة عالية · أكّدي فوراً';
-    if (pts >= 55) return 'ملاءمة متوسطة · مكالمة قصيرة قبل التأكيد';
-    return 'ملاءمة منخفضة · وجّهيها لجلسة Focus';
+  function goToDetails() {
+    document.getElementById('qResult').classList.remove('active');
+    document.getElementById('qDetails').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function submitForm() {
@@ -737,47 +988,56 @@
     const phone = document.getElementById('phoneInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
 
-    if (!name || !phone || !email) {
-      alert('من فضلك اكملي البيانات كلها (الاسم، الواتساب، الإيميل)');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      alert('من فضلك اكتبي بريد إلكتروني صحيح');
-      return;
-    }
+    if (!name || !phone || !email) { alert('من فضلك اكمل البيانات كلها (الاسم، الواتساب، الإيميل)'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('من فضلك اكتب بريد إلكتروني صحيح'); return; }
     const local = phone.replace(/\D/g, '').replace(/^0+/, '');
-    if (local.length < 6) {
-      alert('من فضلك اكتبي رقم واتساب صحيح');
-      return;
-    }
-    // بدون + بالبداية حتى Google Sheets ما يقرأه كصيغة حسابية
-    const waPhone = countryCode() + ' ' + local;
+    if (local.length < 6) { alert('من فضلك اكتب رقم واتساب صحيح'); return; }
+    if (!consentBox.checked) { alert('عشان أقدر أبعتلك نتيجتك، بحتاج موافقتك على استقبال الرسائل'); return; }
 
-    const finalScore = Math.round((score / MAX_RAW) * 100);
-    const tier = tierFor(finalScore);
+    answers = {
+      'الاسم':   name,
+      'واتساب':  countryCode() + ' ' + local,   // بدون + حتى الشيت ما يقرأه كصيغة
+      'الإيميل': email,
+      'نوع الخدمة': document.getElementById('serviceInput').value.trim(),
+      'سنوات العمل': pick(2) ? pick(2).textContent.trim() : '',
+      'الدخل الشهري': usd(D.income),
+      'هدف الدخل الشهري': usd(D.goal),
+      'سعر الخدمة': usd(D.price),
+      'عملاء جدد بالشهر': nf(D.clients),
+      'استفسارات بالشهر': nf(D.leads),
+      'نسبة الإغلاق': Math.round(D.closeRate * 100) + '%',
+      'هامش الربح': pick(8) ? pick(8).textContent.trim() : '',
+      'ساعات العمل الأسبوعية': nf(D.hours),
+      'قيمة ساعة العمل': usd(D.hourly),
+      'الفجوة الشهرية': usd(D.monthGap),
+      'الفجوة السنوية': usd(D.yearGap),
+      'الفجوة الأساسية': D.onTrack ? 'واصل لهدفه · التحدي الثبات' : GAP_WORDS[D.primary],
+      'فجوة التسعير': Math.round(D.priceScore) + '%',
+      'فجوة المبيعات': Math.round(D.salesScore) + '%',
+      'فجوة التسويق': Math.round(D.marketScore) + '%',
+      'إحساسه بالمشكلة': perceived === 'unknown' ? 'ما بيعرف' : (GAP_WORDS[perceived] || '—'),
+      'تطابق الإحساس مع الأرقام': perceived === 'unknown' ? 'ما بيعرف' : (perceived === D.primary ? 'مطابق' : 'مش مطابق'),
+      'الاستعداد للتغيير': document.getElementById('readyRange').value + '/10',
+      'الجاهزية للاستثمار': investment,
+      'موافقة تسويقية': 'إيه ✓',
+      'النموذج': FORM_NAME
+    };
 
-    answers['الاسم']   = name;
-    answers['واتساب']  = waPhone;
-    answers['الإيميل'] = email;
-    answers['النتيجة'] = finalScore + '/100';
-    answers['التصنيف'] = tier;
-    answers['النموذج'] = FORM_NAME;
-
-    // الانتقال لصفحة الشكر
-    document.getElementById('q17').classList.remove('active');
+    document.getElementById('qDetails').classList.remove('active');
     document.getElementById('qFinal').classList.add('active');
-    document.getElementById('progressBar').style.width = '100%';
-    document.getElementById('progressLabel').textContent = 'مكتمل ✓';
+    document.getElementById('focusCta').href = LINK_FOCUS;
+    document.getElementById('waCta').href    = LINK_WHATSAPP;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // كل المرشحات بيروحوا للانستغرام. رابط الدفع بينبعت بالواتساب بعد المراجعة بس.
-    document.getElementById('resCta').href = LINK_INSTAGRAM;
-    document.getElementById('resCta2').href = LINK_WHATSAPP;
-
-    console.log('Strategy Qualify:', JSON.stringify(answers, null, 2));
+    console.log('Diagnostic:', JSON.stringify(answers, null, 2));
     fetch(ENDPOINT + '?data=' + encodeURIComponent(JSON.stringify(answers)),
           { method: 'GET', mode: 'no-cors' }).catch(() => {});
   }
+
+  // التقاط إحساسه بالمشكلة
+  document.querySelectorAll('#q10 .option').forEach(o => {
+    o.addEventListener('click', () => { perceived = o.dataset.key; });
+  });
 </script>
 </body>
 </html>
