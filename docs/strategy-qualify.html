@@ -401,8 +401,22 @@
     <span class="section-tag">البزنس</span>
     <p class="step-num">سؤال 1 / 12</p>
     <p class="question">شو نوع الخدمة اللي بتقدمها؟</p>
-    <p class="sub">بجملة وحدة. مثال: "مركز عناية بالبشرة" أو "استشارات تغذية".</p>
-    <input type="text" id="serviceInput" placeholder="اكتب نوع خدمتك هون" />
+    <p class="sub">اختار الأقرب لطبيعة شغلك</p>
+    <div class="options" data-type="single" id="serviceOptions">
+      <div class="option">مركز تجميل أو عناية بالبشرة</div>
+      <div class="option">صالون شعر أو باروكية</div>
+      <div class="option">عيادة أو كلينك (أسنان، جلدية، تجميل طبي)</div>
+      <div class="option">تغذية أو لياقة أو علاج طبيعي</div>
+      <div class="option">علاج نفسي أو استشارات شخصية</div>
+      <div class="option">كوتشينغ أو تدريب أو استشارات أعمال</div>
+      <div class="option">خدمات مهنية (تصميم، محاسبة، محاماة، تسويق)</div>
+      <div class="option">مركز تعليمي أو دورات</div>
+      <div class="option">خدمات فعاليات (تصوير، تنظيم، ديكور)</div>
+      <div class="option" data-other="1">غير هيك</div>
+    </div>
+    <div id="otherWrap" style="display:none; margin-top:14px;">
+      <input type="text" id="serviceInput" placeholder="اكتب نوع خدمتك هون" />
+    </div>
     <button class="btn-next" disabled onclick="nextStep(1)">التالي ←</button>
   </div>
 
@@ -721,9 +735,30 @@
     const btn = el.closest('.card').querySelector('.btn-next');
     el.addEventListener('input', () => { btn.disabled = !validator(el.value); });
   }
-  bindRequired('serviceInput', v => v.trim().length >= 3);
   ['incomeInput','goalInput','priceInput','clientsInput','leadsInput','hoursInput']
     .forEach(id => bindRequired(id, v => v !== '' && parseFloat(v) >= 0));
+
+  // ===== السؤال الأول: اختيارات + خانة "غير هيك" =====
+  const otherWrap    = document.getElementById('otherWrap');
+  const serviceInput = document.getElementById('serviceInput');
+  const q1Btn        = document.getElementById('q1').querySelector('.btn-next');
+
+  function refreshQ1() {
+    const sel = document.querySelector('#serviceOptions .option.selected');
+    if (!sel) { q1Btn.disabled = true; return; }
+    const isOther = sel.dataset.other === '1';
+    otherWrap.style.display = isOther ? 'block' : 'none';
+    q1Btn.disabled = isOther && serviceInput.value.trim().length < 2;
+    if (isOther) serviceInput.focus();
+  }
+  document.querySelectorAll('#serviceOptions .option').forEach(o => o.addEventListener('click', refreshQ1));
+  serviceInput.addEventListener('input', refreshQ1);
+
+  function serviceValue() {
+    const sel = document.querySelector('#serviceOptions .option.selected');
+    if (!sel) return '';
+    return sel.dataset.other === '1' ? serviceInput.value.trim() : sel.textContent.trim();
+  }
 
   document.getElementById('readyRange').addEventListener('input', function () {
     document.getElementById('readyValue').textContent = this.value;
@@ -998,7 +1033,7 @@
       'الاسم':   name,
       'واتساب':  countryCode() + ' ' + local,   // بدون + حتى الشيت ما يقرأه كصيغة
       'الإيميل': email,
-      'نوع الخدمة': document.getElementById('serviceInput').value.trim(),
+      'نوع الخدمة': serviceValue(),
       'سنوات العمل': pick(2) ? pick(2).textContent.trim() : '',
       'الدخل الشهري': usd(D.income),
       'هدف الدخل الشهري': usd(D.goal),
