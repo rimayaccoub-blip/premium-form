@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استبيان التأهيل — جلسة الاستراتيجية | ريما يعقوب</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: linear-gradient(160deg, #0b1a2e, #14294a, #0d1f38);
+      min-height: 100vh;
+      padding: 30px 16px 60px;
+      color: #fff;
+    }
+
+    .container { max-width: 680px; margin: 0 auto; }
+
+    .header { text-align: center; margin-bottom: 36px; }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #e8c07d, #d19a4e);
+      color: #0b1a2e;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      padding: 6px 20px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-size: clamp(25px, 5vw, 38px);
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .header h1 span { color: #e8c07d; }
+    .header p {
+      font-size: 15px;
+      opacity: 0.82;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .progress-wrap {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      height: 6px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #e8c07d, #d19a4e);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .progress-label { font-size: 12px; opacity: 0.6; text-align: center; margin-bottom: 8px; }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 28px;
+      margin-bottom: 20px;
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+    .card.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num { font-size: 11px; opacity: 0.5; letter-spacing: 1px; margin-bottom: 6px; }
+    .question { font-size: 18px; font-weight: 700; line-height: 1.55; margin-bottom: 6px; }
+    .sub { font-size: 13px; opacity: 0.62; margin-bottom: 20px; line-height: 1.6; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e8c07d;
+      background: rgba(232,192,125,0.12);
+      border: 1px solid rgba(232,192,125,0.25);
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.55;
+      transition: all 0.2s ease;
+      text-align: right;
+    }
+    .option:hover { background: rgba(232,192,125,0.14); border-color: #e8c07d; }
+    .option.selected {
+      background: linear-gradient(90deg, rgba(232,192,125,0.25), rgba(209,154,78,0.18));
+      border-color: #e8c07d;
+      font-weight: 600;
+    }
+
+    .field-label { font-size: 13px; opacity: 0.78; margin-bottom: 8px; font-weight: 600; }
+    .field-hint  { font-size: 12px; opacity: 0.5; margin: -4px 0 14px; text-align: right; }
+
+    .phone-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .phone-row select {
+      flex: 0 0 40%;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 14px 12px 14px 32px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.5) 50%),
+                        linear-gradient(135deg, rgba(255,255,255,0.5) 50%, transparent 50%);
+      background-position: 14px calc(50% - 2px), 19px calc(50% - 2px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+    }
+    .phone-row select:focus { border-color: #e8c07d; }
+    .phone-row select option { background: #14294a; color: #fff; }
+    .phone-row input { flex: 1; margin-bottom: 0; direction: ltr; text-align: left; }
+
+    textarea, input[type="text"], input[type="tel"], input[type="email"], input[type="number"] {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      direction: rtl;
+      margin-bottom: 12px;
+    }
+    textarea:focus, input:focus { border-color: #e8c07d; }
+    textarea::placeholder, input::placeholder { color: rgba(255,255,255,0.35); }
+    .char-count { font-size: 11px; opacity: 0.45; margin: -6px 0 4px; }
+
+    .range-wrap { padding: 8px 0; }
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.2);
+      outline: none;
+      direction: ltr;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8c07d, #d19a4e);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(232,192,125,0.5);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px; border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8c07d, #d19a4e);
+      cursor: pointer;
+    }
+    .range-labels { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.55; margin-top: 8px; gap: 12px; }
+    .range-value { text-align: center; font-size: 34px; font-weight: 800; color: #e8c07d; margin: 10px 0 4px; }
+
+    .btn-next {
+      margin-top: 24px;
+      width: 100%;
+      background: linear-gradient(90deg, #e8c07d, #d19a4e);
+      color: #0b1a2e;
+      font-weight: 800;
+      font-size: 16px;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 30px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
+    .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+    .btn-skip {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .consent {
+      font-size: 12px;
+      opacity: 0.55;
+      line-height: 1.7;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .final-card { text-align: center; padding: 44px 28px; }
+    .final-card .icon { font-size: 52px; margin-bottom: 16px; }
+    .final-card h2 { font-size: 27px; font-weight: 900; margin-bottom: 16px; line-height: 1.4; }
+    .final-card h2 span { color: #e8c07d; }
+    .final-card p { font-size: 15px; opacity: 0.87; line-height: 1.9; margin-bottom: 12px; }
+    .final-card .highlight {
+      background: rgba(232,192,125,0.1);
+      border: 1px solid rgba(232,192,125,0.28);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin: 22px 0;
+      font-size: 15px;
+      line-height: 1.9;
+      text-align: right;
+    }
+    .final-card .highlight strong { color: #e8c07d; display: block; margin-bottom: 8px; }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #e8c07d, #d19a4e);
+      color: #0b1a2e;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 16px 38px;
+      border-radius: 50px;
+      text-decoration: none;
+      margin-top: 18px;
+      transition: opacity 0.2s;
+    }
+    .cta-btn.secondary {
+      background: transparent;
+      color: #e8c07d;
+      border: 1.5px solid rgba(232,192,125,0.5);
+      font-size: 14px;
+      padding: 12px 28px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+    .signature { margin-top: 26px; font-size: 13px; opacity: 0.55; line-height: 1.8; }
+
+    @media (max-width: 480px) {
+      .card { padding: 22px 18px; }
+      .question { font-size: 16px; }
+      .range-labels { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="badge">جلسة الاستراتيجية · ريما يعقوب</div>
+    <h1>قبل ما نحجز<br><span>جلسة الاستراتيجية</span></h1>
+    <p>هاي الجلسة مش جلسة تعارف. بنشتغل فيها على أرقام بزنسك وبنطلع بخطة واضحة، وعشان هيك بحضّر لكل جلسة قبلها. الأسئلة الجاي بتاخد أقل من 5 دقايق، وبتساعدني أعرف إذا فعلاً هاي الجلسة هي الخطوة الصح إلك بهاي المرحلة.</p>
+  </div>
+
+  <p class="progress-label" id="progressLabel">سؤال 1 من 17</p>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- ===== القسم 1: معلومات عن البزنس ===== -->
+
+  <!-- Q1 -->
+  <div class="card active" id="q1">
+    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
+    <p class="step-num">سؤال 1 / 17</p>
+    <p class="question">شو نوع الخدمة اللي بتقدميها؟</p>
+    <p class="sub">بجملة وحدة. مثال: "مركز عناية بالبشرة" أو "استشارات تغذية" أو "تصميم داخلي".</p>
+    <input type="text" id="serviceInput" placeholder="اكتبي نوع خدمتك هون" />
+    <button class="btn-next" id="next1" disabled onclick="nextStep(1)">التالي ←</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card" id="q2">
+    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
+    <p class="step-num">سؤال 2 / 17</p>
+    <p class="question">من قديش وانتي شغالة بهاد البزنس؟</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="2">أقل من سنة</div>
+      <div class="option" data-score="6">من سنة لسنتين</div>
+      <div class="option" data-score="10">من سنتين لخمس سنين</div>
+      <div class="option" data-score="10">أكثر من 5 سنين</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(2)">التالي ←</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card" id="q3">
+    <span class="section-tag">القسم 1 · معلومات عن البزنس</span>
+    <p class="step-num">سؤال 3 / 17</p>
+    <p class="question">مين بيشتغل معك بالبزنس اليوم؟</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="4">لحالي بالكامل</div>
+      <div class="option" data-score="7">أنا + مساعدة أو موظفة وحدة</div>
+      <div class="option" data-score="10">عندي فريق من 2 لـ 4</div>
+      <div class="option" data-score="10">عندي فريق أكبر من 4</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(3)">التالي ←</button>
+  </div>
+
+  <!-- ===== القسم 2: الوضع الحالي بالأرقام ===== -->
+
+  <!-- Q4 -->
+  <div class="card" id="q4">
+    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
+    <p class="step-num">سؤال 4 / 17</p>
+    <p class="question">متوسط الدخل الشهري للبزنس بآخر 3 شهور</p>
+    <p class="sub">الأرقام هون بتضلّ بيني وبينك. بحتاجها عشان أجهّز الجلسة على وضعك انتي بالذات مش على وضع عام.</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="2" data-flag="low-income">أقل من 10,000 ₪</div>
+      <div class="option" data-score="8">10,000 لـ 20,000 ₪</div>
+      <div class="option" data-score="16">20,000 لـ 40,000 ₪</div>
+      <div class="option" data-score="20">40,000 لـ 70,000 ₪</div>
+      <div class="option" data-score="20">أكثر من 70,000 ₪</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(4)">التالي ←</button>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card" id="q5">
+    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
+    <p class="step-num">سؤال 5 / 17</p>
+    <p class="question">قديش عميل جديد بيجيك بالشهر؟</p>
+    <p class="sub">رقم تقريبي بالمتوسط</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="3">أقل من 3</div>
+      <div class="option" data-score="7">من 3 لـ 7</div>
+      <div class="option" data-score="10">من 8 لـ 15</div>
+      <div class="option" data-score="10">أكثر من 15</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(5)">التالي ←</button>
+  </div>
+
+  <!-- Q6 -->
+  <div class="card" id="q6">
+    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
+    <p class="step-num">سؤال 6 / 17</p>
+    <p class="question">من وين بيجوكي العملاء اليوم؟</p>
+    <p class="sub">بتقدري تختاري أكثر من إجابة</p>
+    <div class="options" data-type="multi">
+      <div class="option" data-score="3">توصية من عملاء حاليين</div>
+      <div class="option" data-score="2">انستغرام أو فيسبوك (محتوى مجاني)</div>
+      <div class="option" data-score="3">إعلانات ممولة</div>
+      <div class="option" data-score="3">عملاء راجعين ومتكرّرين</div>
+      <div class="option" data-score="0">ما بعرف بالضبط من وين بيجوا</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(6)">التالي ←</button>
+  </div>
+
+  <!-- Q7 -->
+  <div class="card" id="q7">
+    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
+    <p class="step-num">سؤال 7 / 17</p>
+    <p class="question">متوسط سعر الخدمة الأساسية عندك اليوم؟</p>
+    <p class="sub">رقم تقريبي بالشيكل</p>
+    <input type="number" id="priceInput" placeholder="مثال: 1200" min="0" />
+    <button class="btn-next" id="next7" disabled onclick="nextStep(7)">التالي ←</button>
+  </div>
+
+  <!-- Q8 -->
+  <div class="card" id="q8">
+    <span class="section-tag">القسم 2 · وضعك اليوم بالأرقام</span>
+    <p class="step-num">سؤال 8 / 17</p>
+    <p class="question">بتعرفي قديش ربحك الصافي بالشهر؟</p>
+    <p class="sub">قصدي الربح بعد المصاريف، مش الدخل</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="10">إيه، بعرف الرقم بدقة</div>
+      <div class="option" data-score="6">تقريباً، بس مش متأكدة</div>
+      <div class="option" data-score="3">لأ، ما عندي متابعة مالية منظمة</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(8)">التالي ←</button>
+  </div>
+
+  <!-- ===== القسم 3: التحديات ===== -->
+
+  <!-- Q9 -->
+  <div class="card" id="q9">
+    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
+    <p class="step-num">سؤال 9 / 17</p>
+    <p class="question">شو أكبر تحدي بواجهك بالبزنس اليوم؟</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="8">الدخل غير مستقر، شهر منيح وشهر فاضي</div>
+      <div class="option" data-score="8">الدخل منيح بس الربح قليل، ما بعرف وين بيروح المصروف</div>
+      <div class="option" data-score="7">ما بوصل عملاء جداد كفاية</div>
+      <div class="option" data-score="8">بجيني استفسارات بس ما بتتحول لحجوزات</div>
+      <div class="option" data-score="7">شغلي كله معتمد عليّ، ما بقدر أوسّع</div>
+      <div class="option" data-score="8">التسعير، حاسة إني بتقاضى أقل من قيمة شغلي</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(9)">التالي ←</button>
+  </div>
+
+  <!-- Q10 -->
+  <div class="card" id="q10">
+    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
+    <p class="step-num">سؤال 10 / 17</p>
+    <p class="question">احكيلي أكثر عن هاد التحدي. من إمتى صار موجود وشو جربتي عشان تحليه؟</p>
+    <p class="sub">3 لـ 4 أسطر بكفّوا. هاد السؤال هو الأهم بالاستبيان، وعليه بتنبنى الجلسة.</p>
+    <textarea id="challengeInput" rows="5" data-required="30" placeholder="اكتبي بحرية..."></textarea>
+    <p class="char-count" id="count10">0 حرف</p>
+    <button class="btn-next" disabled onclick="nextStep(10)">التالي ←</button>
+  </div>
+
+  <!-- Q11 -->
+  <div class="card" id="q11">
+    <span class="section-tag">القسم 3 · التحدي الأكبر</span>
+    <p class="step-num">سؤال 11 / 17</p>
+    <p class="question">شو الشي اللي جربتيه قبل هيك وما زبط معك؟</p>
+    <p class="sub">بتقدري تختاري أكثر من إجابة</p>
+    <div class="options" data-type="multi">
+      <div class="option" data-score="2">إعلانات ممولة</div>
+      <div class="option" data-score="2">محتوى يومي على السوشيال</div>
+      <div class="option" data-score="2">كورس أو دورة رقمية</div>
+      <div class="option" data-score="2">مرافقة أو استشارة مع حدا تاني</div>
+      <div class="option" data-score="1">ما جربت اشي منظّم لهلق</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(11)">التالي ←</button>
+  </div>
+
+  <!-- ===== القسم 4: الأهداف ===== -->
+
+  <!-- Q12 -->
+  <div class="card" id="q12">
+    <span class="section-tag">القسم 4 · وين بدك توصلي</span>
+    <p class="step-num">سؤال 12 / 17</p>
+    <p class="question">لو اشتغلنا سوا 3 شهور، شو الرقم أو النتيجة اللي بدك توصليلها؟</p>
+    <p class="sub">كوني محددة قد ما بتقدري. "بدي أطوّر البزنس" مش هدف. "بدي أوصل 45,000 ₪ بالشهر بربح 40%" هدف.</p>
+    <textarea id="goalInput" rows="4" data-required="20" placeholder="اكتبي هدفك بالأرقام..."></textarea>
+    <p class="char-count" id="count12">0 حرف</p>
+    <button class="btn-next" disabled onclick="nextStep(12)">التالي ←</button>
+  </div>
+
+  <!-- Q13 -->
+  <div class="card" id="q13">
+    <span class="section-tag">القسم 4 · وين بدك توصلي</span>
+    <p class="step-num">سؤال 13 / 17</p>
+    <p class="question">من 1 لـ 10، قديش انتي مستعدة تغيّري بطريقة شغلك الحالية؟</p>
+    <div class="range-wrap">
+      <div class="range-value" id="readyValue">5</div>
+      <input type="range" id="readyRange" min="1" max="10" step="1" value="5" />
+      <div class="range-labels">
+        <span>1 · مرتاحة بطريقتي، بدور على تحسينات صغيرة</span>
+        <span>10 · جاهزة أغيّر كل شي إذا كان هو الصح</span>
+      </div>
+    </div>
+    <button class="btn-next" onclick="nextStep(13)">التالي ←</button>
+  </div>
+
+  <!-- ===== القسم 5: الالتزام والجاهزية ===== -->
+
+  <!-- Q14 -->
+  <div class="card" id="q14">
+    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
+    <p class="step-num">سؤال 14 / 17</p>
+    <p class="question">قديش وقت بتقدري تخصصي بالأسبوع للشغل على البزنس؟</p>
+    <p class="sub">المرافقة بتتطلب وقت شغل أسبوعي، مش بس المشاركة بالجلسات.</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="2">أقل من ساعتين بالأسبوع</div>
+      <div class="option" data-score="5">من 2 لـ 4 ساعات</div>
+      <div class="option" data-score="8">من 4 لـ 6 ساعات</div>
+      <div class="option" data-score="10">أكثر من 6 ساعات</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(14)">التالي ←</button>
+  </div>
+
+  <!-- Q15 -->
+  <div class="card" id="q15">
+    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
+    <p class="step-num">سؤال 15 / 17</p>
+    <p class="question">إذا استنتجنا بالجلسة إنه برنامج مرافقة هو الحل الأنسب لوضعك، هل عندك استعداد للاستثمار بحاله خلال الشهور الثلاثة الجاية؟</p>
+    <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا الجلسة بهاد التوقيت بتخدمك، أو الأفضل نأجلها لوقت أنسب إلك.</p>
+    <div class="options" data-type="single">
+      <div class="option" data-score="20">إيه، جاهزة أستثمر إذا كان الحل مناسب لوضعي</div>
+      <div class="option" data-score="14">مبدئياً إيه، بس بدي أعرف التفاصيل والمبلغ قبل ما أقرر</div>
+      <div class="option" data-score="3" data-flag="not-now">مهتمة، بس التوقيت المالي مش مناسب هلق</div>
+      <div class="option" data-score="8">بفضّل نحكي بهاد الموضوع بالجلسة</div>
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(15)">التالي ←</button>
+  </div>
+
+  <!-- Q16 -->
+  <div class="card" id="q16">
+    <span class="section-tag">القسم 5 · الالتزام والجاهزية</span>
+    <p class="step-num">سؤال 16 / 17</p>
+    <p class="question">في أي اشي حابة أعرفه قبل الجلسة؟</p>
+    <p class="sub">اختياري. لو ما في اشي بتقدري تتخطي.</p>
+    <textarea id="notesInput" rows="4" placeholder="اكتبي هون..."></textarea>
+    <button class="btn-next" onclick="nextStep(16)">التالي ←</button>
+  </div>
+
+  <!-- Q17 — بيانات التواصل -->
+  <div class="card" id="q17">
+    <span class="section-tag">آخر خطوة</span>
+    <p class="step-num">سؤال 17 / 17</p>
+    <p class="question">وين برجعلك بالرد؟</p>
+    <p class="sub">برجعلك شخصياً خلال 24 ساعة على الواتساب.</p>
+
+    <p class="field-label">الاسم الكامل</p>
+    <input type="text" id="nameInput" placeholder="اسمك الأول والعائلة" />
+
+    <p class="field-label">رقم الواتساب</p>
+    <div class="phone-row">
+      <select id="countrySelect">
+        <option value="972" selected>🇮🇱 +972</option>
+        <option value="970">🇵🇸 +970</option>
+        <option value="962">🇯🇴 +962</option>
+        <option value="971">🇦🇪 +971</option>
+        <option value="966">🇸🇦 +966</option>
+        <option value="965">🇰🇼 +965</option>
+        <option value="974">🇶🇦 +974</option>
+        <option value="973">🇧🇭 +973</option>
+        <option value="968">🇴🇲 +968</option>
+        <option value="961">🇱🇧 +961</option>
+        <option value="20">🇪🇬 +20</option>
+        <option value="212">🇲🇦 +212</option>
+        <option value="1">🇺🇸 +1</option>
+        <option value="44">🇬🇧 +44</option>
+        <option value="49">🇩🇪 +49</option>
+      </select>
+      <input type="tel" id="phoneInput" placeholder="559311440" />
+    </div>
+    <p class="field-hint" id="phonePreview">الرقم الكامل: +972 …</p>
+
+    <p class="field-label">البريد الإلكتروني</p>
+    <input type="email" id="emailInput" placeholder="name@email.com" />
+
+    <button class="btn-next" onclick="submitForm()">إرسال الطلب للمراجعة ←</button>
+    <p class="consent">معلوماتك بتضلّ سرية وبتنحفظ عندي بس. ما بتنشارك ولا بتنستعمل لأي شي غير تحضير جلستك.</p>
+  </div>
+
+  <!-- ===== صفحة الشكر ===== -->
+  <div class="card final-card" id="qFinal">
+    <div class="icon" id="resIcon">✓</div>
+    <h2 id="resTitle">وصلني <span>طلبك</span></h2>
+    <p id="resBody">شكراً إنك خصصتي الوقت وجاوبتي بجدية.</p>
+
+    <div class="highlight" id="resHighlight">
+      <strong>شو بصير هلق؟</strong>
+      برجع بقرا إجاباتك شخصياً. مش بشكل آلي، وما في تأكيد تلقائي للحجز.<br><br>
+      خلال 24 ساعة برجعلك على الواتساب برد من اثنين: إما رابط لتثبيت موعد الجلسة مع ملاحظات أولية على وضعك، أو توضيح إنه هاي الجلسة مش الخطوة الأنسب إلك بهاي المرحلة مع اقتراح شو الخطوة الأنسب.<br><br>
+      بفضّل أكون صريحة معك من البداية على إنه ناخد جلسة مش بمحلها.
+    </div>
+
+    <p id="resNote" style="font-size:14px; opacity:0.7;">لحد ما أرجعلك، بتقدري تشوفي كيف بشتغل مع أصحاب البزنس.</p>
+
+    <a class="cta-btn" id="resCta" href="#" target="_blank" rel="noopener">تابعيني على انستغرام ←</a><br>
+    <a class="cta-btn secondary" id="resCta2" href="#" target="_blank" rel="noopener">لو في اشي مستعجل، راسليني ←</a>
+
+    <p class="signature">ريما يعقوب<br>مدربة ومستشارة أعمال</p>
+  </div>
+
+</div>
+
+<script>
+  // ============================================================
+  //  الإعدادات — عدّلي هون بس
+  // ============================================================
+  const ENDPOINT       = 'https://script.google.com/macros/s/AKfycbztxXKfPrMwKGVh_PTvsWlA92i6FIFIdx-cvtfuLo0_EIHcpw6TIIZQtNzGx1yu1Sgn/exec';
+  const LINK_INSTAGRAM = 'https://www.instagram.com/rima_yaqub/';
+  const LINK_WHATSAPP  = 'https://wa.me/972559311440';
+  const FORM_NAME      = 'استبيان التأهيل — جلسة الاستراتيجية';
+
+  const TOTAL = 17;
+
+  const LABELS = {
+    1:  'نوع الخدمة',
+    2:  'سنوات العمل',
+    3:  'حجم الفريق',
+    4:  'الدخل الشهري',
+    5:  'عملاء جدد بالشهر',
+    6:  'مصادر العملاء',
+    7:  'سعر الخدمة الأساسية',
+    8:  'معرفة الربح الصافي',
+    9:  'أكبر تحدٍ',
+    10: 'تفصيل التحدي',
+    11: 'شو جربت وما زبط',
+    12: 'الهدف خلال 3 شهور',
+    13: 'الاستعداد للتغيير (1-10)',
+    14: 'الوقت الأسبوعي المتاح',
+    15: 'الجاهزية للاستثمار',
+    16: 'أسئلة قبل الجلسة'
+  };
+
+  const MAX_RAW = 147; // مجموع أعلى نتيجة ممكنة
+
+  let answers = {};
+  let score = 0;
+  let flagLowIncome = false;
+  let flagNotNow = false;
+
+  // ===== تفعيل الخيارات =====
+  document.querySelectorAll('.options').forEach(group => {
+    const type = group.dataset.type;
+    group.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (type === 'single') {
+          group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+        } else {
+          opt.classList.toggle('selected');
+        }
+        const btn = group.closest('.card').querySelector('.btn-next');
+        if (btn) btn.disabled = group.querySelectorAll('.option.selected').length === 0;
+      });
+    });
+  });
+
+  // ===== الحقول النصية الإجبارية =====
+  document.querySelectorAll('textarea[data-required]').forEach(ta => {
+    const card  = ta.closest('.card');
+    const btn   = card.querySelector('.btn-next');
+    const count = card.querySelector('.char-count');
+    const min   = parseInt(ta.dataset.required, 10);
+    ta.addEventListener('input', () => {
+      const len = ta.value.trim().length;
+      btn.disabled = len < min;
+      if (count) count.textContent = len < min ? (len + ' حرف · بحتاج ' + min + ' على الأقل') : (len + ' حرف ✓');
+    });
+  });
+
+  document.getElementById('serviceInput').addEventListener('input', function () {
+    document.getElementById('next1').disabled = this.value.trim().length < 3;
+  });
+
+  document.getElementById('priceInput').addEventListener('input', function () {
+    document.getElementById('next7').disabled = !(parseInt(this.value, 10) > 0);
+  });
+
+  const readyRange = document.getElementById('readyRange');
+  readyRange.addEventListener('input', function () {
+    document.getElementById('readyValue').textContent = this.value;
+  });
+
+  // ===== حقل الهاتف =====
+  function countryCode() { return document.getElementById('countrySelect').value; }
+  function updatePhonePreview() {
+    const local = document.getElementById('phoneInput').value.replace(/\D/g, '').replace(/^0+/, '');
+    document.getElementById('phonePreview').textContent =
+      'الرقم الكامل: +' + countryCode() + ' ' + (local || '…');
+  }
+  document.getElementById('countrySelect').addEventListener('change', updatePhonePreview);
+  document.getElementById('phoneInput').addEventListener('input', updatePhonePreview);
+  updatePhonePreview();
+
+  // ===== جمع إجابات الخيارات =====
+  function collect(stepId) {
+    const group = document.getElementById('q' + stepId).querySelector('.options');
+    if (!group) return '—';
+    const selected = [...group.querySelectorAll('.option.selected')];
+    selected.forEach(o => {
+      score += parseInt(o.dataset.score || 0, 10);
+      if (o.dataset.flag === 'low-income') flagLowIncome = true;
+      if (o.dataset.flag === 'not-now')    flagNotNow = true;
+    });
+    return selected.map(o => o.textContent.trim()).join(' / ') || '—';
+  }
+
+  function nextStep(current) {
+    if (current === 1) {
+      answers[LABELS[1]] = document.getElementById('serviceInput').value.trim();
+
+    } else if (current === 7) {
+      const p = parseInt(document.getElementById('priceInput').value, 10) || 0;
+      answers[LABELS[7]] = p.toLocaleString() + ' ₪';
+      if (p >= 2000) score += 10;
+      else if (p >= 800) score += 8;
+      else if (p >= 300) score += 5;
+      else score += 2;
+
+    } else if (current === 10) {
+      const txt = document.getElementById('challengeInput').value.trim();
+      answers[LABELS[10]] = txt;
+      if (txt.length >= 120) score += 4;
+      else if (txt.length >= 60) score += 2;
+
+    } else if (current === 12) {
+      const txt = document.getElementById('goalInput').value.trim();
+      answers[LABELS[12]] = txt;
+      if (/\d{3,}/.test(txt)) score += 6;      // ذكرت رقم واضح
+      else if (txt.length >= 60) score += 3;
+
+    } else if (current === 13) {
+      const v = parseInt(readyRange.value, 10);
+      answers[LABELS[13]] = v + ' / 10';
+      score += v;
+
+    } else if (current === 16) {
+      answers[LABELS[16]] = document.getElementById('notesInput').value.trim() || '—';
+
+    } else {
+      answers[LABELS[current]] = collect(current);
+    }
+
+    document.getElementById('q' + current).classList.remove('active');
+    const next = current + 1;
+    if (next <= TOTAL) {
+      document.getElementById('q' + next).classList.add('active');
+      document.getElementById('progressLabel').textContent = 'سؤال ' + next + ' من ' + TOTAL;
+    }
+    document.getElementById('progressBar').style.width = Math.round((current / TOTAL) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== التصنيف الداخلي — ما بينعرض للعميلة =====
+  function tierFor(pts) {
+    if (flagLowIncome && flagNotNow) return 'غير مناسبة الآن';
+    if (pts >= 75) return 'ملاءمة عالية · أكّدي فوراً';
+    if (pts >= 55) return 'ملاءمة متوسطة · مكالمة قصيرة قبل التأكيد';
+    return 'ملاءمة منخفضة · وجّهيها لجلسة Focus';
+  }
+
+  function submitForm() {
+    const name  = document.getElementById('nameInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+
+    if (!name || !phone || !email) {
+      alert('من فضلك اكملي البيانات كلها (الاسم، الواتساب، الإيميل)');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('من فضلك اكتبي بريد إلكتروني صحيح');
+      return;
+    }
+    const local = phone.replace(/\D/g, '').replace(/^0+/, '');
+    if (local.length < 6) {
+      alert('من فضلك اكتبي رقم واتساب صحيح');
+      return;
+    }
+    // بدون + بالبداية حتى Google Sheets ما يقرأه كصيغة حسابية
+    const waPhone = countryCode() + ' ' + local;
+
+    const finalScore = Math.round((score / MAX_RAW) * 100);
+    const tier = tierFor(finalScore);
+
+    answers['الاسم']   = name;
+    answers['واتساب']  = waPhone;
+    answers['الإيميل'] = email;
+    answers['النتيجة'] = finalScore + '/100';
+    answers['التصنيف'] = tier;
+    answers['النموذج'] = FORM_NAME;
+
+    // الانتقال لصفحة الشكر
+    document.getElementById('q17').classList.remove('active');
+    document.getElementById('qFinal').classList.add('active');
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'مكتمل ✓';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // كل المرشحات بيروحوا للانستغرام. رابط الدفع بينبعت بالواتساب بعد المراجعة بس.
+    document.getElementById('resCta').href = LINK_INSTAGRAM;
+    document.getElementById('resCta2').href = LINK_WHATSAPP;
+
+    console.log('Strategy Qualify:', JSON.stringify(answers, null, 2));
+    fetch(ENDPOINT + '?data=' + encodeURIComponent(JSON.stringify(answers)),
+          { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  }
+</script>
+</body>
+</html>
