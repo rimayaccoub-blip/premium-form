@@ -4,6 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>الفحص التشخيصي — وين الفجوة ببزنسك؟ | ريما يعقوب</title>
+
+  <!-- Meta Pixel -->
+  <script>
+  window.META_PIXEL_ID = '914783969729003';
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', window.META_PIXEL_ID);
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=914783969729003&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel -->
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1107,6 +1126,17 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     console.log('Diagnostic:', JSON.stringify(answers, null, 2));
+
+    // حدث Lead لبكسل ميتا — بينشغل بس بعد ما يعبي البيانات فعلياً
+    if (window.fbq) {
+      fbq('track', 'Lead', {
+        content_name: FORM_NAME,
+        content_category: answers['نوع الخدمة'],
+        value: D.monthGap || 0,
+        currency: 'USD'
+      });
+    }
+
     fetch(ENDPOINT + '?data=' + encodeURIComponent(JSON.stringify(answers)),
           { method: 'GET', mode: 'no-cors' }).catch(() => {});
   }
