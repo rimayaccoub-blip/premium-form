@@ -61,9 +61,10 @@
     .progress-label { font-size: 12px; opacity: 0.6; text-align: center; margin-bottom: 8px; }
 
     .card {
-      background: rgba(255,255,255,0.06);
+      /* لا تستعملي backdrop-filter هون: بتمنع الضغط على العناصر جوّاها
+         بمتصفح انستغرام وفيسبوك الداخلي على الجوال */
+      background: rgba(22, 41, 68, 0.55);
       border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(12px);
       border-radius: 20px;
       padding: 30px 28px;
       margin-bottom: 20px;
@@ -98,14 +99,24 @@
       background: rgba(255,255,255,0.06);
       border: 1.5px solid rgba(255,255,255,0.15);
       border-radius: 12px;
-      padding: 14px 18px;
+      padding: 16px 18px;
       cursor: pointer;
       font-size: 15px;
       line-height: 1.55;
-      transition: all 0.2s ease;
+      transition: background 0.15s ease, border-color 0.15s ease;
       text-align: right;
+      /* ضروري للمس على الجوال */
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(232,192,125,0.3);
+      -webkit-user-select: none;
+      user-select: none;
+      position: relative;
+      z-index: 1;
     }
-    .option:hover { background: rgba(232,192,125,0.14); border-color: #e8c07d; }
+    @media (hover: hover) {
+      .option:hover { background: rgba(232,192,125,0.14); border-color: #e8c07d; }
+    }
+    .option:active { background: rgba(232,192,125,0.22); border-color: #e8c07d; }
     .option.selected {
       background: linear-gradient(90deg, rgba(232,192,125,0.25), rgba(209,154,78,0.18));
       border-color: #e8c07d;
@@ -210,8 +221,13 @@
       cursor: pointer;
       font-family: inherit;
       transition: opacity 0.2s, transform 0.15s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      z-index: 1;
     }
-    .btn-next:hover { opacity: 0.9; transform: scale(1.01); }
+    @media (hover: hover) { .btn-next:hover { opacity: 0.9; transform: scale(1.01); } }
+    .btn-next:active { opacity: 0.85; }
     .btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
     .consent {
@@ -305,6 +321,8 @@
       margin: 16px 0 4px;
       cursor: pointer;
       transition: all 0.2s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(232,192,125,0.2);
     }
     .checkbox-row:hover { border-color: rgba(232,192,125,0.5); }
     .checkbox-row.checked { border-color: #e8c07d; background: rgba(232,192,125,0.1); }
@@ -717,10 +735,34 @@
   const nf  = n => Math.round(n).toLocaleString('en-US');
   const usd = n => '$' + nf(n);
 
+  // ============================================================
+  //  onTap — ضغطة موحّدة للماوس واللمس
+  //  بعض المتصفحات الداخلية (انستغرام، فيسبوك) ما بتطلّع حدث click
+  //  على عناصر div، فبنمسك اللمس مباشرة ومنمنع الـ click المكرر.
+  // ============================================================
+  function onTap(el, fn) {
+    let sx = 0, sy = 0, moved = false;
+    el.addEventListener('touchstart', e => {
+      moved = false;
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+    }, { passive: true });
+    el.addEventListener('touchmove', e => {
+      if (Math.abs(e.touches[0].clientX - sx) > 10 ||
+          Math.abs(e.touches[0].clientY - sy) > 10) moved = true;
+    }, { passive: true });
+    el.addEventListener('touchend', e => {
+      if (moved) return;
+      e.preventDefault();   // بيمنع الـ click الوهمي بعده
+      fn(e);
+    }, { passive: false });
+    el.addEventListener('click', fn);
+  }
+
   // ===== الخيارات =====
   document.querySelectorAll('.options').forEach(group => {
     group.querySelectorAll('.option').forEach(opt => {
-      opt.addEventListener('click', () => {
+      onTap(opt, () => {
         group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         const btn = group.closest('.card').querySelector('.btn-next');
@@ -751,7 +793,7 @@
     q1Btn.disabled = isOther && serviceInput.value.trim().length < 2;
     if (isOther) serviceInput.focus();
   }
-  document.querySelectorAll('#serviceOptions .option').forEach(o => o.addEventListener('click', refreshQ1));
+  document.querySelectorAll('#serviceOptions .option').forEach(o => onTap(o, refreshQ1));
   serviceInput.addEventListener('input', refreshQ1);
 
   function serviceValue() {
@@ -1071,7 +1113,7 @@
 
   // التقاط إحساسه بالمشكلة
   document.querySelectorAll('#q10 .option').forEach(o => {
-    o.addEventListener('click', () => { perceived = o.dataset.key; });
+    onTap(o, () => { perceived = o.dataset.key; });
   });
 </script>
 </body>
