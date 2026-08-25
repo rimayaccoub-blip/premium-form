@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>تشخيص FOCUS | RIMA YAQUB CONSULTING</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Heebo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --navy-1:#0b1a2e;
+    --navy-2:#14294a;
+    --gold-1:#e8c07d;
+    --gold-2:#d19a4e;
+    --copper:#c08457;
+    --mark:#4a83ad;
+  }
+
+  body{
+    font-family:'Heebo','Segoe UI',Arial,sans-serif;
+    background:linear-gradient(160deg,var(--navy-1),var(--navy-2),#0d1f38);
+    background-attachment:fixed;
+    min-height:100vh;
+    padding:22px 16px 70px;
+    color:#fff;
+    direction:rtl;
+    text-align:right;
+  }
+
+  .container{max-width:700px;margin:0 auto}
+
+  /* ===== مبدّل اللغة ===== */
+  .lang-bar{display:flex;justify-content:center;margin-bottom:22px}
+  .lang-switch{
+    display:flex;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.16);border-radius:50px;padding:4px;gap:2px;
+  }
+  .lang-btn{
+    background:none;border:none;color:rgba(255,255,255,.6);
+    font-family:inherit;font-size:13.5px;font-weight:700;
+    padding:7px 20px;border-radius:50px;cursor:pointer;transition:all .2s;
+  }
+  .lang-btn.active{background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:var(--navy-1)}
+  .lang-btn:not(.active):hover{color:#fff}
+
+  /* ===== اللوغو ===== */
+  .brand{text-align:center;margin-bottom:26px}
+  .brand svg{display:block;margin:0 auto 12px}
+  .brand .wordmark{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:clamp(23px,4.6vw,31px);
+    letter-spacing:.16em;color:var(--copper);
+    font-weight:500;line-height:1.1;
+  }
+  .brand .tagline{
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:clamp(9.5px,1.9vw,11.5px);
+    letter-spacing:.34em;color:var(--copper);
+    opacity:.85;margin-top:7px;
+  }
+  .brand .entity{
+    font-size:10.5px;letter-spacing:.16em;
+    color:rgba(255,255,255,.42);margin-top:14px;line-height:1.9;
+    direction:ltr;
+  }
+
+  /* ===== الهيدر ===== */
+  .header{text-align:center;margin-bottom:28px}
+  .badge{
+    display:inline-block;
+    background:linear-gradient(90deg,var(--gold-1),var(--gold-2));
+    color:var(--navy-1);font-weight:800;font-size:12px;
+    letter-spacing:2px;padding:5px 20px;border-radius:50px;margin-bottom:16px;
+  }
+  .header h1{font-size:clamp(23px,4.8vw,34px);font-weight:900;line-height:1.35;margin-bottom:14px}
+  .header h1 span{color:var(--gold-1)}
+  .header p{font-size:15px;opacity:.82;max-width:560px;margin:0 auto;line-height:1.85}
+
+  .meta-row{
+    display:flex;justify-content:center;gap:22px;flex-wrap:wrap;
+    margin-top:18px;font-size:12.5px;opacity:.6;
+  }
+  .meta-row span::before{content:'· ';color:var(--gold-1)}
+
+  /* ===== شريط التقدم ===== */
+  .progress-wrap{background:rgba(255,255,255,.1);border-radius:20px;height:6px;margin-bottom:10px;overflow:hidden}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));border-radius:20px;transition:width .4s ease;width:0}
+  .progress-label{font-size:12px;opacity:.6;text-align:center;margin-bottom:26px}
+
+  /* ===== الكرت ===== */
+  .card{
+    background:rgba(22,41,68,.55);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;padding:30px 28px;margin-bottom:20px;
+    display:none;animation:fadeIn .35s ease;
+  }
+  .card.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  .section-tag{
+    display:inline-block;font-size:11px;font-weight:700;color:var(--gold-1);
+    background:rgba(232,192,125,.12);border:1px solid rgba(232,192,125,.25);
+    padding:4px 12px;border-radius:50px;margin-bottom:14px;
+  }
+  .question{font-size:18.5px;font-weight:700;line-height:1.55;margin-bottom:6px}
+  .sub{font-size:13px;opacity:.62;margin-bottom:20px;line-height:1.7}
+  .sub:empty{display:none;margin:0}
+
+  /* ===== الخيارات ===== */
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option{
+    background:rgba(255,255,255,.06);
+    border:1.5px solid rgba(255,255,255,.15);
+    border-radius:12px;padding:15px 18px;cursor:pointer;
+    font-size:15px;line-height:1.55;
+    transition:background .15s,border-color .15s;
+    touch-action:manipulation;-webkit-tap-highlight-color:rgba(232,192,125,.3);
+    -webkit-user-select:none;user-select:none;position:relative;z-index:1;
+  }
+  @media(hover:hover){.option:hover{background:rgba(232,192,125,.14);border-color:var(--gold-1)}}
+  .option:active{background:rgba(232,192,125,.22);border-color:var(--gold-1)}
+  .option.selected{
+    background:linear-gradient(90deg,rgba(232,192,125,.25),rgba(209,154,78,.18));
+    border-color:var(--gold-1);font-weight:600;
+  }
+  .option.multi.selected::after{
+    content:'✓';position:absolute;color:var(--gold-1);font-weight:900;
+    top:50%;transform:translateY(-50%);
+  }
+  [dir=rtl] .option.multi.selected::after{left:16px}
+  .limit-note{font-size:12px;opacity:.5;margin-top:10px}
+  .limit-note.hit{color:var(--gold-1);opacity:.9}
+
+  /* ===== الحقول ===== */
+  textarea,input[type=text],input[type=tel],input[type=email],input[type=number]{
+    width:100%;background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.2);border-radius:12px;
+    padding:14px 16px;color:#fff;font-size:15px;font-family:inherit;
+    resize:vertical;outline:none;transition:border-color .2s;
+    margin-bottom:4px;
+  }
+  input[type=number]{direction:ltr;text-align:left;font-size:19px;font-weight:700}
+  textarea{min-height:120px;line-height:1.8}
+  textarea:focus,input:focus{border-color:var(--gold-1)}
+  textarea::placeholder,input::placeholder{color:rgba(255,255,255,.32);font-weight:400;font-size:14.5px}
+  input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+  .num-wrap{position:relative}
+  .num-wrap .unit{
+    position:absolute;top:15px;font-size:16px;font-weight:700;
+    opacity:.45;pointer-events:none;
+  }
+  [dir=rtl] .num-wrap .unit{left:16px}
+  [dir=rtl] .num-wrap input{padding-left:52px}
+  [dir=ltr] .num-wrap .unit{right:16px}
+  [dir=ltr] .num-wrap input{padding-right:52px}
+
+  .phone-row{display:flex;gap:8px}
+  .phone-row select{
+    flex:0 0 38%;background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.2);border-radius:12px;
+    padding:14px 12px;color:#fff;font-size:14px;font-family:inherit;
+    outline:none;cursor:pointer;
+  }
+  .phone-row select:focus{border-color:var(--gold-1)}
+  .phone-row select option{background:var(--navy-2);color:#fff}
+  .phone-row input{flex:1;direction:ltr;text-align:left;margin-bottom:0}
+  .phone-preview{font-size:12px;opacity:.5;margin-top:8px;direction:ltr}
+
+  .field-label{font-size:13px;opacity:.78;margin:14px 0 8px;font-weight:600}
+  .field-label:first-child{margin-top:0}
+
+  /* ===== المقياس ===== */
+  .range-wrap{padding:8px 0}
+  input[type=range]{
+    width:100%;-webkit-appearance:none;height:6px;border-radius:3px;
+    background:rgba(255,255,255,.2);outline:none;direction:ltr;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));cursor:pointer;
+    box-shadow:0 0 8px rgba(232,192,125,.5);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:22px;height:22px;border:none;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));cursor:pointer;
+  }
+  .range-value{text-align:center;font-size:36px;font-weight:800;color:var(--gold-1);margin:12px 0 4px}
+  .range-labels{display:flex;justify-content:space-between;font-size:12px;opacity:.55;margin-top:8px;gap:12px}
+
+  /* ===== الأزرار ===== */
+  .nav-row{display:flex;gap:10px;align-items:center;margin-top:26px}
+  .btn-next{
+    flex:1;background:linear-gradient(90deg,var(--gold-1),var(--gold-2));color:var(--navy-1);
+    font-weight:800;font-size:16px;border:none;border-radius:50px;padding:15px 30px;
+    cursor:pointer;font-family:inherit;transition:opacity .2s,transform .15s;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  }
+  @media(hover:hover){.btn-next:hover{opacity:.9;transform:scale(1.01)}}
+  .btn-next:active{opacity:.85}
+
+  .btn-back{
+    background:none;border:1.5px solid rgba(255,255,255,.22);color:#fff;
+    border-radius:50px;padding:14px 22px;font-size:14px;font-family:inherit;
+    cursor:pointer;opacity:.75;transition:opacity .2s,border-color .2s;
+  }
+  .btn-back:hover{opacity:1;border-color:var(--gold-1)}
+
+  .consent{font-size:12px;opacity:.5;line-height:1.75;margin-top:18px;
+           padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+
+  /* ===== شاشة الإنهاء ===== */
+  .final-card{text-align:center}
+  .final-card .icon{
+    width:66px;height:66px;border-radius:50%;margin:0 auto 22px;
+    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));color:var(--navy-1);
+    font-size:32px;font-weight:900;display:flex;align-items:center;justify-content:center;
+  }
+  .final-card h2{font-size:clamp(22px,4.6vw,29px);font-weight:900;line-height:1.45;margin-bottom:16px}
+  .final-card h2 span{color:var(--gold-1)}
+  .final-card p{font-size:15px;line-height:2;opacity:.85;margin-bottom:14px}
+
+  .steps-box{
+    background:rgba(232,192,125,.09);border:1px solid rgba(232,192,125,.28);
+    border-radius:16px;padding:22px;margin:26px 0 6px;
+  }
+  .steps-box h3{font-size:15px;font-weight:800;color:var(--gold-1);margin-bottom:14px}
+  .steps-box ol{padding-inline-start:20px}
+  .steps-box li{font-size:14px;line-height:2;opacity:.9;margin-bottom:6px}
+
+  .signature{font-size:13px;opacity:.55;margin-top:26px;line-height:1.9}
+
+  .soft-stop h2{font-size:24px;font-weight:900;margin-bottom:16px;line-height:1.5}
+  .soft-stop p{font-size:15px;line-height:2.05;opacity:.85;margin-bottom:14px}
+
+  .err{color:#ff9b9b;font-size:13px;margin-top:10px;display:none}
+  .err.show{display:block}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===== مبدّل اللغة ===== -->
+  <div class="lang-bar" id="langBar">
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ar">العربية</button>
+      <button class="lang-btn" data-lang="he">עברית</button>
+    </div>
+  </div>
+
+  <!-- ===== اللوغو ===== -->
+  <div class="brand">
+    <svg width="76" height="76" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="37" stroke="var(--mark)" stroke-width="2.2"/>
+      <path d="M50 13V87M13 50H87" stroke="var(--mark)" stroke-width="1.6" opacity=".65"/>
+      <g stroke="var(--mark)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <g>
+          <path d="M50 50V26"/>
+          <path d="M41 34L50 25L59 34"/>
+        </g>
+        <g transform="rotate(90 50 50)">
+          <path d="M50 50V26"/>
+          <path d="M41 34L50 25L59 34"/>
+        </g>
+        <g transform="rotate(180 50 50)">
+          <path d="M50 50V26"/>
+          <path d="M41 34L50 25L59 34"/>
+        </g>
+        <g transform="rotate(270 50 50)">
+          <path d="M50 50V26"/>
+          <path d="M41 34L50 25L59 34"/>
+        </g>
+      </g>
+    </svg>
+    <div class="wordmark">RIMA YAQUB</div>
+    <div class="tagline">ELEVATE YOUR BUSINESS JOURNEY</div>
+    <div class="entity">
+      RIMA YAQUB CONSULTING LLC<br>Leverage Growth 360
+    </div>
+  </div>
+
+  <div class="header" id="header">
+    <div class="badge">FOCUS</div>
+    <h1 id="hTitle"></h1>
+    <p id="hDesc"></p>
+    <div class="meta-row" id="hMeta"></div>
+  </div>
+
+  <div class="progress-wrap" id="progWrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel"></div>
+
+  <div id="stage"></div>
+
+  <!-- شاشة التوقف اللطيف -->
+  <div class="card soft-stop" id="softStop">
+    <div class="section-tag" id="ssTag"></div>
+    <h2 id="ssTitle"></h2>
+    <div id="ssBody"></div>
+    <p class="signature" id="ssSign"></p>
+  </div>
+
+  <!-- شاشة النهاية -->
+  <div class="card final-card" id="finalCard">
+    <div class="icon">✓</div>
+    <h2 id="fcTitle"></h2>
+    <p id="fcBody"></p>
+    <div class="steps-box">
+      <h3 id="fcStepsTitle"></h3>
+      <ol id="fcSteps"></ol>
+    </div>
+    <p class="signature" id="fcSign"></p>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+//  الإعدادات
+// ============================================================
+const ENDPOINT  = 'https://script.google.com/macros/s/AKfycbwdo2aUXXco127GsQzL_xLf4nKCYV1-L9pqrNrl-O9W4DEp2WXm4buq1xfAvAUNJto/exec';
+const FORM_NAME = 'FOCUS Intake';
+
+// ============================================================
+//  نصوص الواجهة
+// ============================================================
+const UI = {
+  ar:{
+    dir:'rtl', lang:'ar',
+    title:'تشخيص البزنس <span>قبل الاستشارة</span>',
+    desc:'استشارة FOCUS مش جلسة تعارف. عشان نستغل كل دقيقة منها بتشخيص حقيقي، محتاج أفهم بنية بزنسك وأرقامه قبل ما نلتقي.',
+    meta:['١٠ دقايق','٦ محاور','سري تماماً'],
+    start:'جاهز نبدأ',
+    of:(a,b)=>'سؤال '+a+' من '+b,
+    next:'التالي ←', submit:'إرسال الاستمارة ←', back:'رجوع',
+    done:'خلصنا',
+    consent:'كل اللي بتكتبه بيضل سري وما بينشارك مع أي حدا. بينستعمل بس لتحضير تشخيصك قبل الجلسة.',
+    pickOne:'اختار إجابة',
+    pickSome:'اختار على الأقل إجابة وحدة',
+    maxHit:(n)=>'وصلت للحد الأقصى ('+n+'). شيل واحد إذا بدك تبدّل.',
+    counter:(c,n)=>'اخترت '+c+' من '+n,
+    needText:'جاوب بجملة كاملة على الأقل، الجواب هذا بيفرق بالتشخيص',
+    needNum:'اكتب رقم',
+    errName:'اكتب اسمك الكامل', errPhone:'اكتب رقم هاتف صحيح',
+    errMail:'اكتب بريد إلكتروني صحيح', errBiz:'اكتب اسم البزنس',
+    fName:'الاسم الكامل', fNamePh:'الاسم الأول والعائلة',
+    fPhone:'رقم الهاتف (واتساب)', fMail:'البريد الإلكتروني',
+    fBiz:'اسم البزنس', fBizPh:'الاسم التجاري',
+    fLink:'رابط الانستغرام أو الموقع', fLinkPh:'اختياري',
+    ssTag:'قبل ما نكمل',
+    ssTitle:'خليني أكون صريحة معك',
+    ssBody:[
+      'استشارة FOCUS مبنية على بزنس شغّال، فيه أرقام حقيقية نقدر نحللها ونبني عليها قرار.',
+      'إذا البزنس لسا ما أطلق وما في دخل بعد، الاستشارة مش رح تعطيك القيمة اللي بتستاهل تدفع عليها. المرحلة اللي انت فيها بتحتاج بناء أساس، مش تشخيص.',
+      'شكراً على وقتك، ولما البزنس يبدأ يمشي وتصير عندك أرقام، بنحكي.'
+    ],
+    fcTitle:'شكراً، <span>وصلتني المعلومات</span>',
+    fcBody:'نلتقي بجلسة FOCUS.',
+    fcStepsTitle:'شو بصير هلأ',
+    fcSteps:[
+      'بقرأ إجاباتك وبحضّر تشخيص أولي للبزنس',
+      'بتواصل معك لتثبيت موعد الجلسة',
+      'بالجلسة بنشتغل على المشكلة الواحدة اللي حددتها، وبتطلع بقرار وخطوات مكتوبة'
+    ],
+    sign:'ريما يعقوب<br>مدربة ومستشارة أعمال'
+  },
+  he:{
+    dir:'rtl', lang:'he',
+    title:'אבחון העסק <span>לפני הייעוץ</span>',
+    desc:'פגישת FOCUS היא לא פגישת היכרות. כדי לנצל כל דקה לאבחון אמיתי, אני צריכה להבין את מבנה העסק שלך ואת המספרים לפני שניפגש.',
+    meta:['10 דקות','6 צירים','סודי לחלוטין'],
+    start:'מוכנים להתחיל',
+    of:(a,b)=>'שאלה '+a+' מתוך '+b,
+    next:'הבא ←', submit:'שליחת השאלון ←', back:'חזרה',
+    done:'סיימנו',
+    consent:'כל מה שתכתוב נשאר חסוי ולא משותף עם אף אחד. משמש רק להכנת האבחון שלך לפני הפגישה.',
+    pickOne:'בחר תשובה',
+    pickSome:'בחר לפחות תשובה אחת',
+    maxHit:(n)=>'הגעת למקסימום ('+n+'). הסר אחד כדי להחליף.',
+    counter:(c,n)=>'בחרת '+c+' מתוך '+n,
+    needText:'ענה לפחות במשפט שלם, התשובה הזו משנה את האבחון',
+    needNum:'כתוב מספר',
+    errName:'כתוב את שמך המלא', errPhone:'כתוב מספר טלפון תקין',
+    errMail:'כתוב כתובת אימייל תקינה', errBiz:'כתוב את שם העסק',
+    fName:'שם מלא', fNamePh:'שם פרטי ומשפחה',
+    fPhone:'מספר טלפון (וואטסאפ)', fMail:'אימייל',
+    fBiz:'שם העסק', fBizPh:'השם המסחרי',
+    fLink:'קישור לאינסטגרם או לאתר', fLinkPh:'אופציונלי',
+    ssTag:'לפני שנמשיך',
+    ssTitle:'תני לי להיות כנה איתך',
+    ssBody:[
+      'ייעוץ FOCUS בנוי על עסק פעיל, עם מספרים אמיתיים שאפשר לנתח ולבנות עליהם החלטה.',
+      'אם העסק עוד לא יצא לדרך ואין הכנסה, הייעוץ לא ייתן לך את הערך שמצדיק את התשלום. השלב שאתה נמצא בו דורש בניית בסיס, לא אבחון.',
+      'תודה על הזמן, וכשהעסק יתחיל לזוז ויהיו לך מספרים, נדבר.'
+    ],
+    fcTitle:'תודה, <span>המידע התקבל</span>',
+    fcBody:'נתראה בפגישת FOCUS.',
+    fcStepsTitle:'מה קורה עכשיו',
+    fcSteps:[
+      'אני קוראת את התשובות ומכינה אבחון ראשוני לעסק',
+      'אני יוצרת איתך קשר לקביעת מועד הפגישה',
+      'בפגישה נעבוד על הבעיה האחת שהגדרת, ותצא עם החלטה וצעדים כתובים'
+    ],
+    sign:'רימא יעקוב<br>מאמנת ויועצת עסקית'
+  }
+};
+
+// ============================================================
+//  الأسئلة
+//  كل خيار إله v = كود ثابت بينبعت للباك-إند مهما كانت اللغة
+// ============================================================
+const QUESTIONS = [
+
+{ id:'contact', type:'contact',
+  sec:{ar:'التعريف',he:'היכרות'},
+  q:{ar:'خلينا نتعرف عليك',he:'בוא נכיר'},
+  sub:{ar:'حتى أقدر أتواصل معك وأشوف كيف بيظهر بزنسك للسوق.',
+       he:'כדי שאוכל ליצור איתך קשר ולראות איך העסק שלך נראה בשוק.'} },
+
+// ---------- ١ الواقع ----------
+{ id:'age', type:'choice',
+  sec:{ar:'١ · الواقع الحالي',he:'1 · המצב הנוכחי'},
+  q:{ar:'من متى البزنس قائم؟',he:'כמה זמן העסק קיים?'},
+  opts:[
+    {v:'pre',   ar:'لسا ما أطلقت، ما في دخل بعد', he:'עוד לא יצאתי לדרך, אין הכנסה', stop:true},
+    {v:'u1',    ar:'أقل من سنة',        he:'פחות משנה'},
+    {v:'1_3',   ar:'من سنة لـ 3 سنين',  he:'שנה עד 3 שנים'},
+    {v:'3_5',   ar:'من 3 لـ 5 سنين',    he:'3 עד 5 שנים'},
+    {v:'5p',    ar:'أكثر من 5 سنين',     he:'יותר מ-5 שנים'}
+  ]},
+
+{ id:'team', type:'choice',
+  sec:{ar:'١ · الواقع الحالي',he:'1 · המצב הנוכחי'},
+  q:{ar:'مين بيشتغل بالبزنس معك اليوم؟',he:'מי עובד בעסק איתך היום?'},
+  opts:[
+    {v:'solo',  ar:'لحالي بالكامل',                      he:'לבד לגמרי'},
+    {v:'part',  ar:'لحالي + مساعدة جزئية (تسويق أو إدارة)', he:'לבד + עזרה חלקית (שיווק או ניהול)'},
+    {v:'small', ar:'معي شخص أو اثنين',                   he:'איתי אדם אחד או שניים'},
+    {v:'team',  ar:'معي فريق من 3 وأكثر',                 he:'איתי צוות של 3 ומעלה'}
+  ]},
+
+{ id:'clients', type:'choice',
+  sec:{ar:'١ · الواقع الحالي',he:'1 · המצב הנוכחי'},
+  q:{ar:'كم عميل بتخدم بالشهر تقريباً؟',he:'כמה לקוחות אתה משרת בחודש בערך?'},
+  opts:[
+    {v:'u5',   ar:'أقل من 5',      he:'פחות מ-5'},
+    {v:'5_15', ar:'من 5 لـ 15',    he:'5 עד 15'},
+    {v:'16_30',ar:'من 16 لـ 30',   he:'16 עד 30'},
+    {v:'31_60',ar:'من 31 لـ 60',   he:'31 עד 60'},
+    {v:'60p',  ar:'أكثر من 60',    he:'יותר מ-60'}
+  ]},
+
+{ id:'hours', type:'choice',
+  sec:{ar:'١ · الواقع الحالي',he:'1 · המצב הנוכחי'},
+  q:{ar:'كم ساعة بتشتغل بالأسبوع على البزنس؟',he:'כמה שעות בשבוע אתה עובד על העסק?'},
+  opts:[
+    {v:'u10',  ar:'أقل من 10 ساعات', he:'פחות מ-10 שעות'},
+    {v:'10_25',ar:'من 10 لـ 25',     he:'10 עד 25'},
+    {v:'25_40',ar:'من 25 لـ 40',     he:'25 עד 40'},
+    {v:'40_55',ar:'من 40 لـ 55',     he:'40 עד 55'},
+    {v:'55p',  ar:'أكثر من 55',      he:'יותר מ-55'}
+  ]},
+
+{ id:'gap', type:'text', min:25,
+  sec:{ar:'١ · الواقع الحالي',he:'1 · המצב הנוכחי'},
+  q:{ar:'رغم كل الشغل اللي بتعمله، وين بتحس إنه البزنس مش بيعطيك النتيجة اللي بتتوقعها؟',
+     he:'למרות כל העבודה שאתה עושה, איפה אתה מרגיש שהעסק לא נותן לך את התוצאה שאתה מצפה לה?'},
+  sub:{ar:'هذا أهم سؤال بالقسم. خد وقتك فيه.',he:'זו השאלה החשובה בחלק הזה. קח את הזמן.'} },
+
+// ---------- ٢ الهوية ----------
+{ id:'audience', type:'text', min:20,
+  sec:{ar:'٢ · الهوية والتميّز',he:'2 · זהות ובידול'},
+  q:{ar:'مين العملاء اللي بتخدمهم اليوم؟ ومين منهم بتحقق معه أفضل نتيجة؟',
+     he:'מי הלקוחות שאתה משרת היום? ועם מי מהם אתה משיג את התוצאה הכי טובה?'},
+  sub:{ar:'العميل المثالي مش دايماً هو الأكثر عدداً.',he:'הלקוח האידיאלי הוא לא תמיד הכי נפוץ.'} },
+
+{ id:'result', type:'text', min:15,
+  sec:{ar:'٢ · الهوية والتميّز',he:'2 · זהות ובידול'},
+  q:{ar:'ما هي أفضل النتائج اللي بيقدمها البزنس تبعك للعملاء؟',
+     he:'מהן התוצאות הכי טובות שהעסק שלך מספק ללקוחות?'} },
+
+{ id:'diff', type:'scale',
+  sec:{ar:'٢ · الهوية والتميّز',he:'2 · זהות ובידול'},
+  q:{ar:'قديش واضح إلك شو بميّزك عن المنافسين؟',he:'כמה ברור לך מה מבדל אותך מהמתחרים?'},
+  lo:{ar:'مش واضح إطلاقاً',he:'בכלל לא ברור'},
+  hi:{ar:'واضح تماماً وبعرف أشرحه بجملة',he:'ברור לגמרי ואני יודע להסביר במשפט'} },
+
+// ---------- ٣ بنية العرض ----------
+{ id:'structure', type:'choice',
+  sec:{ar:'٣ · بنية العرض',he:'3 · מבנה ההצעה'},
+  q:{ar:'كيف مبنية خدماتك اليوم؟',he:'איך בנויים השירותים שלך היום?'},
+  opts:[
+    {v:'hourly',  ar:'جلسات أو ساعات منفصلة',           he:'מפגשים או שעות בודדות'},
+    {v:'packages',ar:'باقات ومسارات مرافقة',            he:'חבילות ומסלולי ליווי'},
+    {v:'both',    ar:'الاثنين مع بعض',                  he:'שניהם יחד'},
+    {v:'none',    ar:'ما في بناء واضح، كل عميل حالة لحاله', he:'אין מבנה ברור, כל לקוח מקרה בפני עצמו'}
+  ]},
+
+{ id:'recurring', type:'choice',
+  sec:{ar:'٣ · بنية العرض',he:'3 · מבנה ההצעה'},
+  q:{ar:'في عندك دخل متكرر؟',he:'יש לך הכנסה חוזרת?'},
+  sub:{ar:'اشتراكات، ريتينر شهري، أو عملاء بيرجعوا بانتظام.',
+       he:'מנויים, ריטיינר חודשי, או לקוחות שחוזרים באופן קבוע.'},
+  opts:[
+    {v:'big',   ar:'نعم، وهو جزء كبير من دخلي',  he:'כן, וזה חלק גדול מההכנסה שלי'},
+    {v:'small', ar:'نعم بس جزء صغير',            he:'כן אבל חלק קטן'},
+    {v:'none',  ar:'لأ، كل شهر ببلش من الصفر',   he:'לא, כל חודש מתחיל מאפס'}
+  ]},
+
+{ id:'expand', type:'text', min:15,
+  sec:{ar:'٣ · بنية العرض',he:'3 · מבנה ההצעה'},
+  q:{ar:'شو التوسّع اللي بتفكر فيه؟',he:'איזו התרחבות אתה שוקל?'},
+  sub:{ar:'فرع جديد، فريق، خدمة جديدة، سوق جديد، أو أي اتجاه ثاني.',
+       he:'סניף חדש, צוות, שירות חדש, שוק חדש, או כל כיוון אחר.'} },
+
+// ---------- ٤ الإدارة المالية ----------
+{ id:'income', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'الدخل الشهري الحالي للبزنس تقريباً',he:'ההכנסה החודשית הנוכחית של העסק בערך'},
+  opts:[
+    {v:'10_20',  ar:'من 10,000 لـ 20,000 ش',  he:'10,000 עד 20,000 ₪'},
+    {v:'20_40',  ar:'من 20,000 لـ 40,000 ش',  he:'20,000 עד 40,000 ₪'},
+    {v:'40_70',  ar:'من 40,000 لـ 70,000 ش',  he:'40,000 עד 70,000 ₪'},
+    {v:'70_120', ar:'من 70,000 لـ 120,000 ش', he:'70,000 עד 120,000 ₪'},
+    {v:'120p',   ar:'أكثر من 120,000 ش',      he:'יותר מ-120,000 ₪'}
+  ]},
+
+{ id:'stability', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'الدخل ثابت ولا متذبذب؟',he:'ההכנסה יציבה או משתנה?'},
+  sub:{ar:'لو متذبذب، مهم أعرف إذا التذبذب متوقع ولا عشوائي.',
+       he:'אם משתנה, חשוב לי לדעת אם התנודה צפויה או אקראית.'},
+  opts:[
+    {v:'stable',  ar:'ثابت تقريباً كل شهر',                       he:'יציבה כמעט כל חודש'},
+    {v:'seasonal',ar:'متذبذب، بس بمواسم معروفة إلي',              he:'משתנה, אבל בעונתיות שאני מכיר'},
+    {v:'random',  ar:'متذبذب عشوائي، شهر عالي وشهر فاضي بلا سبب واضح', he:'משתנה באקראי, חודש חזק וחודש ריק בלי סיבה ברורה'},
+    {v:'unknown', ar:'ما بعرف، ما بتابع الأرقام',                 he:'לא יודע, לא עוקב אחרי המספרים'}
+  ]},
+
+{ id:'expenses', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'المصاريف الشهرية الثابتة للبزنس تقريباً',he:'ההוצאות החודשיות הקבועות של העסק בערך'},
+  sub:{ar:'إيجار، معدات، موظفين، تسويق، اشتراكات.',he:'שכירות, ציוד, עובדים, שיווק, מנויים.'},
+  opts:[
+    {v:'u5',    ar:'أقل من 5,000 ش',       he:'פחות מ-5,000 ₪'},
+    {v:'5_15',  ar:'من 5,000 لـ 15,000 ش', he:'5,000 עד 15,000 ₪'},
+    {v:'15_30', ar:'من 15,000 لـ 30,000 ش',he:'15,000 עד 30,000 ₪'},
+    {v:'30p',   ar:'أكثر من 30,000 ش',     he:'יותר מ-30,000 ₪'},
+    {v:'unknown',ar:'ما بعرف الرقم',        he:'לא יודע את המספר'}
+  ]},
+
+{ id:'profitKnown', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'بتعرف كم الربح الصافي اللي بيضل بإيدك آخر الشهر؟',
+     he:'אתה יודע כמה רווח נקי נשאר לך בסוף החודש?'},
+  sub:{ar:'الربح الصافي = الدخل ناقص كل المصاريف والضرائب.',
+       he:'רווח נקי = הכנסה פחות כל ההוצאות והמסים.'},
+  opts:[
+    {v:'exact', ar:'نعم، بعرف الرقم بالضبط وبتابعه شهرياً', he:'כן, יודע את המספר במדויק ועוקב חודשי'},
+    {v:'rough', ar:'عندي فكرة تقريبية بس مش دقيقة',        he:'יש לי מושג כללי אבל לא מדויק'},
+    {v:'no',    ar:'لأ، ما بعرف',                          he:'לא, לא יודע'}
+  ]},
+
+{ id:'accounts', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'في فصل بين حساب البزنس وحسابك الشخصي؟',he:'יש הפרדה בין חשבון העסק לחשבון האישי?'},
+  opts:[
+    {v:'salary', ar:'نعم، حساب منفصل وبسحب لنفسي راتب ثابت', he:'כן, חשבון נפרד ואני מושך לעצמי משכורת קבועה'},
+    {v:'sep',    ar:'حساب منفصل بس بسحب منه حسب الحاجة',    he:'חשבון נפרד אבל מושך לפי הצורך'},
+    {v:'mixed',  ar:'لأ، كله بحساب واحد',                   he:'לא, הכל בחשבון אחד'}
+  ]},
+
+{ id:'debt', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'في ديون أو قروض على البزنس؟',he:'יש חובות או הלוואות על העסק?'},
+  sub:{ar:'السؤال مش للحكم عليك. الديون بتغيّر أولويات الخطة تماماً.',
+       he:'השאלה לא כדי לשפוט. חובות משנים לגמרי את סדר העדיפויות בתוכנית.'},
+  opts:[
+    {v:'none',   ar:'لأ، ما في ديون ولا قروض',                    he:'לא, אין חובות או הלוואות'},
+    {v:'ok',     ar:'في قرض بس الأقساط تحت السيطرة',              he:'יש הלוואה אבל ההחזרים בשליטה'},
+    {v:'heavy',  ar:'في ديون وقروض وبتضغط عليّ شهرياً',            he:'יש חובות והלוואות והם לוחצים עליי חודשית', flag:'debt'},
+    {v:'ar',     ar:'في مبالغ مستحقة عند عملاء ما بتوصل بوقتها',  he:'יש כספים שלקוחות חייבים ולא מגיעים בזמן', flag:'debt'}
+  ]},
+
+{ id:'cashflow', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'كيف السيولة عندك؟',he:'איך הנזילות שלך?'},
+  sub:{ar:'يعني هل بتقدر تغطي التزامات الشهر بدون ضغط.',
+       he:'כלומר האם אתה מכסה את התחייבויות החודש בלי לחץ.'},
+  opts:[
+    {v:'buffer', ar:'مرتاح، وفي احتياطي لشهرين وأكثر', he:'רגוע, ויש רזרבה לחודשיים ומעלה'},
+    {v:'tight',  ar:'بتمشي الحال، بس بدون احتياطي',   he:'מסתדר, אבל בלי רזרבה'},
+    {v:'stress', ar:'كل شهر في ضغط',                  he:'כל חודש יש לחץ', flag:'cash'},
+    {v:'borrow', ar:'بضطر أستلف أو أأجّل دفعات',      he:'נאלץ ללוות או לדחות תשלומים', flag:'cash'}
+  ]},
+
+{ id:'goal', type:'choice',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'شو الدخل الشهري اللي بدك توصله خلال 6 لـ 12 شهر؟',
+     he:'לאיזו הכנסה חודשית אתה רוצה להגיע בתוך 6 עד 12 חודשים?'},
+  opts:[
+    {v:'30_50',  ar:'من 30,000 لـ 50,000 ش',  he:'30,000 עד 50,000 ₪'},
+    {v:'50_100', ar:'من 50,000 لـ 100,000 ش', he:'50,000 עד 100,000 ₪'},
+    {v:'100_200',ar:'من 100,000 لـ 200,000 ش',he:'100,000 עד 200,000 ₪'},
+    {v:'200p',   ar:'أكثر من 200,000 ش',      he:'יותר מ-200,000 ₪'}
+  ]},
+
+{ id:'profitGoal', type:'number', unit:'₪',
+  sec:{ar:'٤ · الإدارة المالية',he:'4 · ניהול פיננסי'},
+  q:{ar:'وشو الربح الصافي الشهري اللي بدك توصله؟',he:'ולאיזה רווח נקי חודשי אתה רוצה להגיע?'},
+  sub:{ar:'مش الدخل. الرقم اللي بدك يضل بإيدك بعد كل المصاريف.',
+       he:'לא ההכנסה. המספר שאתה רוצה שיישאר בידיים אחרי כל ההוצאות.'} },
+
+// ---------- ٥ التسعير والمبيعات ----------
+{ id:'howPriced', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'كيف حددت أسعارك الحالية؟',he:'איך קבעת את המחירים הנוכחיים שלך?'},
+  opts:[
+    {v:'value',  ar:'حسب قيمة النتيجة اللي بيوصلها العميل', he:'לפי ערך התוצאה שהלקוח מקבל'},
+    {v:'market', ar:'حسب أسعار السوق والمنافسين',           he:'לפי מחירי השוק והמתחרים'},
+    {v:'cost',   ar:'حسب وقتي وتكلفتي',                     he:'לפי הזמן והעלות שלי'},
+    {v:'none',   ar:'ما في أساس واضح',                      he:'אין בסיס ברור'}
+  ]},
+
+{ id:'lastRaise', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'إيمتى آخر مرة رفعت الأسعار؟',he:'מתי בפעם האחרונה העלית מחירים?'},
+  opts:[
+    {v:'6m',    ar:'خلال آخر 6 شهور',   he:'בחצי השנה האחרונה'},
+    {v:'12m',   ar:'خلال آخر سنة',      he:'בשנה האחרונה'},
+    {v:'older', ar:'من أكثر من سنة',    he:'לפני יותר משנה'},
+    {v:'never', ar:'ولا مرة رفعت',      he:'אף פעם לא העליתי'}
+  ]},
+
+{ id:'priceFit', type:'scale',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'قديش بتحس إنه سعرك بيعكس قيمة النتيجة اللي بتعطيها؟',
+     he:'כמה אתה מרגיש שהמחיר שלך משקף את ערך התוצאה שאתה נותן?'},
+  lo:{ar:'سعري أقل بكثير من قيمتي',he:'המחיר שלי נמוך בהרבה מהערך'},
+  hi:{ar:'سعري عادل تماماً',he:'המחיר שלי הוגן לגמרי'} },
+
+{ id:'sources', type:'multi', max:3,
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'من وين بيجوك معظم العملاء؟',he:'מאיפה מגיעים רוב הלקוחות שלך?'},
+  sub:{ar:'اختار لحد 3.',he:'בחר עד 3.'},
+  opts:[
+    {v:'ref',   ar:'توصيات وكلام الناس',      he:'המלצות ומפה לאוזן'},
+    {v:'ig',    ar:'انستغرام — محتوى عضوي',   he:'אינסטגרם — תוכן אורגני'},
+    {v:'ads',   ar:'إعلانات ممولة',           he:'פרסום ממומן'},
+    {v:'fb',    ar:'فيسبوك',                  he:'פייסבוק'},
+    {v:'tt',    ar:'تيك توك',                 he:'טיקטוק'},
+    {v:'net',   ar:'شبكة علاقات ومؤسسات',     he:'קשרים ומוסדות'},
+    {v:'idk',   ar:'ما بعرف من وين',          he:'לא יודע מאיפה'}
+  ]},
+
+{ id:'ads', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'بتشغّل حملات ممولة؟',he:'אתה מריץ קמפיינים ממומנים?'},
+  opts:[
+    {v:'always', ar:'نعم، بشكل مستمر',  he:'כן, באופן רציף', ads:true},
+    {v:'some',   ar:'نعم، بس متقطع',    he:'כן, אבל לסירוגין', ads:true},
+    {v:'stopped',ar:'جربت وبطّلت',      he:'ניסיתי והפסקתי'},
+    {v:'never',  ar:'ولا مرة جربت',     he:'אף פעם לא ניסיתי'}
+  ]},
+
+{ id:'adBudget', type:'choice', showIf:'ads',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'قديش بتصرف على الإعلانات بالشهر؟',he:'כמה אתה מוציא על פרסום בחודש?'},
+  opts:[
+    {v:'u1500',  ar:'أقل من 1,500 ش',        he:'פחות מ-1,500 ₪'},
+    {v:'1500_4k',ar:'من 1,500 لـ 4,000 ش',   he:'1,500 עד 4,000 ₪'},
+    {v:'4k_10k', ar:'من 4,000 لـ 10,000 ش',  he:'4,000 עד 10,000 ₪'},
+    {v:'10kp',   ar:'أكثر من 10,000 ش',      he:'יותר מ-10,000 ₪'}
+  ]},
+
+{ id:'adROI', type:'choice', showIf:'ads',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'بتعرف كم بيكلفك العميل الواحد من الإعلان؟',
+     he:'אתה יודע כמה עולה לך לקוח אחד מהפרסום?'},
+  opts:[
+    {v:'yes',   ar:'نعم، بعرف الرقم وبتابعه', he:'כן, יודע את המספר ועוקב'},
+    {v:'rough', ar:'عندي فكرة تقريبية',       he:'יש לי מושג כללי'},
+    {v:'no',    ar:'لأ، ما بعرف',             he:'לא, לא יודע'}
+  ]},
+
+{ id:'salesProcess', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'لما حدا بيسأل عن الخدمة، شو بيصير؟',he:'כשמישהו שואל על השירות, מה קורה?'},
+  opts:[
+    {v:'call',   ar:'بحكي معه أو بعمل مكالمة تشخيص قبل ما أعطي سعر', he:'מדבר איתו או עושה שיחת אבחון לפני שאני נותן מחיר'},
+    {v:'written',ar:'ببعت السعر مع شرح مكتوب',      he:'שולח מחיר עם הסבר כתוב'},
+    {v:'price',  ar:'ببعت السعر مباشرة',            he:'שולח מחיר ישירות'},
+    {v:'link',   ar:'بحوّله لصفحة أو رابط',          he:'מפנה לעמוד או לקישור'},
+    {v:'none',   ar:'بتوهق، ما عندي طريقة ثابتة',   he:'מתבלבל, אין לי שיטה קבועה'}
+  ]},
+
+{ id:'closeRate', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'من كل 10 استفسارات، كم بيصيروا عملاء دافعين؟',
+     he:'מכל 10 פניות, כמה הופכים ללקוחות משלמים?'},
+  opts:[
+    {v:'u1',   ar:'أقل من واحد',   he:'פחות מאחד'},
+    {v:'1_2',  ar:'واحد أو اثنين', he:'אחד או שניים'},
+    {v:'3_4',  ar:'من 3 لـ 4',     he:'3 עד 4'},
+    {v:'5_7',  ar:'من 5 لـ 7',     he:'5 עד 7'},
+    {v:'7p',   ar:'أكثر من 7',     he:'יותר מ-7'},
+    {v:'idk',  ar:'ما بعرف، ما بتابع', he:'לא יודע, לא עוקב'}
+  ]},
+
+{ id:'objection', type:'choice',
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'شو أكثر اعتراض بتسمعه؟',he:'מה ההתנגדות שאתה שומע הכי הרבה?'},
+  opts:[
+    {v:'price', ar:'السعر غالي',           he:'המחיר יקר'},
+    {v:'think', ar:'بدي أفكر',             he:'אני צריך לחשוב'},
+    {v:'later', ar:'مش هلأ، مش وقته',      he:'לא עכשיו, לא הזמן'},
+    {v:'ask',   ar:'بدي أستشير حدا',       he:'אני צריך להתייעץ'},
+    {v:'compare',ar:'بقارن مع حدا تاني',   he:'משווה למישהו אחר'},
+    {v:'ghost', ar:'بيختفوا بدون جواب',    he:'נעלמים בלי תשובה'}
+  ]},
+
+{ id:'doubleTest', type:'text', min:20,
+  sec:{ar:'٥ · التسعير والمبيعات',he:'5 · תמחור ומכירות'},
+  q:{ar:'لو تضاعف عدد عملائك بكرا بنفس الأسعار وطريقة الشغل — بيكون نمو منيح ولا بيزيد الضغط عليك؟ وليش؟',
+     he:'אם מספר הלקוחות שלך יוכפל מחר באותם מחירים ובאותה שיטת עבודה — זו צמיחה טובה או שזה רק יגביר את הלחץ? ולמה?'} },
+
+// ---------- ٦ التركيز ----------
+{ id:'challenges', type:'multi', max:3,
+  sec:{ar:'٦ · وين نركّز',he:'6 · איפה מתמקדים'},
+  q:{ar:'شو أكبر 3 تحديات عندك اليوم؟',he:'מהם 3 האתגרים הגדולים שלך היום?'},
+  sub:{ar:'3 كحد أقصى. الاختيار الصعب هو اللي بيوضّح الأولوية.',
+       he:'3 לכל היותר. הבחירה הקשה היא זו שמבהירה את סדר העדיפויות.'},
+  opts:[
+    {v:'few',      ar:'قلة العملاء',                  he:'מעט לקוחות'},
+    {v:'unstable', ar:'دخل غير ثابت',                 he:'הכנסה לא יציבה'},
+    {v:'lowprice', ar:'تسعير منخفض',                  he:'תמחור נמוך'},
+    {v:'scatter',  ar:'خدمات كثيرة ومشتتة',           he:'יותר מדי שירותים ומפוזרים'},
+    {v:'profit',   ar:'ما بعرف من وين بيجي الربح',    he:'לא יודע מאיפה מגיע הרווח'},
+    {v:'time',     ar:'ببيع وقتي وجلساتي',            he:'מוכר את הזמן והמפגשים שלי'},
+    {v:'pkg',      ar:'صعوبة ببيع الباقات',           he:'קושי למכור חבילות'},
+    {v:'audience', ar:'الجمهور مش واضح',              he:'הקהל לא ברור'},
+    {v:'diff',     ar:'ما بعرف شو بميّزني',           he:'לא יודע מה מבדל אותי'},
+    {v:'mkt',      ar:'التسويق ما بيتحوّل لعملاء',    he:'השיווק לא מתורגם ללקוחות'},
+    {v:'close',    ar:'في استفسارات بس الإغلاق ضعيف', he:'יש פניות אבל הסגירה חלשה'},
+    {v:'hard',     ar:'بشتغل كثير والربح قليل',       he:'עובד הרבה והרווח נמוך'},
+    {v:'numbers',  ar:'ما بعرف أرقامي',               he:'לא יודע את המספרים שלי'},
+    {v:'debt',     ar:'التزامات مالية بتضغط عليّ',    he:'התחייבויות כספיות לוחצות עליי'},
+    {v:'priority', ar:'بدي أنمو بس ما بعرف الأولوية', he:'רוצה לצמוח אבל לא יודע מה קודם'}
+  ]},
+
+{ id:'onePro', type:'text', min:20,
+  sec:{ar:'٦ · وين نركّز',he:'6 · איפה מתמקדים'},
+  q:{ar:'لو قدرنا نحل مشكلة وحدة بس بجلسة FOCUS، بحيث تعمل أكبر فرق بالبزنس خلال الشهور الجاية — شو بدها تكون؟',
+     he:'אם נוכל לפתור בעיה אחת בלבד בפגישת FOCUS, כזו שתעשה את ההבדל הגדול ביותר בחודשים הקרובים — מה היא תהיה?'},
+  sub:{ar:'مشكلة وحدة. مش لستة.',he:'בעיה אחת. לא רשימה.'} },
+
+{ id:'notes', type:'text', min:0, optional:true,
+  sec:{ar:'٦ · وين نركّز',he:'6 · איפה מתמקדים'},
+  q:{ar:'في إشي تاني مهم أعرفه قبل الجلسة؟',he:'יש עוד משהו שחשוב שאדע לפני הפגישה?'},
+  sub:{ar:'اختياري.',he:'אופציונלי.'} }
+];
+
+// ============================================================
+//  المحرك
+// ============================================================
+let LANG = 'ar';
+let t    = UI.ar;
+
+const answers = {};
+let flowIndex = 0;
+let showAds   = false;
+
+const stage   = document.getElementById('stage');
+const progBar = document.getElementById('progressBar');
+const progLbl = document.getElementById('progressLabel');
+
+function L(o){ return o ? (o[LANG] || o.ar || '') : ''; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function onTap(el, fn){
+  let sx=0, sy=0, moved=false;
+  el.addEventListener('touchstart', e=>{moved=false;sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchmove',  e=>{
+    if(Math.abs(e.touches[0].clientX-sx)>10||Math.abs(e.touches[0].clientY-sy)>10) moved=true;
+  },{passive:true});
+  el.addEventListener('touchend', e=>{ if(moved) return; e.preventDefault(); fn(e); },{passive:false});
+  el.addEventListener('click', fn);
+}
+
+// ---------- تبديل اللغة ----------
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    if(b.dataset.lang === LANG) return;
+    LANG = b.dataset.lang;
+    t    = UI[LANG];
+    document.querySelectorAll('.lang-btn').forEach(x => x.classList.toggle('active', x === b));
+    document.documentElement.lang = t.lang;
+    document.documentElement.dir  = t.dir;
+    paintChrome();
+    if(document.getElementById('finalCard').classList.contains('active')) paintFinal();
+    else if(document.getElementById('softStop').classList.contains('active')) paintStop();
+    else render();
+  });
+});
+
+function paintChrome(){
+  document.getElementById('hTitle').innerHTML = t.title;
+  document.getElementById('hDesc').textContent = t.desc;
+  document.getElementById('hMeta').innerHTML = t.meta.map(m => '<span>'+esc(m)+'</span>').join('');
+  if(!progLbl.dataset.started) progLbl.textContent = t.start;
+}
+
+function paintStop(){
+  document.getElementById('ssTag').textContent   = t.ssTag;
+  document.getElementById('ssTitle').textContent = t.ssTitle;
+  document.getElementById('ssBody').innerHTML    = t.ssBody.map(p => '<p>'+esc(p)+'</p>').join('');
+  document.getElementById('ssSign').innerHTML    = t.sign;
+}
+
+function paintFinal(){
+  document.getElementById('fcTitle').innerHTML      = t.fcTitle;
+  document.getElementById('fcBody').textContent     = t.fcBody;
+  document.getElementById('fcStepsTitle').textContent = t.fcStepsTitle;
+  document.getElementById('fcSteps').innerHTML      = t.fcSteps.map(s => '<li>'+esc(s)+'</li>').join('');
+  document.getElementById('fcSign').innerHTML       = t.sign;
+  progLbl.textContent = t.done;
+}
+
+function visibleQuestions(){
+  return QUESTIONS.filter(q => !q.showIf || (q.showIf === 'ads' && showAds));
+}
+
+// ---------- الرسم ----------
+function render(){
+  const list = visibleQuestions();
+  const q    = list[flowIndex];
+  if(!q){ submitAll(); return; }
+
+  const total = list.length;
+  progLbl.dataset.started = '1';
+  progLbl.textContent = t.of(flowIndex+1, total);
+  progBar.style.width = Math.round((flowIndex/total)*100) + '%';
+
+  let h = '';
+  h += '<div class="section-tag">' + esc(L(q.sec)) + '</div>';
+  h += '<div class="question">' + esc(L(q.q)) + '</div>';
+  h += '<div class="sub">' + esc(L(q.sub)) + '</div>';
+
+  if(q.type === 'contact'){
+    h += '<div class="field-label">'+esc(t.fName)+'</div>' +
+         '<input type="text" id="f_name" placeholder="'+esc(t.fNamePh)+'" />' +
+         '<div class="field-label">'+esc(t.fPhone)+'</div>' +
+         '<div class="phone-row">' +
+           '<select id="f_cc">' +
+             '<option value="972">🇮🇱 +972</option>' +
+             '<option value="970">🇵🇸 +970</option>' +
+             '<option value="962">🇯🇴 +962</option>' +
+             '<option value="971">🇦🇪 +971</option>' +
+             '<option value="966">🇸🇦 +966</option>' +
+             '<option value="49">🇩🇪 +49</option>' +
+             '<option value="1">🇺🇸 +1</option>' +
+           '</select>' +
+           '<input type="tel" id="f_phone" placeholder="050 000 0000" />' +
+         '</div>' +
+         '<div class="phone-preview" id="phonePrev"></div>' +
+         '<div class="field-label">'+esc(t.fMail)+'</div>' +
+         '<input type="email" id="f_email" placeholder="name@example.com" />' +
+         '<div class="field-label">'+esc(t.fBiz)+'</div>' +
+         '<input type="text" id="f_biz" placeholder="'+esc(t.fBizPh)+'" />' +
+         '<div class="field-label">'+esc(t.fLink)+'</div>' +
+         '<input type="text" id="f_link" placeholder="'+esc(t.fLinkPh)+'" />';
+  }
+
+  else if(q.type === 'choice' || q.type === 'multi'){
+    const cls = q.type === 'multi' ? 'option multi' : 'option';
+    h += '<div class="options" id="optGroup">';
+    q.opts.forEach((o,i)=>{ h += '<div class="'+cls+'" data-i="'+i+'">'+esc(L(o))+'</div>'; });
+    h += '</div>';
+    if(q.type === 'multi') h += '<div class="limit-note" id="limitNote">'+esc(t.counter(0,q.max))+'</div>';
+  }
+
+  else if(q.type === 'number'){
+    h += '<div class="num-wrap"><span class="unit">'+esc(q.unit||'')+'</span>' +
+         '<input type="number" id="f_num" inputmode="numeric" placeholder="0" /></div>';
+  }
+
+  else if(q.type === 'text'){
+    h += '<textarea id="f_text"></textarea>';
+  }
+
+  else if(q.type === 'scale'){
+    h += '<div class="range-wrap">' +
+           '<div class="range-value" id="scaleVal">5</div>' +
+           '<input type="range" id="f_scale" min="1" max="10" value="5" step="1" />' +
+           '<div class="range-labels"><span>'+esc(L(q.lo))+'</span><span>'+esc(L(q.hi))+'</span></div>' +
+         '</div>';
+  }
+
+  h += '<div class="err" id="errBox"></div>';
+  h += '<div class="nav-row">' +
+         (flowIndex > 0 ? '<button class="btn-back" id="backBtn">'+esc(t.back)+'</button>' : '') +
+         '<button class="btn-next" id="nextBtn">' +
+           esc(flowIndex === total-1 ? t.submit : t.next) +
+         '</button>' +
+       '</div>';
+
+  if(flowIndex === 0) h += '<p class="consent">'+esc(t.consent)+'</p>';
+
+  stage.innerHTML = '<div class="card active">' + h + '</div>';
+  restore(q);
+  wire(q);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ---------- استرجاع الإجابة عند الرجوع أو تبديل اللغة ----------
+function restore(q){
+  if(q.type === 'contact'){
+    if(answers.name)     document.getElementById('f_name').value  = answers.name;
+    if(answers._phoneLocal) document.getElementById('f_phone').value = answers._phoneLocal;
+    if(answers._cc)      document.getElementById('f_cc').value    = answers._cc;
+    if(answers.email)    document.getElementById('f_email').value = answers.email;
+    if(answers.business) document.getElementById('f_biz').value   = answers.business;
+    if(answers.link)     document.getElementById('f_link').value  = answers.link;
+  }
+  else if(q.type === 'choice'){
+    const v = answers[q.id];
+    if(!v) return;
+    const i = q.opts.findIndex(o => o.v === v);
+    if(i >= 0) document.querySelector('#optGroup .option[data-i="'+i+'"]').classList.add('selected');
+  }
+  else if(q.type === 'multi'){
+    const v = answers[q.id];
+    if(!v) return;
+    const codes = v.split(',');
+    let c = 0;
+    q.opts.forEach((o,i)=>{
+      if(codes.indexOf(o.v) > -1){
+        document.querySelector('#optGroup .option[data-i="'+i+'"]').classList.add('selected');
+        c++;
+      }
+    });
+    document.getElementById('limitNote').textContent = t.counter(c, q.max);
+  }
+  else if(q.type === 'number' && answers[q.id]) document.getElementById('f_num').value = answers[q.id];
+  else if(q.type === 'text'   && answers[q.id]) document.getElementById('f_text').value = answers[q.id];
+  else if(q.type === 'scale'){
+    const v = answers[q.id] || 5;
+    document.getElementById('f_scale').value = v;
+    document.getElementById('scaleVal').textContent = v;
+  }
+}
+
+function wire(q){
+  const nextBtn = document.getElementById('nextBtn');
+  const backBtn = document.getElementById('backBtn');
+  const errBox  = document.getElementById('errBox');
+
+  if(backBtn) backBtn.onclick = () => { flowIndex--; render(); };
+
+  const fail  = m => { errBox.textContent = m; errBox.classList.add('show'); };
+  const clear = () => errBox.classList.remove('show');
+
+  if(q.type === 'choice' || q.type === 'multi'){
+    const group = document.getElementById('optGroup');
+    const note  = document.getElementById('limitNote');
+    group.querySelectorAll('.option').forEach(opt => {
+      onTap(opt, () => {
+        clear();
+        if(q.type === 'choice'){
+          group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+        } else {
+          const n = group.querySelectorAll('.option.selected').length;
+          if(!opt.classList.contains('selected') && n >= q.max){
+            note.classList.add('hit');
+            note.textContent = t.maxHit(q.max);
+            return;
+          }
+          opt.classList.toggle('selected');
+          note.classList.remove('hit');
+          note.textContent = t.counter(group.querySelectorAll('.option.selected').length, q.max);
+        }
+      });
+    });
+  }
+
+  if(q.type === 'scale'){
+    const r = document.getElementById('f_scale');
+    r.addEventListener('input', () => { document.getElementById('scaleVal').textContent = r.value; });
+  }
+
+  if(q.type === 'contact'){
+    const cc = document.getElementById('f_cc');
+    const ph = document.getElementById('f_phone');
+    const pv = document.getElementById('phonePrev');
+    const upd = () => {
+      const local = ph.value.replace(/\D/g,'').replace(/^0+/,'');
+      pv.textContent = local ? '+' + cc.value + ' ' + local : '';
+    };
+    cc.addEventListener('change', upd);
+    ph.addEventListener('input', upd);
+    upd();
+  }
+
+  nextBtn.onclick = () => {
+    clear();
+
+    if(q.type === 'contact'){
+      const name  = document.getElementById('f_name').value.trim();
+      const local = document.getElementById('f_phone').value.replace(/\D/g,'').replace(/^0+/,'');
+      const email = document.getElementById('f_email').value.trim();
+      const biz   = document.getElementById('f_biz').value.trim();
+      if(name.length < 2)  return fail(t.errName);
+      if(local.length < 7) return fail(t.errPhone);
+      if(!/^\S+@\S+\.\S+$/.test(email)) return fail(t.errMail);
+      if(biz.length < 2)   return fail(t.errBiz);
+      answers._cc = document.getElementById('f_cc').value;
+      answers._phoneLocal = document.getElementById('f_phone').value;
+      answers.name     = name;
+      answers.phone    = '+' + answers._cc + local;
+      answers.email    = email;
+      answers.business = biz;
+      answers.link     = document.getElementById('f_link').value.trim();
+    }
+
+    else if(q.type === 'choice'){
+      const sel = document.querySelector('#optGroup .option.selected');
+      if(!sel) return fail(t.pickOne);
+      const o = q.opts[Number(sel.dataset.i)];
+      answers[q.id]        = o.v;
+      answers[q.id + '_t'] = o.ar;
+      if(q.id === 'ads') showAds = !!o.ads;
+      answers['_flag_' + (o.flag || 'x')] = o.flag ? true : undefined;
+      if(o.stop){ softStop(); return; }
+    }
+
+    else if(q.type === 'multi'){
+      const sels = [...document.querySelectorAll('#optGroup .option.selected')];
+      if(!sels.length) return fail(t.pickSome);
+      const picked = sels.map(s => q.opts[Number(s.dataset.i)]);
+      answers[q.id]        = picked.map(o => o.v).join(',');
+      answers[q.id + '_t'] = picked.map(o => o.ar).join(' | ');
+    }
+
+    else if(q.type === 'number'){
+      const v = document.getElementById('f_num').value;
+      if(v === '' || Number(v) <= 0) return fail(t.needNum);
+      answers[q.id] = Number(v);
+    }
+
+    else if(q.type === 'text'){
+      const v = document.getElementById('f_text').value.trim();
+      if(!q.optional && v.length < (q.min || 10)) return fail(t.needText);
+      answers[q.id] = v;
+    }
+
+    else if(q.type === 'scale'){
+      answers[q.id] = Number(document.getElementById('f_scale').value);
+    }
+
+    flowIndex++;
+    render();
+  };
+}
+
+function hideForm(){
+  stage.innerHTML = '';
+  document.getElementById('header').style.display = 'none';
+  document.getElementById('progWrap').style.display = 'none';
+}
+
+function softStop(){
+  answers._stopped = true;
+  send();
+  hideForm();
+  progLbl.style.display = 'none';
+  paintStop();
+  document.getElementById('softStop').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function submitAll(){
+  send();
+  hideForm();
+  document.getElementById('progWrap').style.display = 'block';
+  progBar.style.width = '100%';
+  paintFinal();
+  document.getElementById('finalCard').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function send(){
+  answers._form = FORM_NAME;
+  answers._lang = LANG;
+  answers._at   = new Date().toISOString();
+  delete answers._phoneLocal;
+  delete answers._cc;
+  try{
+    fetch(ENDPOINT + '?data=' + encodeURIComponent(JSON.stringify(answers)),
+          { method:'GET', mode:'no-cors' });
+  }catch(e){ console.error(e); }
+}
+
+paintChrome();
+render();
+</script>
+</body>
+</html>
