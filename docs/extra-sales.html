@@ -123,10 +123,10 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 .hero-grid{display:grid;gap:30px;align-items:center}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:44px}}
 .hero-img{margin:0;position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
-.hero-img img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
+.hero-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%;aspect-ratio:4/5}
 .hero-img::after{content:"";position:absolute;inset:0;
   background:linear-gradient(to top,rgba(10,26,48,.45),rgba(10,26,48,0) 45%)}
-@media(max-width:899px){.hero-img{order:-1;margin-bottom:6px}.hero-img img{aspect-ratio:3/2}}
+@media(max-width:899px){.hero-img{order:-1;margin-bottom:6px}.hero-img img{aspect-ratio:4/5;object-position:50% 18%}}
 
 /* ==== ABOUT RIMA ==== */
 .about{display:grid;gap:24px;align-items:start}
@@ -181,6 +181,25 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 @media (prefers-reduced-motion:reduce){
   .ticker .track{animation:none;overflow-x:auto;width:100%}
 }
+
+/* ==== SOCIAL PROOF SCREENSHOTS ==== */
+#proof{display:none}
+#proof.show{display:block}
+.proof-grid{display:grid;gap:14px;grid-template-columns:1fr;margin-top:26px}
+@media(min-width:640px){.proof-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:980px){.proof-grid{grid-template-columns:1fr 1fr 1fr}}
+.shot{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--off-line);
+  background:#fff;box-shadow:0 6px 22px rgba(10,26,48,.10);cursor:zoom-in;
+  transition:transform .18s ease,box-shadow .18s ease}
+.shot:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,26,48,.16)}
+.shot img{display:block;width:100%;height:auto}
+.proof-note{margin-top:18px;font-size:14px;color:#5a6b80;text-align:center}
+#lightbox{position:fixed;inset:0;z-index:120;background:rgba(6,16,30,.92);
+  display:none;align-items:center;justify-content:center;padding:22px;cursor:zoom-out}
+#lightbox.show{display:flex}
+#lightbox img{max-width:100%;max-height:92vh;border-radius:12px;display:block}
+#lightbox .x{position:absolute;top:14px;inset-inline-end:18px;color:#fff;font-size:34px;
+  line-height:1;background:none;border:0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -415,6 +434,22 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
   </div>
 </section>
 
+<!-- ================= SOCIAL PROOF (SCREENSHOTS) ================= -->
+<!-- حطّي صور الشاشة بمجلد EXTRA-proof باسم proof-01 ... proof-12 (jpg / png / jpeg).
+     اللي مش موجود بينخفي لحاله. إذا ما في ولا صورة، القسم كله بينخفي. -->
+<section class="light" id="proof">
+  <div class="wrap">
+    <h2>مش كلام… هاي رسائل من ناس اشتغلت معي</h2>
+    <div class="proof-grid" id="proofGrid"></div>
+    <p class="proof-note">صور شاشة أصلية من محادثات. الأسماء مخفية للخصوصية.</p>
+  </div>
+</section>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="تكبير الصورة">
+  <button class="x" type="button" aria-label="إغلاق">&times;</button>
+  <img alt="">
+</div>
+
 <!-- ================= DETAILS + PRICE ================= -->
 <section class="light" id="details" style="border-top:0;padding-top:0">
   <div class="wrap">
@@ -618,6 +653,45 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
   }, {threshold:0}).observe(hero);
 
   track('PageView');
+})();
+</script>
+
+<script>
+(function(){
+  var DIR='EXTRA-proof/', MAX=12, EXT=['jpg','png','jpeg','JPG','PNG'];
+  var grid=document.getElementById('proofGrid'),
+      sec=document.getElementById('proof'),
+      lb=document.getElementById('lightbox'),
+      lbImg=lb.querySelector('img');
+
+  function add(src, order){
+    var fig=document.createElement('figure'); fig.className='shot';
+    fig.style.order=order;
+    var im=document.createElement('img');
+    im.src=src; im.loading='lazy'; im.alt='رسالة من عميلة سابقة';
+    fig.appendChild(im); grid.appendChild(fig);
+    sec.classList.add('show');
+    fig.addEventListener('click',function(){
+      lbImg.src=src; lb.classList.add('show'); document.body.style.overflow='hidden';
+    });
+  }
+  function close(){ lb.classList.remove('show'); document.body.style.overflow=''; }
+  lb.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  for(var i=1;i<=MAX;i++){
+    (function(n){
+      var base=DIR+'proof-'+(n<10?'0':'')+n+'.', k=0;
+      function tryNext(){
+        if(k>=EXT.length) return;
+        var t=new Image(), src=base+EXT[k++];
+        t.onload=function(){ add(src,n); };
+        t.onerror=tryNext;
+        t.src=src;
+      }
+      tryNext();
+    })(i);
+  }
 })();
 </script>
 </body>
