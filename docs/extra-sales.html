@@ -20,8 +20,9 @@
   const CONFIG = {
     PAYMENT_URL:       "https://mrng.to/lobLorsMm6",
     PAYMENT_URL_RIMA:  "#REPLACE_PAYMENT_URL_RIMA",
-    PRICE:             1990,
+    PRICE:             2490,
     PRICE_INSTALLMENT: 498,
+    INSTALLMENT_COUNT: 5,
     COUPON_CODE:       "RIMA",
     COUPON_PERCENT:    15
   };
@@ -200,11 +201,31 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 #lightbox img{max-width:100%;max-height:92vh;border-radius:12px;display:block}
 #lightbox .x{position:absolute;top:14px;inset-inline-end:18px;color:#fff;font-size:34px;
   line-height:1;background:none;border:0;cursor:pointer}
+
+/* ==== BONUS STACK ==== */
+.bonus{margin:34px 0 0;border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:#fff}
+.bonus-head{background:var(--gold);color:#0A1A30;padding:14px 20px;font-weight:700;font-size:18px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bonus-head span{font-size:14px;font-weight:600;opacity:.85}
+.bonus ul{list-style:none;margin:0;padding:6px 20px 4px}
+.bonus li{padding:18px 0;border-bottom:1px dashed var(--off-line);
+  display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.bonus li:last-child{border-bottom:0}
+.bonus li .txt{flex:1 1 260px;min-width:0}
+.bonus li .txt b{display:block;font-size:17px;margin-bottom:5px}
+.bonus li .txt p{margin:0;font-size:15px;color:#5a6b80;line-height:1.65}
+.bonus li .val{flex:0 0 auto;font-weight:700;color:#0A1A30;background:#F5E9D0;
+  border-radius:999px;padding:6px 14px;font-size:14px;white-space:nowrap}
+.bonus-sum{background:#FBF6EC;padding:16px 20px;font-weight:700;font-size:17px;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--off-line)}
+.bonus-sum .free{color:#1E7A4A}
+.pay-note{margin:10px 0 0;font-size:20px;font-weight:700;color:var(--gold-dark,#8A6A22)}
+@media(max-width:520px){.bonus li .val{align-self:flex-start}}
 </style>
 </head>
 <body>
 
-<div id="couponBar" hidden>خصم خاص لعملاء ريما السابقين 15% · السعر النهائي <b>1,691 ₪</b> بدل 1,990 ₪</div>
+<div id="couponBar" hidden>خصم خاص لعملاء ريما السابقين 15% · السعر النهائي <b>2,116 ₪</b> بدل 2,490 ₪</div>
 
 <!-- ================= HERO ================= -->
 <header>
@@ -457,7 +478,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     <div class="facts">
       <div class="fact"><b>حيفا</b><span>حضوري</span></div>
       <div class="fact"><b>8</b><span>مشاركين كحد أقصى</span></div>
-      <div class="fact"><b>4</b><span>لقاءات</span></div>
+      <div class="fact"><b>4+1</b><span>لقاءات · والخامس زوم</span></div>
       <div class="fact"><b>~3</b><span>ساعات للقاء</span></div>
     </div>
     <ul class="dates">
@@ -465,10 +486,41 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
       <li><span>اللقاء 2</span><b>24/09 · 17:00-19:30</b></li>
       <li><span>اللقاء 3</span><b>01/10 · 17:00-19:30</b></li>
       <li><span>اللقاء 4</span><b>08/10 · 17:00-19:30</b></li>
+      <li><span>لقاء المتابعة · زوم</span><b>05/11 · 20:00-21:30</b></li>
     </ul>
+    <!-- ===== BONUSES ===== -->
+    <div class="bonus">
+      <div class="bonus-head">شو بتاخدي كمان مع الورشة<span>مرافقة بعد اللقاء الأخير</span></div>
+      <ul>
+        <li>
+          <div class="txt">
+            <b>لقاء متابعة جماعي · زوم · 05/11</b>
+            <p>بعد شهر من انتهاء الورشة بنقعد سوا: شو طبقتي، شو اشتغل معك، ووين لسا واقفة. مش لقاء محتوى، لقاء أرقام ومحادثات حقيقية.</p>
+          </div>
+          <div class="val">قيمته 590 ₪</div>
+        </li>
+        <li>
+          <div class="txt">
+            <b>تيك المبيعات المطبوع</b>
+            <p>سكربت المحادثة، ورقة الاعتراضات، وجدول التسعير. بتاخديهم بإيدك من اللقاء الأول وبتشتغلي فيهم من نفس الأسبوع.</p>
+          </div>
+          <div class="val">قيمته 390 ₪</div>
+        </li>
+        <li>
+          <div class="txt">
+            <b>مجموعة واتساب مفتوحة لحد 05/11</b>
+            <p>للأسئلة اللي بتطلع وانتي بنص محادثة بيع حقيقية، مش بعد ما تخلص.</p>
+          </div>
+          <div class="val">قيمته 290 ₪</div>
+        </li>
+      </ul>
+      <div class="bonus-sum"><span>قيمة الإضافات: 1,270 ₪</span><span class="free">بتيجي مع الورشة</span></div>
+    </div>
+
     <div class="pricebox">
-      <div class="amount" id="priceMain">1,990 ₪</div>
-      <p class="muted" style="margin:6px 0 0">أو 4 دفعات × 498 ₪</p>
+      <div class="amount" id="priceMain">2,490 ₪</div>
+      <p class="pay-note">أو 5 دفعات × 498 ₪</p>
+      <p class="micro muted" style="margin:4px 0 0">بدون فوائد · كل الإضافات مشمولة</p>
       <div class="cta-block">
         <a class="btn" href="#" data-cta="price">احجز/ي مقعدك</a>
         <p class="micro muted">التسجيل بيتم مباشرة، بدون مكالمة مبيعات.</p>
@@ -537,7 +589,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
       </div></details>
 
     <details><summary>هل يمكن الدفع بالتقسيط؟</summary>
-      <div class="body">نعم، 4 دفعات × 498 ₪.</div></details>
+      <div class="body">نعم، 5 دفعات × 498 ₪ بدون فوائد.</div></details>
 
     <details><summary>وين اللقاءات؟</summary>
       <div class="body">حضوريًا في حيفا. العنوان الدقيق بينبعت للمسجلين.</div></details>
@@ -551,7 +603,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     <p class="lead muted">بدل ما تنهي المحادثة، اعرف شو تعمل بعدها.</p>
     <div class="hl" style="text-align:center">
       <b>EXTRA SALES</b><br>
-      <span style="font-weight:400" class="muted">4 لقاءات عملية · حيفا · 8 مقاعد · 17:00-19:30<br>17/09 · 24/09 · 01/10 · 08/10<br><span id="priceFinal">1,990 ₪ أو 4 × 498 ₪</span></span>
+      <span style="font-weight:400" class="muted">4 لقاءات عملية بحيفا + لقاء متابعة زوم · 8 مقاعد<br>17/09 · 24/09 · 01/10 · 08/10 · 05/11<br><span id="priceFinal">2,490 ₪ أو 5 × 498 ₪</span></span>
     </div>
     <div class="cta-block"><a class="btn" href="#" data-cta="final">احجز/ي مقعدك</a></div>
   </div>
@@ -561,7 +613,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 
 <!-- ================= STICKY MOBILE CTA ================= -->
 <div class="sticky" id="sticky">
-  <div class="t"><b id="stickyPrice">1,990 ₪</b>8 مقاعد · حيفا</div>
+  <div class="t"><b id="stickyPrice">2,490 ₪</b>8 مقاعد · حيفا</div>
   <a class="btn" href="#" data-cta="sticky">احجز/ي مقعدك</a>
 </div>
 
