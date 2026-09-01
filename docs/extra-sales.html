@@ -19,12 +19,9 @@
 <script>
   const CONFIG = {
     PAYMENT_URL:       "https://mrng.to/lobLorsMm6",
-    PAYMENT_URL_RIMA:  "#REPLACE_PAYMENT_URL_RIMA",
     PRICE:             2490,
     PRICE_INSTALLMENT: 498,
-    INSTALLMENT_COUNT: 5,
-    COUPON_CODE:       "RIMA",
-    COUPON_PERCENT:    15
+    INSTALLMENT_COUNT: 5
   };
 </script>
 
@@ -117,8 +114,6 @@ details .body{padding:0 0 14px}
 body.has-sticky{padding-bottom:82px}
 .final{text-align:center}
 footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
-#couponBar{display:none;background:var(--gold);color:#0A1A30;text-align:center;padding:12px 16px;font-weight:600}
-#couponBar.show{display:block}
 
 /* ==== HERO IMAGE ==== */
 .hero-grid{display:grid;gap:30px;align-items:center}
@@ -225,7 +220,6 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 </head>
 <body>
 
-<div id="couponBar" hidden>خصم خاص لعملاء ريما السابقين 15% · السعر النهائي <b>2,116 ₪</b> بدل 2,490 ₪</div>
 
 <!-- ================= HERO ================= -->
 <header>
@@ -245,7 +239,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     </div>
    </div>
    <figure class="hero-img">
-     <img src="rima-hero.jpg" alt="ريما يعقوب خلال جلسة مرافقة مع صاحبة بزنس" loading="eager" width="1131" height="1440">
+     <img src="rima-hero.jpg" alt="ريما يعقوب خلال جلسة مرافقة مع صاحب بزنس" loading="eager" width="1131" height="1440">
    </figure>
   </div>
 </section>
@@ -460,9 +454,9 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
      اللي مش موجود بينخفي لحاله. إذا ما في ولا صورة، القسم كله بينخفي. -->
 <section class="light" id="proof">
   <div class="wrap">
-    <h2>مش كلام… هاي رسائل من ناس اشتغلت معي</h2>
+    <h2>مش كلام… هاي رسائل من ناس اشتغلوا معي</h2>
     <div class="proof-grid" id="proofGrid"></div>
-    <p class="proof-note">صور شاشة أصلية من محادثات. الأسماء مخفية للخصوصية.</p>
+    <p class="proof-note">صور شاشة أصلية من محادثات مع أصحاب وصاحبات بزنس. الأسماء مخفية للخصوصية.</p>
   </div>
 </section>
 
@@ -477,7 +471,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     <h2>EXTRA SALES · PILOT · حيفا</h2>
     <div class="facts">
       <div class="fact"><b>حيفا</b><span>حضوري</span></div>
-      <div class="fact"><b>8</b><span>مشاركين كحد أقصى</span></div>
+      <div class="fact"><b>8</b><span>مشاركين/ات كحد أقصى</span></div>
       <div class="fact"><b>4+1</b><span>لقاءات · والخامس زوم</span></div>
       <div class="fact"><b>~3</b><span>ساعات للقاء</span></div>
     </div>
@@ -490,26 +484,26 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     </ul>
     <!-- ===== BONUSES ===== -->
     <div class="bonus">
-      <div class="bonus-head">شو بتاخدي كمان مع الورشة<span>مرافقة بعد اللقاء الأخير</span></div>
+      <div class="bonus-head">شو بتاخد/ي كمان مع الورشة<span>مرافقة بعد اللقاء الأخير</span></div>
       <ul>
         <li>
           <div class="txt">
             <b>لقاء متابعة جماعي · زوم · 05/11</b>
-            <p>بعد شهر من انتهاء الورشة بنقعد سوا: شو طبقتي، شو اشتغل معك، ووين لسا واقفة. مش لقاء محتوى، لقاء أرقام ومحادثات حقيقية.</p>
+            <p>بعد شهر من انتهاء الورشة بنقعد سوا: شو طبّقت، شو اشتغل معك، ووين لسا واقف/ة. مش لقاء محتوى، لقاء أرقام ومحادثات حقيقية.</p>
           </div>
           <div class="val">قيمته 590 ₪</div>
         </li>
         <li>
           <div class="txt">
             <b>تيك المبيعات المطبوع</b>
-            <p>سكربت المحادثة، ورقة الاعتراضات، وجدول التسعير. بتاخديهم بإيدك من اللقاء الأول وبتشتغلي فيهم من نفس الأسبوع.</p>
+            <p>سكربت المحادثة، ورقة الاعتراضات، وجدول التسعير. بتاخدهم بإيدك من اللقاء الأول وبتشتغل فيهم من نفس الأسبوع.</p>
           </div>
           <div class="val">قيمته 390 ₪</div>
         </li>
         <li>
           <div class="txt">
             <b>مجموعة واتساب مفتوحة لحد 05/11</b>
-            <p>للأسئلة اللي بتطلع وانتي بنص محادثة بيع حقيقية، مش بعد ما تخلص.</p>
+            <p>للأسئلة اللي بتطلع وانت بنص محادثة بيع حقيقية، مش بعد ما تخلص.</p>
           </div>
           <div class="val">قيمته 290 ₪</div>
         </li>
@@ -619,10 +613,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 
 <script>
 (function(){
-  var params = new URLSearchParams(location.search);
-  var coupon = (params.get('coupon')||'').toUpperCase();
-  var active = false; /* الكوبون معطّل — بينبعت شخصيًا. لإعادة تفعيله: coupon === CONFIG.COUPON_CODE */
-  var payUrl = active ? CONFIG.PAYMENT_URL_RIMA : CONFIG.PAYMENT_URL;
+  var payUrl = CONFIG.PAYMENT_URL;
 
   function track(name, data){
     try{
@@ -632,22 +623,11 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     }catch(err){ /* tracking must never block the UI */ }
   }
 
-  if (active){
-    var off = Math.round(CONFIG.PRICE * CONFIG.COUPON_PERCENT / 100);
-    var fin = CONFIG.PRICE - off;
-    document.getElementById('couponBar').classList.add('show');
-    document.getElementById('priceMain').innerHTML =
-      '<del>' + CONFIG.PRICE.toLocaleString('en-US') + ' ₪</del> ' + fin.toLocaleString('en-US') + ' ₪';
-    document.getElementById('priceFinal').textContent = fin.toLocaleString('en-US') + ' ₪ بعد الخصم';
-    document.getElementById('stickyPrice').textContent = fin.toLocaleString('en-US') + ' ₪';
-    track('Coupon_Used', {coupon: coupon, value: fin});
-  }
-
   document.querySelectorAll('[data-cta]').forEach(function(a){
     a.setAttribute('href', payUrl);
     a.addEventListener('click', function(){
       track('CTA_Click', {location: a.dataset.cta});
-      track('Checkout_Click', {location: a.dataset.cta, coupon: active ? coupon : null});
+      track('Checkout_Click', {location: a.dataset.cta, value: CONFIG.PRICE});
     });
   });
 
@@ -720,7 +700,7 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     var fig=document.createElement('figure'); fig.className='shot';
     fig.style.order=order;
     var im=document.createElement('img');
-    im.src=src; im.loading='lazy'; im.alt='رسالة من عميلة سابقة';
+    im.src=src; im.loading='lazy'; im.alt='رسالة من مشارك سابق';
     fig.appendChild(im); grid.appendChild(fig);
     sec.classList.add('show');
     fig.addEventListener('click',function(){
