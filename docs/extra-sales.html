@@ -79,6 +79,14 @@ section.light .hl{background:#fff;border-color:var(--off-line)}
 .btn:hover{background:#FFD84D;transform:translateY(-1px)}
 .btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .cta-block{margin-top:30px}
+.cta-pair{margin-top:28px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.wa-hero{display:inline-flex;align-items:center;gap:11px;background:#25D366;color:#0A1A30;
+  font-weight:700;font-size:19px;border-radius:999px;padding:16px 34px;text-decoration:none;
+  border:1px solid #1EB855}
+.wa-hero svg{width:24px;height:24px;flex:0 0 auto}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;color:var(--gold);
+  border:1px solid var(--gold-deep);background:transparent;border-radius:999px;
+  padding:14px 30px;font-size:17px;font-weight:600;text-decoration:none}
 .micro{font-size:14px;margin-top:12px}
 .grid{display:grid;gap:14px}
 @media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr}}
@@ -122,6 +130,9 @@ details .body{padding:0 0 14px}
 .sticky .t{font-size:13px;color:var(--muted);line-height:1.4}
 .sticky .t b{display:block;color:var(--off);font-size:15px}
 .sticky .btn{padding:12px 22px;font-size:16px;white-space:nowrap}
+.wa-sticky{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:#25D366;
+  border:1px solid #1EB855;display:flex;align-items:center;justify-content:center}
+.wa-sticky svg{width:26px;height:26px}
 @media(min-width:900px){.sticky{display:none !important}}
 body.has-sticky{padding-bottom:82px}
 .final{text-align:center}
@@ -222,12 +233,12 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
   border:1px solid #1EB855;transition:transform .15s ease,box-shadow .15s ease}
 .wa:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,211,102,.35)}
 .wa svg{width:24px;height:24px;flex:0 0 auto}
-.wa-float{position:fixed;inset-inline-start:18px;bottom:96px;z-index:60;
+.wa-float{position:fixed;inset-inline-start:18px;bottom:26px;z-index:60;display:none;
   width:58px;height:58px;border-radius:50%;background:#25D366;border:1px solid #1EB855;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 6px 20px rgba(10,26,48,.35)}
 .wa-float svg{width:30px;height:30px}
-@media(min-width:900px){.wa-float{bottom:26px}}
+@media(min-width:900px){.wa-float{display:flex}}
 
 /* ==== BONUS STACK ==== */
 .bonus{margin:34px 0 0;border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:#fff}
@@ -265,9 +276,12 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
     <p class="lead">ممكن مشكلتك مش بعدد الـLeads.<br><b>ممكن المشكلة بطريقة البيع نفسها.</b></p>
     <div class="hl">EXTRA SALES · Service Business Edition<br>
       <span style="font-weight:400;font-size:17px" class="muted">4 لقاءات حضورية وعملية في حيفا لبناء طريقة بيع أوضح وأقوى لخدماتك.</span></div>
-    <div class="cta-block">
-      <a class="btn" href="#" data-cta="hero">احجز/ي مقعدك</a>
-      <p class="micro muted">Pilot أول · 8 مقاعد فقط</p>
+    <div class="cta-pair">
+      <a class="wa-hero" href="https://wa.me/972525751404?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B1%D9%8A%D9%85%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%B3%D8%A4%D8%A7%D9%84%20%D8%B9%D9%86%20%D9%88%D8%B1%D8%B4%D8%A9%20EXTRA%20SALES%20%D9%82%D8%A8%D9%84%20%D9%85%D8%A7%20%D8%A3%D8%AD%D8%AC%D8%B2%20%D9%85%D9%82%D8%B9%D8%AF%D9%8A." target="_blank" rel="noopener" data-wa="hero">
+        <svg viewBox="0 0 24 24" fill="#0A1A30" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.44-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.03 1.01-1.03 2.46s1.06 2.86 1.2 3.06c.15.2 2.08 3.18 5.04 4.46.7.3 1.25.48 1.68.62.71.22 1.35.19 1.86.12.57-.09 1.74-.71 1.99-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35z"/><path d="M12.04 2C6.6 2 2.17 6.42 2.17 11.87c0 1.74.46 3.44 1.32 4.94L2 22l5.34-1.4a9.86 9.86 0 0 0 4.7 1.2h.01c5.44 0 9.87-4.43 9.87-9.87 0-2.64-1.03-5.12-2.9-6.99A9.8 9.8 0 0 0 12.04 2zm0 18.06h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.52 3.68-8.2 8.21-8.2 2.19 0 4.25.86 5.8 2.41a8.16 8.16 0 0 1 2.4 5.8c0 4.53-3.68 8.2-8.2 8.2z"/></svg><span>احكي معي بالواتساب</span>
+      </a>
+      <a class="btn-ghost" href="#details">شوف/ي التفاصيل والسعر</a>
+      <p class="micro muted" style="margin-top:4px">Pilot أول · 8 مقاعد فقط · بجاوب شخصيًا</p>
     </div>
    </div>
    <figure class="hero-img">
@@ -659,7 +673,10 @@ footer{padding:34px 0;text-align:center;font-size:14px;color:var(--muted);border
 <!-- ================= STICKY MOBILE CTA ================= -->
 <div class="sticky" id="sticky">
   <div class="t"><b id="stickyPrice">2,490 ₪</b>8 مقاعد · حيفا</div>
-  <a class="btn" href="#" data-cta="sticky">احجز/ي مقعدك</a>
+  <div style="display:flex;gap:8px;align-items:center">
+    <a class="wa-sticky" href="https://wa.me/972525751404?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B1%D9%8A%D9%85%D8%A7%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%B3%D8%A4%D8%A7%D9%84%20%D8%B9%D9%86%20%D9%88%D8%B1%D8%B4%D8%A9%20EXTRA%20SALES%20%D9%82%D8%A8%D9%84%20%D9%85%D8%A7%20%D8%A3%D8%AD%D8%AC%D8%B2%20%D9%85%D9%82%D8%B9%D8%AF%D9%8A." target="_blank" rel="noopener" data-wa="sticky" aria-label="واتساب"><svg viewBox="0 0 24 24" fill="#0A1A30" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.74-.86-2.01-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.44-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.19-.24-.57-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.03 1.01-1.03 2.46s1.06 2.86 1.2 3.06c.15.2 2.08 3.18 5.04 4.46.7.3 1.25.48 1.68.62.71.22 1.35.19 1.86.12.57-.09 1.74-.71 1.99-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35z"/><path d="M12.04 2C6.6 2 2.17 6.42 2.17 11.87c0 1.74.46 3.44 1.32 4.94L2 22l5.34-1.4a9.86 9.86 0 0 0 4.7 1.2h.01c5.44 0 9.87-4.43 9.87-9.87 0-2.64-1.03-5.12-2.9-6.99A9.8 9.8 0 0 0 12.04 2zm0 18.06h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.52 3.68-8.2 8.21-8.2 2.19 0 4.25.86 5.8 2.41a8.16 8.16 0 0 1 2.4 5.8c0 4.53-3.68 8.2-8.2 8.2z"/></svg></a>
+    <a class="btn" href="#" data-cta="sticky">احجز/ي مقعدك</a>
+  </div>
 </div>
 
 <script>
