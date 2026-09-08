@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}img{max-width:100%}</style>
+<title>قبل ما يتحوّل النقاش لمعركة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FFFBF8; --card:#FFFFFF; --ink:#2B2320; --soft:#6E6360;
+  --line:#F0E1DA; --accent:#BF6047; --accent-soft:#FCEAE2;
+  --alert-bg:#FDF4EF; --alert-line:#E8C3B2;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'Tajawal',system-ui,'Segoe UI',sans-serif;font-size:17.5px;line-height:2;direction:rtl}
+.wrap{max-width:600px;margin:0 auto;padding:38px 20px 80px}
+h1,h2,h3{font-family:'Cairo','Tajawal',sans-serif;text-wrap:balance}
+.kicker{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.08em}
+h1{font-size:32px;font-weight:700;margin:12px 0 14px;line-height:1.35}
+.lead{color:var(--soft);font-size:18px;margin:0;line-height:1.85}
+.rule{height:1px;background:var(--line);margin:38px 0}
+section{margin-bottom:42px}
+h2{font-size:23px;font-weight:700;margin:0 0 16px;line-height:1.5}
+h3{font-size:18px;font-weight:600;margin:0 0 8px}
+p{margin:0 0 18px}
+.big{font-size:19px}
+
+/* نقطة توقف - highlight */
+.mark{background:var(--accent-soft);border-radius:14px;padding:20px 22px;margin:26px 0;font-size:18px;line-height:1.85}
+.mark .lbl{display:block;font-family:'Cairo',sans-serif;font-size:12.5px;letter-spacing:.08em;font-weight:700;color:var(--accent);margin-bottom:8px}
+.mark p{margin:0}
+
+/* الدائرة */
+.loop{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0;text-align:center;font-size:17px;line-height:2.4;color:var(--soft)}
+.loop b{color:var(--ink);font-family:'Cairo',sans-serif;font-weight:600;white-space:nowrap}
+.loop .arw{color:var(--accent);padding:0 4px}
+
+/* الخطوات */
+.step{margin-bottom:34px}
+.step-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.step-head .n{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
+.step-head h2{margin:0}
+.ask{font-family:'Cairo',sans-serif;font-weight:600;font-size:19px;margin:0 0 6px;color:var(--accent)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.q p{margin:0}
+.q .ex{color:var(--soft);font-size:16px;margin-top:8px}
+.wordbank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.wordbank span{border:1px solid var(--line);border-radius:99px;padding:4px 14px;font-size:15.5px;color:var(--soft)}
+.swap{border-right:3px solid var(--line);padding-right:16px;margin:0 0 14px}
+.swap .bad{color:var(--soft);margin:0 0 10px}
+.swap .good{margin:0;font-weight:500}
+.say{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:18px;margin:0 0 18px}
+
+/* صور */
+figure{margin:26px 0;text-align:center}
+figure img{width:100%;border-radius:16px;border:1px solid var(--line);display:block}
+figcaption{color:var(--soft);font-size:14.5px;margin-top:8px}
+.imgslot{border:1px dashed var(--line);border-radius:16px;padding:34px 20px;color:var(--soft);font-size:14.5px;background:var(--card)}
+
+.intro{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:26px 0}
+.portrait{width:82px;height:82px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex:0 0 auto;border:2px solid var(--accent-soft)}
+.pname{font-family:'Cairo',sans-serif;font-weight:700;font-size:17px;margin-bottom:2px}
+.pdesc{color:var(--soft);font-size:15.5px;line-height:1.7;margin:0}
+.alert{background:var(--alert-bg);border:1px solid var(--alert-line);border-radius:16px;padding:22px;font-size:16.5px;line-height:1.85}
+.alert p{margin:0}
+.cta-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;text-align:center}
+.cta{display:block;background:var(--accent);color:#fff;text-decoration:none;border-radius:12px;padding:16px;font-family:'Cairo',sans-serif;font-size:17.5px;font-weight:700;margin-top:20px}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sub{color:var(--soft);font-size:15px;margin:12px 0 0}
+footer{color:var(--soft);font-size:13.5px;margin-top:34px;text-align:center}
+</style>
+</head><body>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">ابتسام دبّاح · سكن ومودة</div>
+  <h1>قبل ما يتحوّل النقاش لمعركة</h1>
+  <p class="lead">دليل صغير بيساعدك توقفي لحظة وتفهمي شو عم بصير معك وقت الخلاف، قبل ما تاخدك ردّة الفعل التلقائية.</p>
+</header>
+
+<div class="intro">
+  <img class="portrait" src="ibtisam.jpg" alt="ابتسام دبّاح">
+  <div>
+    <div class="pname">ابتسام دبّاح</div>
+    <p class="pdesc">مرشدة زوجية وعائلية. بترافق النساء والأزواج لبناء علاقات أكثر وعيًا، أمانًا ومودة.</p>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<section>
+  <p class="big">يمكن بتفوتي على الحديث وإنتِ بس بدك توصّلي شغلة وجعتك…</p>
+  <p>وبعد دقائق بتلاقي حالك بتدافعي عن نفسك، بتعيدي نفس الكلام، أو بتسكتي وبتقولي: «خلص ما في فايدة».</p>
+  <p>غالبًا المشكلة مش بس بالموضوع اللي اختلفتوا عليه (الأولاد، المصاريف، التعامل مع الأهل…). مع الوقت ممكن تتكوّن بينكم دائرة بتشتغل تقريبًا بنفس الطريقة:</p>
+
+  <div class="loop">
+    <b>إشي بوجعني</b><span class="arw">←</span><b>برد بطريقة معينة</b><span class="arw">←</span><b>رده بيوجعني أكتر</b><span class="arw">←</span><b>برد أقوى</b><span class="arw">←</span><b>وهو كمان برد بطريقته</b>
+  </div>
+
+  <div class="mark">
+    <span class="lbl">النقطة الأساسية</span>
+    <p>وفجأة، بدل ما تكونوا إنتو الاثنين أمام المشكلة، بتصيروا أمام بعض.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="step">
+  <div class="step-head"><span class="n">١</span><h2>ارجعي لآخر خلاف واسألي حالك 3 أسئلة</h2></div>
+
+  <div class="q">
+    <p class="ask">شو صار؟</p>
+    <p>اكتبي الموقف نفسه، بدون تفسير أو اتهام.</p>
+    <p class="ex">مثلاً: «حكيت معه عن موضوع بالبيت، ضل بالتلفون، وأنا رفعت صوتي».</p>
+  </div>
+
+  <div class="q">
+    <p class="ask">شو حسيت تحته؟</p>
+    <p>مش بس «عصّبني». شو كان تحت العصبية؟</p>
+    <div class="wordbank"><span>خذلان</span><span>وحدة</span><span>عدم تقدير</span><span>خوف</span><span>إحساس إنك مش مهمة</span><span>مش مسموعة</span></div>
+  </div>
+
+  <div class="q">
+    <p class="ask">شو كنتِ فعلًا محتاجة؟</p>
+    <div class="wordbank"><span>إصغاء</span><span>تقدير</span><span>مساندة</span><span>أمان</span><span>وضوح</span><span>مساحة</span><span>قرب</span><span>راحة</span></div>
+    <p class="ex">مثلاً: «كنت محتاجة أحس إنه معي بهاد الموضوع».</p>
+  </div>
+
+  <p>أحيانًا إحنا بنعبّر عن الوجع بالغضب، وبنستغرب ليش الطرف الثاني ما سمع الاحتياج اللي كان تحته.</p>
+
+  <div class="mark">
+    <span class="lbl">اعمليها أكثر من مرة</span>
+    <p>اعملي هالتمرين بعد أكثر من خلاف. ممكن تلاحظي إنه رغم تغيّر المواضيع، نفس الشعور أو الاحتياج عم يرجع.</p>
+  </div>
+</section>
+
+<!-- صورة: ورقة التمرين / الأسئلة الثلاثة -->
+<figure>
+  <img src="step1.png" loading="lazy" alt="زوجان ظهر لظهر وكل واحد بعالمه">
+</figure>
+
+<div class="rule"></div>
+
+<section class="step">
+  <div class="step-head"><span class="n">٢</span><h2>بالمرة الجاية… غيّري البداية</h2></div>
+
+  <p>قبل ما يطلع الرد المعتاد، اسألي حالك للحظة: شو وجعني هلق؟ وشو بدي أوصّل فعلًا؟</p>
+  <p>وبدل ما تبدأي من اللي عمله غلط، جرّبي تبدأي من تجربتك:</p>
+
+  <div class="swap">
+    <p class="bad">❌ «كل الحمل عليّ وإنت مش فارق معك»</p>
+    <p class="good">✓ «لما لقيت حالي عم بعمل كل إشي لحالي، حسيت إني شايلة الحمل وحدي. كنت محتاجة أحس إنك معي وبتشاركني»</p>
+  </div>
+
+  <div class="mark">
+    <span class="lbl">انتبهي</span>
+    <p>مش المطلوب تحكي «الجملة الصح». المطلوب إنه اللي يوصل يكون أقرب لوجعك واحتياجك، مش بس لردّة فعلك.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="step">
+  <div class="step-head"><span class="n">٣</span><h2>انتبهي للحظة اللي لازم توقفي فيها</h2></div>
+
+  <p>إذا حسيتِ إنك عم تعيدي نفس الجملة للمرة الثالثة، أو صوتك عم يعلى، أو هو بلّش يدافع أو ينسحب… وقّفي محاولة الإقناع. ممكن تقولي:</p>
+
+  <p class="say">«حاسّة إنا دخلنا بنفس الدائرة. خلينا نوقف شوي ونرجع نحكي لما نقدر نسمع بعض»</p>
+
+  <div class="mark">
+    <span class="lbl">ليش هاد مهم</span>
+    <p>التوقف هون مش هروب من المشكلة. هو محاولة ما نخلي طريقة النقاش تصير مشكلة أكبر من الموضوع نفسه.</p>
+  </div>
+</section>
+
+<!-- صورة: لحظة التوقف -->
+<figure>
+  <img src="step3.png" loading="lazy" alt="زوجان بعيدين عن بعض بعد خلاف">
+</figure>
+
+<div class="rule"></div>
+
+<section>
+  <h2>وإذا جربتِ… وبرضه بترجعوا لنفس المكان؟</h2>
+  <p>يمكن المشكلة مش إنك ما بتعرفي تحكي.</p>
+  <p>أحيانًا منعرف شو المفروض نقول، ومع هيك وقت الخلاف بنرجع لنفس ردود الفعل، لأنه تحت طريقة التواصل ممكن يكون في وجع متراكم، واحتياجات ما وصلت، ونمط خاص اتكوّن بينكم مع الوقت.</p>
+  <div class="mark">
+    <span class="lbl">الخطوة الجاية</span>
+    <p>وقتها، يمكن الخطوة الجاية مش إنك تحاولي أكتر، وإنما تفهمي شو عم يحافظ على الدائرة.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cta-box">
+    <h2 style="margin-bottom:10px">حابة نفهم الدائرة الخاصة بعلاقتكم؟</h2>
+    <p style="color:var(--soft);margin:0;font-size:16.5px">في جلسة الاستشارة بنفهم مع بعض: وين بتبدأ الدائرة بينكم، شو بصير لكل طرف خلالها، ووين ممكن تكون أول نقطة نبدأ منها التغيير.</p>
+    <a class="cta" href="https://ibtisamfamily.com/#form" target="_blank" rel="noopener">احجزي جلسة استشارة</a>
+    <p class="sub">مش متأكدة إذا الجلسة مناسبة إلك؟ ابعتيلي رسالة ومنشوف سوا.</p>
+  </div>
+</section>
+
+<section>
+  <div class="alert">
+    <p>ملاحظة: إذا الخلاف فيه خوف، تهديد، عنف أو أذى، فالأولوية مش تحسين طريقة الحوار، وإنما الأمان والحصول على دعم مناسب.</p>
+  </div>
+</section>
+
+<footer>ابتسام دبّاح · سكن ومودة</footer>
+</div>
+</body></html>
