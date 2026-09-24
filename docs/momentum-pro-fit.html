@@ -576,5 +576,34 @@
     }
   }
 </script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   لما النموذج ينحط جوا iframe بصفحة تانية، بيبعت ارتفاعه للصفحة
+   الأم عشان الـ iframe يكبر ويصغر مع كل خطوة، بدون scroll داخلي.
+   خارج الـ iframe السكربت بيوقف لحاله وما بيعمل إشي.
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  if (window.parent === window) return;
+
+  var last = 0;
+  function report(){
+    var h = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight
+    );
+    if (Math.abs(h - last) < 4) return;
+    last = h;
+    window.parent.postMessage({ rqForm: 'height', height: h }, '*');
+  }
+
+  window.addEventListener('load', report);
+  document.addEventListener('click', function(){ setTimeout(report, 80); });
+  if (window.ResizeObserver) new ResizeObserver(report).observe(document.body);
+  setInterval(report, 700);
+  report();
+})();
+</script>
 </body>
 </html>
