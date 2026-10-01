@@ -1,0 +1,216 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #F5EFE6;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    direction: rtl;
+    padding: 64px 16px 80px;
+    color: #2C2218;
+  }
+
+  .phases-wrap { max-width: 700px; margin: 0 auto; }
+
+  .top-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #B07D3A;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .top-title {
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    color: #1E1509;
+  }
+
+  .top-title span { color: #B07D3A; }
+
+  .top-sub {
+    font-size: 15px;
+    color: rgba(44,34,24,0.6);
+    line-height: 1.7;
+    margin-bottom: 52px;
+    max-width: 520px;
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    background: #FDF9F4;
+    border-radius: 20px;
+    padding: 32px 30px 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(176,125,58,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    border: 1.5px solid rgba(212,169,106,0.2);
+  }
+
+  .card-bg-num {
+    position: absolute;
+    left: -10px;
+    top: -18px;
+    font-size: 130px;
+    font-weight: 900;
+    color: rgba(212,169,106,0.07);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -4px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D4A96A, transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .card-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #D4A96A, #B07D3A);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(176,125,58,0.3);
+  }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1E1509;
+    line-height: 1.3;
+  }
+
+  .card-promise {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #B07D3A;
+    background: rgba(176,125,58,0.1);
+    border: 1px solid rgba(176,125,58,0.2);
+    border-radius: 30px;
+    padding: 5px 14px;
+    margin-bottom: 20px;
+  }
+
+  .card-items {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14.5px;
+    color: rgba(44,34,24,0.8);
+    line-height: 1.55;
+  }
+
+  .item-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: rgba(212,169,106,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+</style>
+
+<div class="phases-wrap" dir="rtl">
+  <p class="top-label">البرنامج</p>
+  <h2 class="top-title">90 يوم تبني نظام ربحي<br><span></span></h2>
+  <p class="top-sub">مش نظرية. مش محتوى تشاهدينه وتنسينه. كل مرحلة فيها تطبيق حقيقي يبني نظام دخل يستمر معك بعد البرنامج.</p>
+
+  <div class="cards">
+
+    <div class="card">
+      <span class="card-bg-num">01</span>
+      <div class="card-top">
+        <div class="card-num">1</div>
+        <h3 class="card-title">اكتشفي خطة التحول</h3>
+      </div>
+      <span class="card-promise">ستعرفين بالضبط من تخدمين وبكم وليش يختارونك</span>
+      <div class="card-items">
+        <div class="item"><span class="item-icon">🎯</span><span>تحديد التخصص الأكثر ربحاً — الذي يجعل العميل يبحث عنك أنتِ تحديداً</span></div>
+        <div class="item"><span class="item-icon">👥</span><span>تدقيق جمهور مستعد للدفع الآن — وليس مجرد متابعين يعجبون بمحتواك</span></div>
+        <div class="item"><span class="item-icon">✍️</span><span>صياغة رسالة تضرب القلب قبل العقل وتجعل العميل يقول "هذي تتكلم عني"</span></div>
+        <div class="item"><span class="item-icon">💎</span><span>بناء عرض High Ticket يستحق سعره ويُباع بثقة كاملة</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-bg-num">02</span>
+      <div class="card-top">
+        <div class="card-num">2</div>
+        <h3 class="card-title">تحولي لمغناطيس يجذب العملاء</h3>
+      </div>
+      <span class="card-promise">ستبيعين بدون ما تحسين بضغط أو خوف من الرفض</span>
+      <div class="card-items">
+        <div class="item"><span class="item-icon">🗺️</span><span>مسار عميل واضح من لحظة اكتشافك حتى قول "حجزت"</span></div>
+        <div class="item"><span class="item-icon">📱</span><span>خطة محتوى تبني الثقة يومياً وتجعل متابعيك يتحولون لعملاء</span></div>
+        <div class="item"><span class="item-icon">📣</span><span>أساسيات الإعلان الممول مع لقاء تطبيقي مباشر مع مختص</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-bg-num">03</span>
+      <div class="card-top">
+        <div class="card-num">3</div>
+        <h3 class="card-title">نظامك يشتغل وانتِ مرتاحة</h3>
+      </div>
+      <span class="card-promise">لن تلاحقي عميلاً بعد اليوم — هم من يأتون إليك</span>
+      <div class="card-items">
+        <div class="item"><span class="item-icon">📝</span><span>سكريبتات بيع جاهزة لكل موقف — ردي بثقة على أي سؤال أو اعتراض</span></div>
+        <div class="item"><span class="item-icon">🤝</span><span>مقابلة مبيعات تُقنع بدون ضغط وتُغلق الصفقة بشكل طبيعي</span></div>
+        <div class="item"><span class="item-icon">💡</span><span>تحويل خبرتك لمنتج واضح القيمة يدفع الناس ثمنه بسعادة</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-bg-num">04</span>
+      <div class="card-top">
+        <div class="card-num">4</div>
+        <h3 class="card-title">حياة بدون قلق آخر الشهر</h3>
+      </div>
+      <span class="card-promise">الدخل يصبح متوقعاً ومستقراً — لا مفاجآت بعد الآن</span>
+      <div class="card-items">
+        <div class="item"><span class="item-icon">📊</span><span>تخطيط تدفق مالي يحمي أرباحك الصافية ويوقف تسرب المال</span></div>
+        <div class="item"><span class="item-icon">📅</span><span>نموذج دخل شهري متوقع — تعرفين أول الشهر كم ستجنين آخره</span></div>
+        <div class="item"><span class="item-icon">🔁</span><span>نظام عملاء يملأ كالندرك لأشهر قادمة بدون جهد يومي</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
