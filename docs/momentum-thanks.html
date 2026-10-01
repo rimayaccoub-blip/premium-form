@@ -25,18 +25,35 @@
   <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=914783969729003&ev=CompleteRegistration&noscript=1" /></noscript>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
   <style>
+    /* Palette lifted from the Momentum_Pro landing page so the handoff is seamless. */
+    :root {
+      --cream: #F5EFE6;
+      --surface: #FFFFFF;
+      --ink: #2C2218;
+      --ink-strong: #1E1509;
+      --accent: #B07D3A;
+      --accent-tint: rgba(176, 125, 58, 0.10);
+      --accent-line: rgba(176, 125, 58, 0.22);
+      --wa: #25D366;
+      --wa-ink: #06331A;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', 'Arial', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 16px;
-      color: #fff;
+      padding: 48px 16px 64px;
     }
 
     .card {
@@ -46,32 +63,34 @@
     }
 
     .check {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 24px;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 26px;
       border-radius: 50%;
-      background: linear-gradient(90deg, #f7c59f, #e8875a);
+      background: linear-gradient(135deg, #D4A96A, var(--accent));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
-      color: #1a1a2e;
+      font-size: 38px;
+      color: #fff;
       font-weight: 900;
+      box-shadow: 0 10px 28px rgba(176, 125, 58, 0.28);
     }
 
     h1 {
-      font-size: clamp(24px, 5vw, 34px);
+      font-size: clamp(26px, 5.5vw, 36px);
       font-weight: 900;
       line-height: 1.3;
+      color: var(--ink-strong);
       margin-bottom: 16px;
     }
-    h1 span { color: #f7c59f; }
+    h1 span { color: var(--accent); }
 
     .lead {
-      font-size: 16px;
-      line-height: 1.8;
-      opacity: 0.85;
-      margin-bottom: 32px;
+      font-size: 16.5px;
+      line-height: 1.85;
+      color: rgba(44, 34, 24, 0.72);
+      margin-bottom: 34px;
     }
 
     .wa-btn {
@@ -81,46 +100,74 @@
       gap: 10px;
       width: 100%;
       max-width: 420px;
-      background: #25D366;
-      color: #06331a;
+      background: var(--wa);
+      color: var(--wa-ink);
       font-size: 18px;
       font-weight: 800;
+      font-family: inherit;
       text-decoration: none;
       padding: 18px 24px;
       border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
+      box-shadow: 0 10px 26px rgba(37, 211, 102, 0.3);
       transition: transform 0.15s ease;
     }
-    .wa-btn:active { transform: scale(0.98); }
-
-    .wa-btn svg { width: 24px; height: 24px; fill: #06331a; }
+    .wa-btn:active { transform: scale(0.985); }
+    .wa-btn svg { width: 24px; height: 24px; fill: var(--wa-ink); }
 
     .hint {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 14px;
-      opacity: 0.6;
       line-height: 1.7;
+      color: rgba(44, 34, 24, 0.52);
     }
 
     .steps {
-      margin-top: 36px;
+      margin-top: 38px;
       text-align: right;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      padding: 22px 24px;
+      background: var(--surface);
+      border: 1px solid var(--accent-line);
+      border-radius: 16px;
+      padding: 24px 26px;
+      box-shadow: 0 2px 10px rgba(44, 34, 24, 0.04);
     }
     .steps h2 {
-      font-size: 15px;
-      font-weight: 800;
-      color: #f7c59f;
-      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
     }
-    .steps p {
-      font-size: 14.5px;
-      line-height: 1.9;
-      opacity: 0.85;
-      margin-bottom: 6px;
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(44, 34, 24, 0.82);
+    }
+    .step + .step { margin-top: 12px; }
+    .step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: var(--accent-tint);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .sig {
+      margin-top: 30px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: rgba(44, 34, 24, 0.45);
     }
   </style>
 </head>
@@ -132,7 +179,7 @@
 
     <p class="lead">
       باقي خطوة وحدة بس.<br />
-      اضغطي على الزر وابعتي الرسالة الجاهزة، وبوصلك فورًا تفاصيل محادثة الملاءمة.
+      اضغطي على الزر وابعتي الرسالة الجاهزة، وبوصلك تفاصيل محادثة الملاءمة.
     </p>
 
     <a id="waBtn" class="wa-btn" href="#" rel="noopener">
@@ -146,10 +193,12 @@
 
     <div class="steps">
       <h2>شو بصير بعد هيك؟</h2>
-      <p>1. بتبعتي الرسالة الجاهزة بالواتساب.</p>
-      <p>2. بوصلك سؤالين قصار لنفهم وين انتِ اليوم.</p>
-      <p>3. بنحدد موعد محادثة الملاءمة، وبنقلك بصراحة إذا البرنامج بناسب مرحلتك.</p>
+      <div class="step"><span class="step-num">1</span><span>بتبعتي الرسالة الجاهزة بالواتساب.</span></div>
+      <div class="step"><span class="step-num">2</span><span>بوصلك سؤالين قصار لنفهم وين انتِ اليوم.</span></div>
+      <div class="step"><span class="step-num">3</span><span>بنحدد موعد محادثة الملاءمة، وبنقلك بصراحة إذا البرنامج بناسب مرحلتك.</span></div>
     </div>
+
+    <p class="sig">ريما يعقوب · مدرّبة ومستشارة أعمال</p>
   </div>
 
   <script>
@@ -168,12 +217,8 @@
       var text = KEYWORD;
       if (name) { text += ' - ' + name; }
 
-      var href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
-      document.getElementById('waBtn').setAttribute('href', href);
-
-      // Give her a moment to read the page, then open WhatsApp on its own.
-      // Anyone who lands back here still has the button.
-      setTimeout(function () { window.location.href = href; }, 3000);
+      document.getElementById('waBtn')
+        .setAttribute('href', 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text));
     })();
   </script>
 </body>
