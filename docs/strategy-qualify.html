@@ -55,6 +55,10 @@
       margin-bottom: 14px;
     }
     .header h1 span { color: #e8c07d; }
+    .intro-video { max-width: 280px; margin: 6px auto 22px; text-align: center; }
+    .intro-video video { width: 100%; aspect-ratio: 9 / 16; display: block; object-fit: cover; border-radius: 18px;
+      border: 1px solid rgba(232,192,125,0.35); background: #000; box-shadow: 0 12px 34px rgba(0,0,0,0.35); }
+    .intro-video .cap { font-size: 13px; opacity: 0.75; margin-top: 10px; line-height: 1.7; }
     .gap-art { max-width: 380px; margin: 22px auto 4px; background: rgba(255,255,255,0.03); border: 1px solid rgba(232,192,125,0.2); border-radius: 18px; padding: 14px 12px 10px; }
     .gap-art svg { display: block; font-family: inherit; }
     .gap-art .cap { font-size: 13px; opacity: 0.75; margin-top: 8px; line-height: 1.7; }
@@ -679,13 +683,13 @@
   <div class="card" id="q13">
     <span class="section-tag">الجاهزية</span>
     <p class="step-num">سؤال 13 / 13</p>
-    <p class="question">لو طلع إنه الحل بده مرافقة مهنية، عندك استعداد للاستثمار بحاله خلال الشهور الثلاثة الجاية؟</p>
+    <p class="question">لو طلع إنه الحل بده مرافقة مهنية، قديش انت مستعد تستثمر فيها خلال الشهور الثلاثة الجاية؟</p>
     <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا هاي اللحظة الصح إلك أو لأ.</p>
     <div class="options" data-type="single">
-      <div class="option">إيه، جاهز أستثمر إذا كان الحل مناسب لوضعي</div>
-      <div class="option">مبدئياً إيه، بس بدي أعرف التفاصيل والمبلغ قبل ما أقرر</div>
-      <div class="option">مهتم، بس التوقيت المالي مش مناسب هلق</div>
-      <div class="option">بفضّل نحكي بهاد الموضوع بجلسة</div>
+      <div class="option" data-inv="high">جاهز أستثمر أكثر من 3,000 دولار</div>
+      <div class="option" data-inv="high">جاهز أستثمر من 1,500 لـ 3,000 دولار</div>
+      <div class="option" data-inv="low">مبدئياً من 500 لـ 1,500 دولار</div>
+      <div class="option" data-inv="low">أقل من 500 دولار</div>
     </div>
     <button class="btn-next" disabled onclick="showResults()">شوف نتيجتك ←</button>
   </div>
@@ -746,6 +750,10 @@
   <!-- ============ بيانات التواصل ============ -->
   <div class="card" id="qDetails">
     <span class="section-tag">آخر خطوة</span>
+    <div class="intro-video">
+      <video id="introVideo" src="media/fajwa-intro.mp4" poster="media/fajwa-intro.jpg" controls playsinline preload="metadata"></video>
+      <p class="cap">دقيقة وحدة: هيك بنكمّل من هون. اترك تفاصيلك تحت، وأنا برجعلك 👇</p>
+    </div>
     <p class="question">وين ببعتلك التحليل ونتيجتك؟</p>
     <p class="sub">ببعتلك نتيجة الفحص كاملة، مع ملاحظاتي الشخصية على أرقامك انت بالذات، وخطوة عملية بتقدر تبلش فيها هاد الأسبوع.</p>
 
@@ -819,12 +827,9 @@
     <!-- لمين مش مناسب هلق: بدون حجز مباشر -->
     <div id="reviewBlock" style="display:none">
       <div class="highlight">
-        <strong>الخطوة الجاية إلك</strong>
-        من أرقامك، الأنسب إلك هلق مش جلسة مدفوعة. رح أراجع نتيجتك بنفسي، وإذا شفت إنه في خطوة بتناسب وضعك، برجعلك على الواتساب.
-        <br><br>
-        وبالأثناء، في سلسلة دروس مجانية بتفرجيك كيف العميل بياخد قرار الشراء، خطوة خطوة. ابدأ فيها من اليوم.
+        <strong>الخطوة الجاية</strong>
+        وصلتني أرقامك. رح أراجع نتيجتك بنفسي، وبرجعلك على الواتساب نشوف سوا شو الخطوة الأنسب لوضعك هلق.
       </div>
-      <a class="cta-btn" id="seriesCta" href="https://rimayaqub.com/khareeta" target="_blank" rel="noopener">بدي أشوف السلسلة المجانية ←</a>
     </div>
 
     <p class="signature">ريما يعقوب<br>مدربة ومستشارة أعمال</p>
@@ -842,18 +847,15 @@
   const FORM_NAME     = 'الفحص التشخيصي — فجوة البزنس';
 
   // ===== مين بيشوف زر الحجز؟ =====
-  // لازم كل الشروط تتحقق، غير هيك بيشوف شاشة "براجع نتيجتك" والسلسلة المجانية.
-  const FIT_MIN_INCOME    = 4000; // دخل شهري بالدولار
-  const FIT_MIN_READINESS = 6;    // الاستعداد للتغيير من 10
+  // دخل شهري 1,500$ وفوق + استعداد يستثمر 1,500$ وفوق = بيشوف زر الحجز.
+  // غير هيك بيشوف "رح أراجع وأرجعلك".
+  const FIT_MIN_INCOME = 1500;
 
   function fitCheck() {
     const reasons = [];
     if (D.income < FIT_MIN_INCOME) reasons.push('دخل أقل من ' + FIT_MIN_INCOME + '$');
-    const yrs = pick(2) ? pick(2).textContent.trim() : '';
-    if (yrs === 'أقل من سنة') reasons.push('أقل من سنة بالبزنس');
-    const ready = +document.getElementById('readyRange').value;
-    if (ready < FIT_MIN_READINESS) reasons.push('استعداد للتغيير ' + ready + '/10');
-    if (investment.indexOf('التوقيت المالي') > -1) reasons.push('التوقيت المالي مش مناسب');
+    const inv = pick(13);
+    if (!inv || inv.dataset.inv !== 'high') reasons.push('استثمار أقل من 1,500$');
     return { fit: reasons.length === 0, reasons: reasons };
   }
 
@@ -1273,6 +1275,17 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  (function () {
+    var v = document.getElementById('introVideo');
+    if (!v) return;
+    var sent = {};
+    function once(k) { if (!sent[k]) { sent[k] = 1; track(k); } }
+    v.addEventListener('play', function () { once('IntroVideoPlay'); });
+    v.addEventListener('timeupdate', function () {
+      if (v.duration && v.currentTime / v.duration > 0.9) once('IntroVideoComplete');
+    });
+  })();
+
   function goToDetails() {
     track('QuizDetailsShown', { gap: D.onTrack ? 'on_track' : DATA_WORDS[D.primary] });
     document.getElementById('qResult').classList.remove('active');
@@ -1291,6 +1304,8 @@
     if (local.length < 6) { alert('من فضلك اكتب رقم واتساب صحيح'); return; }
     if (!consentBox.checked) { alert('عشان أقدر أبعتلك نتيجتك، بحتاج موافقتك على استقبال الرسائل'); return; }
 
+    const iv = document.getElementById('introVideo');
+    if (iv) iv.pause();
     const FIT = fitCheck();
     answers = {
       'الاسم':   name,
