@@ -686,10 +686,9 @@
     <p class="question">لو طلع إنه الحل بده مرافقة مهنية، قديش انت مستعد تستثمر فيها خلال الشهور الثلاثة الجاية؟</p>
     <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا هاي اللحظة الصح إلك أو لأ.</p>
     <div class="options" data-type="single">
-      <div class="option" data-inv="high">جاهز أستثمر أكثر من 3,000 دولار</div>
-      <div class="option" data-inv="high">جاهز أستثمر من 1,500 لـ 3,000 دولار</div>
-      <div class="option" data-inv="low">مبدئياً من 500 لـ 1,500 دولار</div>
-      <div class="option" data-inv="low">أقل من 500 دولار</div>
+      <div class="option" data-inv="low" data-save="مبدئياً · أقل من 1,500 دولار">أقل من 1,500 دولار</div>
+      <div class="option" data-inv="high" data-save="أستثمر · من 1,500 لـ 3,000 دولار">من 1,500 لـ 3,000 دولار</div>
+      <div class="option" data-inv="high" data-save="أستثمر · أكثر من 3,000 دولار">أكثر من 3,000 دولار</div>
     </div>
     <button class="btn-next" disabled onclick="showResults()">شوف نتيجتك ←</button>
   </div>
@@ -1199,7 +1198,7 @@
 
   function showResults() {
     const invOpt = pick(13);
-    investment = invOpt ? invOpt.textContent.trim() : '';
+    investment = invOpt ? (invOpt.dataset.save || invOpt.textContent.trim()) : '';
 
     D = diagnose();
 
