@@ -571,12 +571,11 @@
       <div class="option" data-stage="3"><b>3. نظام بلّش يشتغل</b><br><span class="opt-sub">عرض واضح، عملاء بيجوا بشكل ثابت، وبلّشت أفوّض</span></div>
       <div class="option" data-stage="4"><b>4. بزنس بيمشي بنظام</b><br><span class="opt-sub">دخل ثابت، فريق ونظام، وأنا بقود مش بنفّذ</span></div>
     </div>
-    <p class="sub" style="margin-top:18px">ووين بدك يكون بعد سنة؟</p>
-    <div class="options chips" data-type="single" id="stageGoal">
-      <div class="option" data-stage="1">1. كل البزنس واقف عليّ</div>
-      <div class="option" data-stage="2">2. دخل ماشي بس متعب</div>
-      <div class="option" data-stage="3">3. نظام بلّش يشتغل</div>
-      <div class="option" data-stage="4">4. بزنس بيمشي بنظام</div>
+    <p class="sub" style="margin-top:18px">وشو أهم شي بدك توصله بعد سنة؟</p>
+    <div class="options" data-type="single" id="stageGoal">
+      <div class="option" data-stage="3">دخل ثابت كل شهر، مش طالع ونازل</div>
+      <div class="option" data-stage="4">فريق موظفين بيشتغل معي، وأنا بقود</div>
+      <div class="option" data-stage="4">الاثنين: دخل ثابت وفريق</div>
     </div>
     <button class="btn-next" disabled onclick="nextStep(5)">التالي ←</button>
   </div>
@@ -1046,6 +1045,7 @@
   const DATA_WORDS = { price: 'التسعير', sales: 'المبيعات', marketing: 'التسويق' };
   const STAGE_NAMES = ['كل البزنس واقف عليّ', 'دخل ماشي بس متعب', 'نظام بلّش يشتغل', 'بزنس بيمشي بنظام'];
   const STAGE_SHORT = ['كله عليّ', 'ماشي بس متعب', 'نظام بلّش', 'بيمشي بنظام'];
+  function goalLabel() { const o = document.querySelector('#stageGoal .option.selected'); return o ? o.textContent.trim() : ''; }
   function stageVal(id) { const o = document.querySelector('#' + id + ' .option.selected'); return o ? +o.dataset.stage : 0; }
 
   // خط الفجوة بالمصاري: من دخل اليوم لهدفك
@@ -1085,10 +1085,10 @@
     }
     h += '</div><p class="gl-note">';
     if (goal > now) {
-      h += 'اليوم بزنسك بمرحلة <b style="color:#e8c07d">«' + STAGE_NAMES[now - 1] + '»</b>، وبدك توصل لـ <b>«' + STAGE_NAMES[goal - 1] + '»</b>. ' +
+      h += 'اليوم بزنسك بمرحلة <b style="color:#e8c07d">«' + STAGE_NAMES[now - 1] + '»</b>، وبدك توصل لـ <b>«' + goalLabel() + '»</b>. ' +
         'هاي فجوة ما بتتسكّر بشغل أكثر. بتتسكّر بنظام: عرض واضح، مسار مبيعات، ومتابعة مالية.';
     } else {
-      h += 'بزنسك أصلاً بالمرحلة اللي بدك ياها. التحدي هلق إنه هاد الوضع يضل ثابت حتى بالشهور الصعبة.';
+      h += 'بدك توصل لـ <b style="color:#e8c07d">«' + goalLabel() + '»</b>، وبزنسك أصلاً قريب من هاي المرحلة. التحدي هلق إنه يضل ثابت حتى بالشهور الصعبة.';
     }
     return h + '</p>';
   }
@@ -1330,7 +1330,7 @@
       'إحساسه بالمشكلة': perceived === 'unknown' ? 'ما بيعرف' : (DATA_WORDS[perceived] || '—'),
       'تطابق الإحساس مع الأرقام': perceived === 'unknown' ? 'ما بيعرف' : (perceived === D.primary ? 'مطابق' : 'مش مطابق'),
       'مرحلة البزنس اليوم': STAGE_NAMES[stageVal('stageNow') - 1] || '',
-      'المرحلة المطلوبة': STAGE_NAMES[stageVal('stageGoal') - 1] || '',
+      'المرحلة المطلوبة': goalLabel(),
       'الاستعداد للتغيير': document.getElementById('readyRange').value + '/10',
       'الجاهزية للاستثمار': investment,
       'موافقة تسويقية': 'إيه ✓',
