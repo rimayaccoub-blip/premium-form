@@ -55,13 +55,9 @@
       margin-bottom: 14px;
     }
     .header h1 span { color: #e8c07d; }
-    .intro-video { max-width: 300px; margin: 22px auto 6px; }
-    .intro-video video {
-      width: 100%; aspect-ratio: 9 / 16; display: block; object-fit: cover;
-      border-radius: 18px; border: 1px solid rgba(232,192,125,0.35);
-      background: #000; box-shadow: 0 12px 34px rgba(0,0,0,0.35);
-    }
-    .intro-video .cap { font-size: 13px; opacity: 0.75; margin-top: 10px; line-height: 1.7; }
+    .gap-art { max-width: 380px; margin: 22px auto 4px; background: rgba(255,255,255,0.03); border: 1px solid rgba(232,192,125,0.2); border-radius: 18px; padding: 14px 12px 10px; }
+    .gap-art svg { display: block; font-family: inherit; }
+    .gap-art .cap { font-size: 13px; opacity: 0.75; margin-top: 8px; line-height: 1.7; }
     .header p {
       font-size: 15px;
       opacity: 0.82;
@@ -463,9 +459,32 @@
     <div class="badge">الفحص التشخيصي · ريما يعقوب</div>
     <h1>وين الفجوة الحقيقية<br><span>ببزنسك؟</span></h1>
     <p>أغلب أصحاب الخدمات بشتغلوا على الشي الغلط، لأنهم بحسّوا وين المشكلة بدل ما بحسبوها. 13 سؤال، وبتطلع بالرقم اللي بيفصل بين وين انت اليوم ووين بدك توصل، ووين بالضبط الخلل.</p>
-    <div class="intro-video">
-      <video id="introVideo" src="media/fajwa-intro.mp4" poster="media/fajwa-intro.jpg" controls playsinline preload="metadata"></video>
-      <p class="cap">دقيقة وحدة: هيك بفحص مع كل صاحب بزنس وين الفجوة. شوفها، وبعدين جاوب على الأسئلة تحت 👇</p>
+    <div class="gap-art" aria-hidden="true">
+      <svg viewBox="0 0 340 190" width="100%" role="img">
+        <defs>
+          <linearGradient id="ga" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="#e8c07d" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#e8c07d" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line x1="20" y1="160" x2="320" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <line x1="20" y1="40" x2="320" y2="40" stroke="rgba(255,155,155,0.35)" stroke-width="1" stroke-dasharray="4 5"/>
+        <path d="M320 150 C 290 140, 270 146, 245 132 S 205 118, 185 120 L 185 160 L 320 160 Z" fill="url(#ga)"/>
+        <path d="M320 150 C 290 140, 270 146, 245 132 S 205 118, 185 120" fill="none" stroke="#e8c07d" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M185 120 C 150 104, 110 70, 40 44" fill="none" stroke="#ff9b9b" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <line x1="185" y1="114" x2="185" y2="46" stroke="#ff9b9b" stroke-width="1.5"/>
+        <line x1="179" y1="46" x2="191" y2="46" stroke="#ff9b9b" stroke-width="1.5"/>
+        <line x1="179" y1="114" x2="191" y2="114" stroke="#ff9b9b" stroke-width="1.5"/>
+        <rect x="196" y="66" width="62" height="26" rx="13" fill="rgba(255,155,155,0.16)" stroke="#ff9b9b" stroke-width="1"/>
+        <text x="227" y="84" text-anchor="middle" font-size="14" font-weight="800" fill="#ff9b9b">الفجوة</text>
+        <circle cx="185" cy="120" r="7" fill="#e8c07d"/>
+        <circle cx="40" cy="44" r="7" fill="#0b1a2e" stroke="#ff9b9b" stroke-width="2.5"/>
+        <text x="185" y="148" text-anchor="middle" font-size="13" font-weight="700" fill="#e8c07d">دخلك اليوم</text>
+        <text x="80" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#ff9b9b">الدخل اللي بدك ياه</text>
+        <text x="300" y="180" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.5)">اليوم</text>
+        <text x="45" y="180" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.5)">بعد سنة</text>
+      </svg>
+      <p class="cap">بآخر الفحص بتشوف هاد الخط بأرقامك انت: قديش الفجوة، ووين بالضبط هي.</p>
     </div>
   </div>
 
@@ -780,6 +799,7 @@
     <!-- البونص -->
     <div class="bonus" id="bonusBox"></div>
 
+    <div id="fitBlock">
     <div class="highlight">
       <strong>بس خليني أكون صريحة معك</strong>
       الخطوة اللي فوق بتحرّك محور واحد. النتيجة بتقولك <b style="color:#e8c07d">وين</b> الفجوة، بس ما بتقولك <b style="color:#e8c07d">كيف</b> تبني نظام يسكّرها ويضل شغال بعدين.
@@ -794,6 +814,18 @@
     </p>
 
     <a class="cta-btn secondary" id="waCta" href="#" target="_blank" rel="noopener">عندي سؤال قبل الحجز ←</a>
+    </div>
+
+    <!-- لمين مش مناسب هلق: بدون حجز مباشر -->
+    <div id="reviewBlock" style="display:none">
+      <div class="highlight">
+        <strong>الخطوة الجاية إلك</strong>
+        من أرقامك، الأنسب إلك هلق مش جلسة مدفوعة. رح أراجع نتيجتك بنفسي، وإذا شفت إنه في خطوة بتناسب وضعك، برجعلك على الواتساب.
+        <br><br>
+        وبالأثناء، في سلسلة دروس مجانية بتفرجيك كيف العميل بياخد قرار الشراء، خطوة خطوة. ابدأ فيها من اليوم.
+      </div>
+      <a class="cta-btn" id="seriesCta" href="https://rimayaqub.com/khareeta" target="_blank" rel="noopener">بدي أشوف السلسلة المجانية ←</a>
+    </div>
 
     <p class="signature">ريما يعقوب<br>مدربة ومستشارة أعمال</p>
   </div>
@@ -808,6 +840,22 @@
   const LINK_FOCUS    = 'https://rimayaqub.ravpage.co.il/Focus';
   const LINK_WHATSAPP = 'https://wa.me/972559311440';
   const FORM_NAME     = 'الفحص التشخيصي — فجوة البزنس';
+
+  // ===== مين بيشوف زر الحجز؟ =====
+  // لازم كل الشروط تتحقق، غير هيك بيشوف شاشة "براجع نتيجتك" والسلسلة المجانية.
+  const FIT_MIN_INCOME    = 4000; // دخل شهري بالدولار
+  const FIT_MIN_READINESS = 6;    // الاستعداد للتغيير من 10
+
+  function fitCheck() {
+    const reasons = [];
+    if (D.income < FIT_MIN_INCOME) reasons.push('دخل أقل من ' + FIT_MIN_INCOME + '$');
+    const yrs = pick(2) ? pick(2).textContent.trim() : '';
+    if (yrs === 'أقل من سنة') reasons.push('أقل من سنة بالبزنس');
+    const ready = +document.getElementById('readyRange').value;
+    if (ready < FIT_MIN_READINESS) reasons.push('استعداد للتغيير ' + ready + '/10');
+    if (investment.indexOf('التوقيت المالي') > -1) reasons.push('التوقيت المالي مش مناسب');
+    return { fit: reasons.length === 0, reasons: reasons };
+  }
 
   const TOTAL = 13;
   const CLOSE_BENCHMARK = 0.35; // نسبة إغلاق مرجعية لأصحاب الخدمات
@@ -909,20 +957,10 @@
     track('QuizStep', { step: n });
   }
   trackStepOnce(1);
-  (function () {
-    var v = document.getElementById('introVideo');
-    if (!v) return;
-    var sent = {};
-    function once(k, params) { if (!sent[k]) { sent[k] = 1; track(k, params); } }
-    v.addEventListener('play', function () { once('IntroVideoPlay'); });
-    v.addEventListener('timeupdate', function () {
-      if (v.duration && v.currentTime / v.duration > 0.9) once('IntroVideoComplete');
-    });
-  })();
 
   function nextStep(current) {
-    const iv = document.querySelector('.intro-video');
-    if (iv) { iv.style.display = 'none'; const v = document.getElementById('introVideo'); if (v) v.pause(); }
+    const ga = document.querySelector('.gap-art');
+    if (ga) ga.style.display = 'none';
     document.getElementById('q' + current).classList.remove('active');
     const next = current + 1;
     document.getElementById('q' + next).classList.add('active');
@@ -1253,6 +1291,7 @@
     if (local.length < 6) { alert('من فضلك اكتب رقم واتساب صحيح'); return; }
     if (!consentBox.checked) { alert('عشان أقدر أبعتلك نتيجتك، بحتاج موافقتك على استقبال الرسائل'); return; }
 
+    const FIT = fitCheck();
     answers = {
       'الاسم':   name,
       'واتساب':  countryCode() + ' ' + local,   // بدون + حتى الشيت ما يقرأه كصيغة
@@ -1281,11 +1320,16 @@
       'الاستعداد للتغيير': document.getElementById('readyRange').value + '/10',
       'الجاهزية للاستثمار': investment,
       'موافقة تسويقية': 'إيه ✓',
+      'الملاءمة': FIT.fit ? 'مناسب · شاف زر الحجز' : 'للمراجعة · ' + FIT.reasons.join('، '),
       'النموذج': FORM_NAME
     };
 
     document.getElementById('qDetails').classList.remove('active');
     document.getElementById('qFinal').classList.add('active');
+    document.getElementById('fitBlock').style.display    = FIT.fit ? '' : 'none';
+    document.getElementById('reviewBlock').style.display = FIT.fit ? 'none' : '';
+    track('QuizFit', { fit: FIT.fit ? 'fit' : 'review' });
+    if (FIT.fit) track('QualifiedLead', { value: D.monthGap || 0, currency: 'USD' });
     document.getElementById('focusCta').href = LINK_FOCUS;
     document.getElementById('waCta').href    = LINK_WHATSAPP;
     window.scrollTo({ top: 0, behavior: 'smooth' });
