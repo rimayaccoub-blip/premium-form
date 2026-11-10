@@ -55,6 +55,13 @@
       margin-bottom: 14px;
     }
     .header h1 span { color: #e8c07d; }
+    .intro-video { max-width: 300px; margin: 22px auto 6px; }
+    .intro-video video {
+      width: 100%; aspect-ratio: 9 / 16; display: block; object-fit: cover;
+      border-radius: 18px; border: 1px solid rgba(232,192,125,0.35);
+      background: #000; box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+    }
+    .intro-video .cap { font-size: 13px; opacity: 0.75; margin-top: 10px; line-height: 1.7; }
     .header p {
       font-size: 15px;
       opacity: 0.82;
@@ -428,6 +435,10 @@
     <div class="badge">الفحص التشخيصي · ريما يعقوب</div>
     <h1>وين الفجوة الحقيقية<br><span>ببزنسك؟</span></h1>
     <p>أغلب أصحاب الخدمات بشتغلوا على الشي الغلط، لأنهم بحسّوا وين المشكلة بدل ما بحسبوها. 12 سؤال، وبتطلع بالرقم اللي بيفصل بين وين انت اليوم ووين بدك توصل، ووين بالضبط الخلل.</p>
+    <div class="intro-video">
+      <video id="introVideo" src="media/fajwa-intro.mp4" poster="media/fajwa-intro.jpg" controls playsinline preload="metadata"></video>
+      <p class="cap">دقيقة وحدة: هيك بفحص مع كل صاحب بزنس وين الفجوة. شوفها، وبعدين جاوب على الأسئلة تحت 👇</p>
+    </div>
   </div>
 
   <p class="progress-label" id="progressLabel">سؤال 1 من 12</p>
@@ -572,7 +583,7 @@
     <p class="question">بإحساسك انت، وين المشكلة الأساسية؟</p>
     <p class="sub">جاوب بحدسك قبل ما تشوف الأرقام. هاد السؤال بيقارن إحساسك بالنتيجة.</p>
     <div class="options" data-type="single">
-      <div class="option" data-key="price">بالتسعير، حاسس إني بتقاضى أقل من قيمة شغلي</div>
+      <div class="option" data-key="price">بالعرض والتسعير، حاسس إني بتقاضى أقل من قيمة شغلي</div>
       <div class="option" data-key="sales">بالمبيعات، بيجيني استفسارات بس ما بتتحول لحجوزات</div>
       <div class="option" data-key="marketing">بالتسويق، ما بوصل لعدد كافي من الناس</div>
       <div class="option" data-key="unknown">صراحة ما بعرف، هاد سبب تعبئتي للفحص</div>
@@ -843,6 +854,16 @@
     track('QuizStep', { step: n });
   }
   trackStepOnce(1);
+  (function () {
+    var v = document.getElementById('introVideo');
+    if (!v) return;
+    var sent = {};
+    function once(k, params) { if (!sent[k]) { sent[k] = 1; track(k, params); } }
+    v.addEventListener('play', function () { once('IntroVideoPlay'); });
+    v.addEventListener('timeupdate', function () {
+      if (v.duration && v.currentTime / v.duration > 0.9) once('IntroVideoComplete');
+    });
+  })();
 
   function nextStep(current) {
     document.getElementById('q' + current).classList.remove('active');
@@ -923,8 +944,8 @@
     };
   }
 
-  const GAP_NAMES = { price: 'بالتسعير', sales: 'بالمبيعات', marketing: 'بالتسويق' };
-  const GAP_WORDS = { price: 'التسعير', sales: 'المبيعات', marketing: 'التسويق' };
+  const GAP_NAMES = { price: 'بالعرض والتسعير', sales: 'بالمبيعات', marketing: 'بالتسويق' };
+  const GAP_WORDS = { price: 'العرض والتسعير', sales: 'المبيعات', marketing: 'التسويق' };
 
   function barClass(s) { return s >= 55 ? 'hi' : (s >= 30 ? 'mid' : 'lo'); }
 
