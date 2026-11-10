@@ -288,6 +288,34 @@
     .gap-hero.good .big { color: #9be0b8; }
     .gap-hero .note { font-size: 13px; opacity: 0.75; margin-top: 12px; line-height: 1.75; }
 
+    .opt-sub { font-size: 13px; opacity: 0.7; font-weight: 400; }
+    .options.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .options.chips .option { font-size: 13px; padding: 12px 10px; text-align: center; }
+
+    /* ===== خطوط الفجوة ===== */
+    .gaplines { margin: 4px 0 24px; }
+    .gl { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 16px 14px; margin-bottom: 12px; }
+    .gl-title { font-size: 13px; font-weight: 700; margin-bottom: 44px; }
+    .gl-track { position: relative; height: 6px; border-radius: 6px; background: rgba(255,255,255,0.10); margin: 0 14px; }
+    .gl-done { position: absolute; top: 0; bottom: 0; right: 0; border-radius: 6px; background: #e8c07d; }
+    .gl-gap { position: absolute; top: 0; bottom: 0; border-radius: 6px;
+      background: repeating-linear-gradient(90deg, #ff9b9b 0 8px, transparent 8px 13px); }
+    .gl-dot { position: absolute; top: 50%; width: 16px; height: 16px; margin-right: -8px; transform: translateY(-50%);
+      border-radius: 50%; background: #0b1a2e; border: 2px solid rgba(255,255,255,0.3); }
+    .gl-dot.now { border-color: #e8c07d; background: #e8c07d; }
+    .gl-dot.goal { border-color: #ff9b9b; background: #0b1a2e; box-shadow: 0 0 0 4px rgba(255,155,155,0.18); }
+    .gl-dot.goal.reached { border-color: #9be0b8; box-shadow: 0 0 0 4px rgba(155,224,184,0.2); }
+    .gl-tag { position: absolute; bottom: 16px; transform: translateX(50%); font-size: 11px; white-space: nowrap; opacity: 0.85; text-align: center; line-height: 1.35; }
+    .gl-tag b { display: block; font-size: 13px; color: #e8c07d; direction: ltr; }
+    .gl-tag.goal b { color: #ff9b9b; }
+    .gl-labels { position: relative; height: 34px; margin: 12px 14px 0; }
+    .gl-labels span { position: absolute; transform: translateX(50%); font-size: 10.5px; opacity: 0.55; text-align: center; width: 70px; line-height: 1.35; }
+    .gl-labels span.on { opacity: 1; color: #e8c07d; font-weight: 700; }
+    .gl-labels span.tg { opacity: 1; color: #ff9b9b; font-weight: 700; }
+    .gl-note { font-size: 13px; opacity: 0.85; line-height: 1.75; margin-top: 12px; }
+    .gl-note b { color: #ff9b9b; }
+    .money-note { font-size: 13px; line-height: 1.75; background: rgba(232,192,125,0.08); border: 1px solid rgba(232,192,125,0.25); border-radius: 12px; padding: 12px 14px; margin: -8px 0 20px; }
+
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
     .stat {
       background: rgba(255,255,255,0.05);
@@ -434,20 +462,20 @@
   <div class="header">
     <div class="badge">الفحص التشخيصي · ريما يعقوب</div>
     <h1>وين الفجوة الحقيقية<br><span>ببزنسك؟</span></h1>
-    <p>أغلب أصحاب الخدمات بشتغلوا على الشي الغلط، لأنهم بحسّوا وين المشكلة بدل ما بحسبوها. 12 سؤال، وبتطلع بالرقم اللي بيفصل بين وين انت اليوم ووين بدك توصل، ووين بالضبط الخلل.</p>
+    <p>أغلب أصحاب الخدمات بشتغلوا على الشي الغلط، لأنهم بحسّوا وين المشكلة بدل ما بحسبوها. 13 سؤال، وبتطلع بالرقم اللي بيفصل بين وين انت اليوم ووين بدك توصل، ووين بالضبط الخلل.</p>
     <div class="intro-video">
       <video id="introVideo" src="media/fajwa-intro.mp4" poster="media/fajwa-intro.jpg" controls playsinline preload="metadata"></video>
       <p class="cap">دقيقة وحدة: هيك بفحص مع كل صاحب بزنس وين الفجوة. شوفها، وبعدين جاوب على الأسئلة تحت 👇</p>
     </div>
   </div>
 
-  <p class="progress-label" id="progressLabel">سؤال 1 من 12</p>
+  <p class="progress-label" id="progressLabel">سؤال 1 من 13</p>
   <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
   <!-- Q1 -->
   <div class="card active" id="q1">
     <span class="section-tag">البزنس</span>
-    <p class="step-num">سؤال 1 / 12</p>
+    <p class="step-num">سؤال 1 / 13</p>
     <p class="question">شو نوع الخدمة اللي بتقدمها؟</p>
     <p class="sub">اختار الأقرب لطبيعة شغلك</p>
     <div class="options" data-type="single" id="serviceOptions">
@@ -471,7 +499,7 @@
   <!-- Q2 -->
   <div class="card" id="q2">
     <span class="section-tag">البزنس</span>
-    <p class="step-num">سؤال 2 / 12</p>
+    <p class="step-num">سؤال 2 / 13</p>
     <p class="question">من قديش وانت شغال بهاد البزنس؟</p>
     <div class="options" data-type="single">
       <div class="option">أقل من سنة</div>
@@ -485,7 +513,7 @@
   <!-- Q3 -->
   <div class="card" id="q3">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 3 / 12</p>
+    <p class="step-num">سؤال 3 / 13</p>
     <p class="question">متوسط دخلك الشهري من البزنس بآخر 3 شهور؟</p>
     <p class="sub">أرقامك بتضلّ بيني وبينك، وبدونها ما في تشخيص. رقم تقريبي بالدولار بكفّي.</p>
     <div class="num-wrap">
@@ -498,7 +526,7 @@
   <!-- Q4 -->
   <div class="card" id="q4">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 4 / 12</p>
+    <p class="step-num">سؤال 4 / 13</p>
     <p class="question">شو الدخل الشهري اللي بدك توصله خلال سنة؟</p>
     <p class="sub">الرقم اللي لو وصلته بتحس إنه البزنس صار بالمكان اللي بدك إياه.</p>
     <div class="num-wrap">
@@ -510,13 +538,22 @@
 
   <!-- Q5 -->
   <div class="card" id="q5">
-    <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 5 / 12</p>
-    <p class="question">قديش متوسط سعر خدمتك الأساسية؟</p>
-    <p class="sub">اللي بيدفعه العميل بالمعاملة الوحدة أو بالباقة.</p>
-    <div class="num-wrap">
-      <span class="unit">$</span>
-      <input type="number" id="priceInput" placeholder="250" min="0" />
+    <span class="section-tag">البزنس</span>
+    <p class="step-num">سؤال 5 / 13</p>
+    <p class="question">مش بس مصاري: وين بزنسك اليوم، ووين بدك يكون؟</p>
+    <p class="sub">اختار المرحلة اللي بتوصف بزنسك اليوم بصدق.</p>
+    <div class="options" data-type="single" id="stageNow">
+      <div class="option" data-stage="1"><b>1. كل البزنس واقف عليّ</b><br><span class="opt-sub">بشتغل وبسوّق وببيع لحالي، والدخل بيطلع وبينزل</span></div>
+      <div class="option" data-stage="2"><b>2. دخل ماشي بس متعب</b><br><span class="opt-sub">في عملاء، بس كل شي مربوط بساعاتي ووجودي</span></div>
+      <div class="option" data-stage="3"><b>3. نظام بلّش يشتغل</b><br><span class="opt-sub">عرض واضح، عملاء بيجوا بشكل ثابت، وبلّشت أفوّض</span></div>
+      <div class="option" data-stage="4"><b>4. بزنس بيمشي بنظام</b><br><span class="opt-sub">دخل ثابت، فريق ونظام، وأنا بقود مش بنفّذ</span></div>
+    </div>
+    <p class="sub" style="margin-top:18px">ووين بدك يكون بعد سنة؟</p>
+    <div class="options chips" data-type="single" id="stageGoal">
+      <div class="option" data-stage="1">1. كل البزنس واقف عليّ</div>
+      <div class="option" data-stage="2">2. دخل ماشي بس متعب</div>
+      <div class="option" data-stage="3">3. نظام بلّش يشتغل</div>
+      <div class="option" data-stage="4">4. بزنس بيمشي بنظام</div>
     </div>
     <button class="btn-next" disabled onclick="nextStep(5)">التالي ←</button>
   </div>
@@ -524,12 +561,12 @@
   <!-- Q6 -->
   <div class="card" id="q6">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 6 / 12</p>
-    <p class="question">قديش عميل جديد بيشتري منك بالشهر؟</p>
-    <p class="sub">اللي فعلاً بدفعوا، مش اللي بسألوا.</p>
+    <p class="step-num">سؤال 6 / 13</p>
+    <p class="question">قديش متوسط سعر خدمتك الأساسية؟</p>
+    <p class="sub">اللي بيدفعه العميل بالمعاملة الوحدة أو بالباقة.</p>
     <div class="num-wrap">
-      <span class="unit">👤</span>
-      <input type="number" id="clientsInput" placeholder="12" min="0" />
+      <span class="unit">$</span>
+      <input type="number" id="priceInput" placeholder="250" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(6)">التالي ←</button>
   </div>
@@ -537,12 +574,12 @@
   <!-- Q7 -->
   <div class="card" id="q7">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 7 / 12</p>
-    <p class="question">قديش استفسار بيجيك بالشهر؟</p>
-    <p class="sub">كل واحد سأل عن السعر أو الخدمة، سواء اشترى أو لأ. رسائل، تلفونات، كومنتات.</p>
+    <p class="step-num">سؤال 7 / 13</p>
+    <p class="question">قديش عميل جديد بيشتري منك بالشهر؟</p>
+    <p class="sub">اللي فعلاً بدفعوا، مش اللي بسألوا.</p>
     <div class="num-wrap">
-      <span class="unit">💬</span>
-      <input type="number" id="leadsInput" placeholder="40" min="0" />
+      <span class="unit">👤</span>
+      <input type="number" id="clientsInput" placeholder="12" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(7)">التالي ←</button>
   </div>
@@ -550,15 +587,12 @@
   <!-- Q8 -->
   <div class="card" id="q8">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 8 / 12</p>
-    <p class="question">قديش بيضلّ بإيدك من كل 100 دولار دخل، بعد كل المصاريف؟</p>
-    <p class="sub">لو ما بتعرف بالضبط، اختار الأقرب لإحساسك.</p>
-    <div class="options" data-type="single">
-      <div class="option" data-val="0.15">أقل من 20 دولار</div>
-      <div class="option" data-val="0.28">من 20 لـ 35 دولار</div>
-      <div class="option" data-val="0.42">من 35 لـ 50 دولار</div>
-      <div class="option" data-val="0.60">أكثر من 50 دولار</div>
-      <div class="option" data-val="0.25">ما بعرف، ما عندي متابعة مالية</div>
+    <p class="step-num">سؤال 8 / 13</p>
+    <p class="question">قديش استفسار بيجيك بالشهر؟</p>
+    <p class="sub">كل واحد سأل عن السعر أو الخدمة، سواء اشترى أو لأ. رسائل، تلفونات، كومنتات.</p>
+    <div class="num-wrap">
+      <span class="unit">💬</span>
+      <input type="number" id="leadsInput" placeholder="40" min="0" />
     </div>
     <button class="btn-next" disabled onclick="nextStep(8)">التالي ←</button>
   </div>
@@ -566,20 +600,35 @@
   <!-- Q9 -->
   <div class="card" id="q9">
     <span class="section-tag">الأرقام</span>
-    <p class="step-num">سؤال 9 / 12</p>
-    <p class="question">قديش ساعة بتشتغل بالأسبوع على البزنس؟</p>
-    <p class="sub">كل شي: الخدمة نفسها، الرد على الرسائل، المحتوى، الحسابات.</p>
-    <div class="num-wrap">
-      <span class="unit">⏱</span>
-      <input type="number" id="hoursInput" placeholder="45" min="1" max="120" />
+    <p class="step-num">سؤال 9 / 13</p>
+    <p class="question">قديش بيضلّ بإيدك من كل 100 دولار دخل، بعد كل المصاريف؟</p>
+    <p class="sub">أغلب أصحاب البزنس ما بيعرفوا الرقم بالضبط، وهاد عادي. اختار الأقرب، أو "ما بعرف".</p>
+    <div class="options" data-type="single">
+      <div class="option" data-val="0.18">أقل من 25 دولار</div>
+      <div class="option" data-val="0.37">من 25 لـ 50 دولار</div>
+      <div class="option" data-val="0.60">أكثر من 50 دولار</div>
+      <div class="option" data-val="0.25" data-unknown="1">ما بعرف</div>
     </div>
     <button class="btn-next" disabled onclick="nextStep(9)">التالي ←</button>
   </div>
 
   <!-- Q10 -->
   <div class="card" id="q10">
+    <span class="section-tag">الأرقام</span>
+    <p class="step-num">سؤال 10 / 13</p>
+    <p class="question">قديش ساعة بتشتغل بالأسبوع على البزنس؟</p>
+    <p class="sub">كل شي: الخدمة نفسها، الرد على الرسائل، المحتوى، الحسابات.</p>
+    <div class="num-wrap">
+      <span class="unit">⏱</span>
+      <input type="number" id="hoursInput" placeholder="45" min="1" max="120" />
+    </div>
+    <button class="btn-next" disabled onclick="nextStep(10)">التالي ←</button>
+  </div>
+
+  <!-- Q11 -->
+  <div class="card" id="q11">
     <span class="section-tag">إحساسك</span>
-    <p class="step-num">سؤال 10 / 12</p>
+    <p class="step-num">سؤال 11 / 13</p>
     <p class="question">بإحساسك انت، وين المشكلة الأساسية؟</p>
     <p class="sub">جاوب بحدسك قبل ما تشوف الأرقام. هاد السؤال بيقارن إحساسك بالنتيجة.</p>
     <div class="options" data-type="single">
@@ -588,13 +637,13 @@
       <div class="option" data-key="marketing">بالتسويق، ما بوصل لعدد كافي من الناس</div>
       <div class="option" data-key="unknown">صراحة ما بعرف، هاد سبب تعبئتي للفحص</div>
     </div>
-    <button class="btn-next" disabled onclick="nextStep(10)">التالي ←</button>
+    <button class="btn-next" disabled onclick="nextStep(11)">التالي ←</button>
   </div>
 
-  <!-- Q11 -->
-  <div class="card" id="q11">
+  <!-- Q12 -->
+  <div class="card" id="q12">
     <span class="section-tag">الجاهزية</span>
-    <p class="step-num">سؤال 11 / 12</p>
+    <p class="step-num">سؤال 12 / 13</p>
     <p class="question">من 1 لـ 10، قديش انت مستعد تغيّر بطريقة شغلك الحالية؟</p>
     <div class="range-wrap">
       <div class="range-value" id="readyValue">5</div>
@@ -604,13 +653,13 @@
         <span>10 · جاهز أغيّر كل شي</span>
       </div>
     </div>
-    <button class="btn-next" onclick="nextStep(11)">التالي ←</button>
+    <button class="btn-next" onclick="nextStep(12)">التالي ←</button>
   </div>
 
-  <!-- Q12 -->
-  <div class="card" id="q12">
+  <!-- Q13 -->
+  <div class="card" id="q13">
     <span class="section-tag">الجاهزية</span>
-    <p class="step-num">سؤال 12 / 12</p>
+    <p class="step-num">سؤال 13 / 13</p>
     <p class="question">لو طلع إنه الحل بده مرافقة مهنية، عندك استعداد للاستثمار بحاله خلال الشهور الثلاثة الجاية؟</p>
     <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا هاي اللحظة الصح إلك أو لأ.</p>
     <div class="options" data-type="single">
@@ -635,6 +684,12 @@
       <p class="note" id="gapNote"></p>
     </div>
 
+    <div class="gaplines">
+      <div class="gl" id="glMoney"></div>
+      <div class="gl" id="glStage"></div>
+    </div>
+    <div class="money-note" id="moneyNote" style="display:none"></div>
+
     <div class="stat-grid">
       <div class="stat"><p class="k">دخلك الشهري اليوم</p><p class="v" id="stIncome">—</p></div>
       <div class="stat"><p class="k">هدفك الشهري</p><p class="v" id="stGoal">—</p></div>
@@ -646,7 +701,7 @@
     <p class="bars-sub">كل شريط بيقيس قد إيش هاد المحور بعيد عن اللي بتحتاجه عشان توصل لهدفك. كل ما الشريط أطول، كل ما هاد المحور بيوقفك أكثر.</p>
 
     <div class="bar-row">
-      <div class="bar-head"><span class="nm">💰 التسعير</span><span class="pc" id="pcPrice">0%</span></div>
+      <div class="bar-head"><span class="nm">💰 العرض والتسعير</span><span class="pc" id="pcPrice">0%</span></div>
       <div class="bar-track"><div class="bar-fill" id="barPrice"></div></div>
       <p class="bar-note" id="notePrice"></p>
     </div>
@@ -754,7 +809,7 @@
   const LINK_WHATSAPP = 'https://wa.me/972559311440';
   const FORM_NAME     = 'الفحص التشخيصي — فجوة البزنس';
 
-  const TOTAL = 12;
+  const TOTAL = 13;
   const CLOSE_BENCHMARK = 0.35; // نسبة إغلاق مرجعية لأصحاب الخدمات
 
   let answers = {};
@@ -866,6 +921,8 @@
   })();
 
   function nextStep(current) {
+    const iv = document.querySelector('.intro-video');
+    if (iv) { iv.style.display = 'none'; const v = document.getElementById('introVideo'); if (v) v.pause(); }
     document.getElementById('q' + current).classList.remove('active');
     const next = current + 1;
     document.getElementById('q' + next).classList.add('active');
@@ -903,7 +960,7 @@
     const clients = Math.max(num('clientsInput'), 0);
     const leads   = Math.max(num('leadsInput'), 0);
     const hours   = Math.max(num('hoursInput'), 1);
-    const margin  = parseFloat(pick(8).dataset.val);
+    const margin  = parseFloat(pick(9).dataset.val);
 
     const clamp = x => Math.max(0, Math.min(1, x));
 
@@ -946,6 +1003,57 @@
 
   const GAP_NAMES = { price: 'بالعرض والتسعير', sales: 'بالمبيعات', marketing: 'بالتسويق' };
   const GAP_WORDS = { price: 'العرض والتسعير', sales: 'المبيعات', marketing: 'التسويق' };
+  // القيم اللي بتنحفظ بالشيت وبتشغّل تاغات ManyChat. لا تغيّرها بدون تحديث السكريبت.
+  const DATA_WORDS = { price: 'التسعير', sales: 'المبيعات', marketing: 'التسويق' };
+  const STAGE_NAMES = ['كل البزنس واقف عليّ', 'دخل ماشي بس متعب', 'نظام بلّش يشتغل', 'بزنس بيمشي بنظام'];
+  const STAGE_SHORT = ['كله عليّ', 'ماشي بس متعب', 'نظام بلّش', 'بيمشي بنظام'];
+  function stageVal(id) { const o = document.querySelector('#' + id + ' .option.selected'); return o ? +o.dataset.stage : 0; }
+
+  // خط الفجوة بالمصاري: من دخل اليوم لهدفك
+  function moneyLineHTML(d) {
+    const pct = d.onTrack ? 100 : Math.max(8, Math.min(88, d.goal > 0 ? d.income / d.goal * 100 : 0));
+    let h = '<p class="gl-title">💵 الفجوة بالمصاري، كل شهر</p>' +
+      '<div class="gl-track">' +
+        '<div class="gl-done" style="width:' + pct + '%"></div>' +
+        (d.onTrack ? '' : '<div class="gl-gap" style="right:' + pct + '%;left:0"></div>') +
+        '<div class="gl-dot goal' + (d.onTrack ? ' reached' : '') + '" style="right:100%"></div>' +
+        '<div class="gl-dot now" style="right:' + pct + '%"></div>' +
+        '<div class="gl-tag" style="right:' + Math.max(pct, 10) + '%">اليوم<b>' + usd(d.income) + '</b></div>' +
+        (d.onTrack ? '' : '<div class="gl-tag goal" style="right:96%">هدفك<b>' + usd(d.goal) + '</b></div>') +
+      '</div>';
+    h += '<p class="gl-note">' + (d.onTrack
+      ? 'وصلت لهدفك بالدخل. الفجوة عندك مش بالمصاري.'
+      : 'ناقصك <b>' + usd(d.monthGap) + ' بالشهر</b> عشان توصل للدخل اللي بدك ياه.') + '</p>';
+    return h;
+  }
+
+  // خط الفجوة بمرحلة البزنس: وين انت اليوم ووين بدك تكون
+  function stageLineHTML(now, goal) {
+    if (!now || !goal) return '';
+    const pos = n => ((n - 1) / 3) * 100;
+    const a = pos(now), b = pos(goal);
+    let h = '<p class="gl-title" style="margin-bottom:22px">🧭 الفجوة بالبزنس نفسه</p><div class="gl-track">' +
+      '<div class="gl-done" style="width:' + a + '%"></div>';
+    if (goal > now) h += '<div class="gl-gap" style="right:' + a + '%;width:' + (b - a) + '%"></div>';
+    for (let i = 1; i <= 4; i++) {
+      const cls = i === now ? ' now' : (i === goal ? ' goal' : '');
+      h += '<div class="gl-dot' + cls + '" style="right:' + pos(i) + '%"></div>';
+    }
+    h += '</div><div class="gl-labels">';
+    for (let i = 1; i <= 4; i++) {
+      const c = i === now ? ' class="on"' : (i === goal && goal > now ? ' class="tg"' : '');
+      h += '<span' + c + ' style="right:' + pos(i) + '%">' + STAGE_SHORT[i - 1] + '</span>';
+    }
+    h += '</div><p class="gl-note">';
+    if (goal > now) {
+      h += 'اليوم بزنسك بمرحلة <b style="color:#e8c07d">«' + STAGE_NAMES[now - 1] + '»</b>، وبدك توصل لـ <b>«' + STAGE_NAMES[goal - 1] + '»</b>. ' +
+        'هاي فجوة ما بتتسكّر بشغل أكثر. بتتسكّر بنظام: عرض واضح، مسار مبيعات، ومتابعة مالية.';
+    } else {
+      h += 'بزنسك أصلاً بالمرحلة اللي بدك ياها. التحدي هلق إنه هاد الوضع يضل ثابت حتى بالشهور الصعبة.';
+    }
+    return h + '</p>';
+  }
+
 
   function barClass(s) { return s >= 55 ? 'hi' : (s >= 30 ? 'mid' : 'lo'); }
 
@@ -1050,7 +1158,7 @@
   }
 
   function showResults() {
-    const invOpt = pick(12);
+    const invOpt = pick(13);
     investment = invOpt ? invOpt.textContent.trim() : '';
 
     D = diagnose();
@@ -1070,6 +1178,21 @@
       document.getElementById('yearGap').textContent = usd(D.yearGap);
       document.getElementById('gapNote').textContent =
         'هاد الفرق بين دخلك اليوم وهدفك، مضروب بـ 12 شهر. مش خسارة، هو دخل موجود بمتناولك وما بتوصله بالطريقة الحالية.';
+    }
+
+    const sNow = stageVal('stageNow'), sGoal = stageVal('stageGoal');
+    document.getElementById('glMoney').innerHTML = moneyLineHTML(D);
+    const glStage = document.getElementById('glStage');
+    glStage.innerHTML = stageLineHTML(sNow, sGoal);
+    glStage.style.display = sNow && sGoal ? '' : 'none';
+
+    const profitUnknown = pick(9) && pick(9).dataset.unknown === '1';
+    const mn = document.getElementById('moneyNote');
+    if (profitUnknown) {
+      mn.style.display = '';
+      mn.innerHTML = '📌 قلت إنك ما بتعرف قديش بيضلّ بإيدك من كل 100 دولار. هاي فجوة بحد ذاتها: ' +
+        'بدون متابعة مالية، ما في طريقة تعرف إذا الدخل الإضافي رح يتحوّل لربح أو بس لشغل أكثر. ' +
+        '<b style="color:#e8c07d">قيمة ساعة شغلك تحت هي تقدير.</b>';
     }
 
     document.getElementById('stIncome').textContent = usd(D.income);
@@ -1104,16 +1227,16 @@
     document.getElementById('verdictBox').innerHTML  = verdictHTML(D);
     document.getElementById('bonusBox').innerHTML    = bonusHTML(D);
 
-    document.getElementById('q12').classList.remove('active');
+    document.getElementById('q13').classList.remove('active');
     document.getElementById('qResult').classList.add('active');
     document.getElementById('progressBar').style.width = '100%';
     document.getElementById('progressLabel').textContent = 'نتيجتك جاهزة ✓';
-    track('QuizResults', { gap: D.onTrack ? 'on_track' : GAP_WORDS[D.primary], value: Math.round(D.monthGap), currency: 'USD' });
+    track('QuizResults', { gap: D.onTrack ? 'on_track' : DATA_WORDS[D.primary], value: Math.round(D.monthGap), currency: 'USD' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function goToDetails() {
-    track('QuizDetailsShown', { gap: D.onTrack ? 'on_track' : GAP_WORDS[D.primary] });
+    track('QuizDetailsShown', { gap: D.onTrack ? 'on_track' : DATA_WORDS[D.primary] });
     document.getElementById('qResult').classList.remove('active');
     document.getElementById('qDetails').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1142,17 +1265,19 @@
       'عملاء جدد بالشهر': nf(D.clients),
       'استفسارات بالشهر': nf(D.leads),
       'نسبة الإغلاق': Math.round(D.closeRate * 100) + '%',
-      'هامش الربح': pick(8) ? pick(8).textContent.trim() : '',
+      'هامش الربح': pick(9) ? pick(9).textContent.trim() : '',
       'ساعات العمل الأسبوعية': nf(D.hours),
       'قيمة ساعة العمل': usd(D.hourly),
       'الفجوة الشهرية': usd(D.monthGap),
       'الفجوة السنوية': usd(D.yearGap),
-      'الفجوة الأساسية': D.onTrack ? 'واصل لهدفه · التحدي الثبات' : GAP_WORDS[D.primary],
+      'الفجوة الأساسية': D.onTrack ? 'واصل لهدفه · التحدي الثبات' : DATA_WORDS[D.primary],
       'فجوة التسعير': Math.round(D.priceScore) + '%',
       'فجوة المبيعات': Math.round(D.salesScore) + '%',
       'فجوة التسويق': Math.round(D.marketScore) + '%',
-      'إحساسه بالمشكلة': perceived === 'unknown' ? 'ما بيعرف' : (GAP_WORDS[perceived] || '—'),
+      'إحساسه بالمشكلة': perceived === 'unknown' ? 'ما بيعرف' : (DATA_WORDS[perceived] || '—'),
       'تطابق الإحساس مع الأرقام': perceived === 'unknown' ? 'ما بيعرف' : (perceived === D.primary ? 'مطابق' : 'مش مطابق'),
+      'مرحلة البزنس اليوم': STAGE_NAMES[stageVal('stageNow') - 1] || '',
+      'المرحلة المطلوبة': STAGE_NAMES[stageVal('stageGoal') - 1] || '',
       'الاستعداد للتغيير': document.getElementById('readyRange').value + '/10',
       'الجاهزية للاستثمار': investment,
       'موافقة تسويقية': 'إيه ✓',
@@ -1181,8 +1306,16 @@
           { method: 'GET', mode: 'no-cors' }).catch(() => {});
   }
 
+  // سؤال المرحلة: الزر بيتفعّل بس لما يختار اليوم والهدف
+  (function () {
+    const btn = document.getElementById('q5').querySelector('.btn-next');
+    document.querySelectorAll('#q5 .option').forEach(o => onTap(o, () => {
+      btn.disabled = !(stageVal('stageNow') && stageVal('stageGoal'));
+    }));
+  })();
+
   // التقاط إحساسه بالمشكلة
-  document.querySelectorAll('#q10 .option').forEach(o => {
+  document.querySelectorAll('#q11 .option').forEach(o => {
     onTap(o, () => { perceived = o.dataset.key; });
   });
 </script>
