@@ -685,7 +685,8 @@
     <p class="question">لو طلع إنه الحل بده مرافقة مهنية، قديش انت مستعد تستثمر فيها خلال الشهور الثلاثة الجاية؟</p>
     <p class="sub">ما في هون إجابة بتقصيك. بسأل عشان أعرف إذا هاي اللحظة الصح إلك أو لأ.</p>
     <div class="options" data-type="single">
-      <div class="option" data-inv="low" data-save="مبدئياً · أقل من 1,500 دولار">أقل من 1,500 دولار</div>
+      <div class="option" data-inv="entry" data-save="مبدئياً · أقل من 500 دولار">أقل من 500 دولار</div>
+      <div class="option" data-inv="low" data-save="مبدئياً · من 500 لـ 1,500 دولار">من 500 لـ 1,500 دولار</div>
       <div class="option" data-inv="high" data-save="أستثمر · من 1,500 لـ 3,000 دولار">من 1,500 لـ 3,000 دولار</div>
       <div class="option" data-inv="high" data-save="أستثمر · أكثر من 3,000 دولار">أكثر من 3,000 دولار</div>
     </div>
@@ -845,12 +846,15 @@
   const FORM_NAME     = 'الفحص التشخيصي — فجوة البزنس';
 
   // ===== مين بيشوف زر الحجز؟ =====
+  // استثمار أقل من 500$ = بيشوف زر Focus دايماً (بغض النظر عن الدخل).
   // دخل شهري 1,500$ وفوق + استعداد يستثمر 1,500$ وفوق = بيشوف زر الحجز.
-  // غير هيك بيشوف "رح أراجع وأرجعلك".
+  // غير هيك (500-1,500$) بيشوف "رح أراجع وأرجعلك".
   const FIT_MIN_INCOME = 1500;
 
   function fitCheck() {
     const reasons = [];
+    const invE = pick(13);
+    if (invE && invE.dataset.inv === 'entry') return { fit: true, entry: true, reasons: ['استثمار أقل من 500$'] };
     if (D.income < FIT_MIN_INCOME) reasons.push('دخل أقل من ' + FIT_MIN_INCOME + '$');
     const inv = pick(13);
     if (!inv || inv.dataset.inv !== 'high') reasons.push('استثمار أقل من 1,500$');
@@ -1334,7 +1338,7 @@
       'الاستعداد للتغيير': document.getElementById('readyRange').value + '/10',
       'الجاهزية للاستثمار': investment,
       'موافقة تسويقية': 'إيه ✓',
-      'الملاءمة': FIT.fit ? 'مناسب · شاف زر الحجز' : 'للمراجعة · ' + FIT.reasons.join('، '),
+      'الملاءمة': FIT.entry ? 'Focus · استثمار أقل من 500$ · شاف زر الحجز' : FIT.fit ? 'مناسب · شاف زر الحجز' : 'للمراجعة · ' + FIT.reasons.join('، '),
       'النموذج': FORM_NAME
     };
 
@@ -1342,8 +1346,8 @@
     document.getElementById('qFinal').classList.add('active');
     document.getElementById('fitBlock').style.display    = FIT.fit ? '' : 'none';
     document.getElementById('reviewBlock').style.display = FIT.fit ? 'none' : '';
-    track('QuizFit', { fit: FIT.fit ? 'fit' : 'review' });
-    if (FIT.fit) track('QualifiedLead', { value: D.monthGap || 0, currency: 'USD' });
+    track('QuizFit', { fit: FIT.entry ? 'focus_entry' : (FIT.fit ? 'fit' : 'review') });
+    if (FIT.fit && !FIT.entry) track('QualifiedLead', { value: D.monthGap || 0, currency: 'USD' });
     document.getElementById('focusCta').href = LINK_FOCUS;
     document.getElementById('waCta').href    = LINK_WHATSAPP;
     window.scrollTo({ top: 0, behavior: 'smooth' });
