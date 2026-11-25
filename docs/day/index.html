@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aesthetic Mastery Day | عيادة مليانة ومربحة</title>
+<meta name="description" content="يوم عملي تطبيقي لأصحاب وصاحبات العيادات والمراكز العلاجية، الخميس 10.12 في الناصرة.">
+<meta property="og:title" content="Aesthetic Mastery Day | عيادة مليانة ومربحة">
+<meta property="og:description" content="ابني بصمتك العلاجية في مركزك.. وعيادة مليانة بدون إعلانات يومية. الخميس 10.12، الناصرة.">
+<meta property="og:image" content="https://rimayaccoub-blip.github.io/premium-form/day/assets/hall-people.jpg">
+<meta property="og:type" content="website">
+<style>body{margin:0}img{max-width:100%}</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Kufi+Arabic:wght@400;500&display=swap">
+<style>
+/* layout: dark espresso hero and closing invitation, nude body with champagne hairlines; event-invitation column, thin gold frame on the hero, agenda as a timetable, proof as a mixed row */
+:root{
+  --bg:#f3ebe3; --paper:#fbf7f2; --ink:#2a211c; --muted:#7a675b; --line:#e0d1c1; --gold:#b38d55; --gold-ink:#86643a; --gold-soft:#ece0d0;
+  --night:#1d1713; --night-2:#2a221c; --night-ink:#f2e8db; --night-muted:#bfae9c; --champagne:#d8bd8c;
+  --display:"El Messiri","Noto Kufi Arabic",Tahoma,sans-serif; --body:"Noto Kufi Arabic",Tahoma,sans-serif; --latin:"Cormorant Garamond",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171310; --paper:#211b17; --ink:#efe5d8; --muted:#b0a090; --line:#3a3029; --gold:#d2b07a; --gold-ink:#e0c391; --gold-soft:#2e251d;
+  --night:#0f0c0a; --night-2:#1c1713; --night-ink:#f2e8db; --night-muted:#bfae9c; --champagne:#dcc293; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171310; --paper:#211b17; --ink:#efe5d8; --muted:#b0a090; --line:#3a3029; --gold:#d2b07a; --gold-ink:#e0c391; --gold-soft:#2e251d;
+  --night:#0f0c0a; --night-2:#1c1713; --night-ink:#f2e8db; --night-muted:#bfae9c; --champagne:#dcc293; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);direction:rtl;line-height:1.8;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:44px;border-bottom:1px solid var(--line)}
+h1,h2,h3{font-family:var(--display);line-height:1.35;margin:0;text-wrap:balance}
+h2{font-size:1.6rem;margin-bottom:18px}
+h3{font-size:1.1rem}
+p{margin:0}
+bdi{unicode-bidi:isolate}
+.muted{color:var(--muted)}
+
+/* hero */
+.hero{padding-block:36px 44px}
+.frame{border:1px solid var(--gold);padding:34px 22px;text-align:center;display:flex;flex-direction:column;gap:16px;align-items:center;background:var(--paper)}
+.brand{font-family:var(--latin);font-size:1.6rem;letter-spacing:.06em;color:var(--gold-ink);direction:ltr}
+.frame h1{font-size:clamp(1.55rem,5vw,2.3rem)}
+.when{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;color:var(--muted);font-size:.95rem}
+.when span{white-space:nowrap}
+.pricetag{display:flex;align-items:baseline;gap:12px;justify-content:center;flex-wrap:wrap}
+.pricetag .now{font-family:var(--display);font-size:2rem;color:var(--gold-ink)}
+.pricetag s{color:var(--muted)}
+.cta{display:inline-block;background:var(--gold);color:#fff;text-decoration:none;font-family:var(--display);font-size:1.15rem;padding:12px 34px;border-radius:4px}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.note{font-size:.85rem;color:var(--muted)}
+
+.lead{font-size:1.08rem;max-width:62ch}
+.gets{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.gets li{display:grid;grid-template-columns:2.2rem 1fr;gap:10px;align-items:start}
+.gets b{font-family:var(--latin);font-size:1.5rem;color:var(--gold);line-height:1.3;text-align:center}
+
+/* agenda */
+.agenda{display:grid;gap:0}
+/* unused */.slot{display:grid;grid-template-columns:4.5rem 1fr;gap:16px;padding-block:14px;border-top:1px solid var(--line)}
+.slot:first-child{border-top:0}
+.slot time{font-family:var(--latin);font-size:1.25rem;color:var(--gold-ink);direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.slot p{color:var(--muted);font-size:.95rem}
+
+/* about */
+.about{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+.about img{width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line)}
+.about > div{display:flex;flex-direction:column;gap:12px;min-width:0}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-family:var(--display);font-size:1.6rem;color:var(--gold-ink);line-height:1.2}
+.stats span{font-size:.85rem;color:var(--muted)}
+
+/* proof */
+.proof{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.case{background:var(--paper);border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.case .num{font-family:var(--display);font-size:1.7rem;color:var(--gold-ink);line-height:1.3}
+.case .num small{font-size:1rem;color:var(--muted)}
+.case img{width:100%;border:1px solid var(--line)}
+.vid{display:flex;flex-direction:column;gap:8px;min-width:0}
+.vid video{width:100%;max-width:320px;aspect-ratio:9/16;object-fit:cover;background:#000;display:block;margin-inline:auto}
+.vid p{text-align:center}
+.thumb{position:relative;text-decoration:none}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb::after{content:"▶";position:absolute;inset:0;display:grid;place-items:center;font-size:2.4rem;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.vid p{font-size:.92rem}
+.disclaimer{font-size:.8rem;color:var(--muted);margin-top:14px}
+
+/* price box */
+.pricebox{background:var(--gold-soft);border:1px solid var(--gold);padding:28px 22px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.pricebox ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;font-size:.95rem}
+.pricebox li::before{content:"✓ ";color:var(--gold-ink)}
+
+.hall{margin:22px 0 0}
+.hall img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border:1px solid var(--line)}
+.gift{display:flex;gap:16px;align-items:center;border:1px solid var(--gold);padding:20px 22px;background:var(--paper)}
+.gift-mark{font-size:1.8rem;color:var(--gold)}
+.gift h3{margin-bottom:2px}
+.yt{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.case.wide{grid-column:1/-1}
+.case.wide img{max-width:520px;margin-inline:auto}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+details{border-top:1px solid var(--line);padding-block:14px}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-family:var(--display);font-size:1.05rem}
+details p{margin-top:8px;color:var(--muted)}
+footer{padding-block:28px 40px;text-align:center;font-size:.85rem;color:var(--muted)}
+
+@media (max-width:620px){
+  .about{grid-template-columns:1fr}
+  .about img{max-width:240px}
+  .proof{grid-template-columns:1fr}
+}
+
+/* noir treatment */
+.frame{background:var(--night);border-color:var(--champagne);color:var(--night-ink);padding:46px 24px;outline:1px solid var(--champagne);outline-offset:-10px}
+.frame .brand{color:var(--champagne)}
+.frame h1{color:var(--night-ink)}
+.frame .muted,.frame .when{color:var(--night-muted)}
+.frame .cta,.pricebox .cta{background:var(--champagne);color:var(--night)}
+.frame .cta:focus-visible,.pricebox .cta:focus-visible{outline-color:var(--night-ink)}
+.pricebox{background:var(--night);border-color:var(--champagne);color:var(--night-ink);outline:1px solid var(--champagne);outline-offset:-10px;padding:40px 24px}
+.pricebox h2{color:var(--night-ink)}
+.pricebox .now{color:var(--champagne)}
+.pricebox s,.pricebox .note{color:var(--night-muted)}
+.pricebox li::before{color:var(--champagne)}
+.gift{background:var(--night-2);border-color:var(--champagne);color:var(--night-ink)}
+.gift .muted{color:var(--night-muted)}
+.gift-mark{color:var(--champagne)}
+.gets b{color:var(--gold)}
+h2{color:var(--ink)}
+h2::after{content:"";display:block;width:48px;height:1px;background:var(--gold);margin-top:12px}
+.pricebox h2::after{margin-inline:auto;background:var(--champagne)}
+.frame .venue{color:var(--night-muted,var(--muted));margin-top:-8px}
+.split{font-family:var(--display);font-size:1.1rem;margin-top:-6px}
+.pricebox .split{color:var(--night-ink,var(--ink))}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="frame">
+    <div class="brand">Aesthetic Mastery Day</div>
+    <h1>ابني بصمتك العلاجية في مركزك.. وعيادة مليانة بدون إعلانات يومية</h1>
+    <p class="muted">يوم عملي تطبيقي لأصحاب وصاحبات العيادات والمراكز العلاجية والأخصائيين</p>
+    <div class="when"><span>الخميس <bdi>10.12</bdi></span><span><bdi>9:00</bdi> حتى <bdi>15:00</bdi></span><span>الناصرة</span><span>شامل ضيافة</span></div>
+    <p class="note venue">يرسل عنوان المكان للمسجلين لاحقا</p>
+    <a class="cta" href="#price">احجز/ي مكانك</a>
+  </div>
+</section>
+
+<section>
+  <p class="lead">نحن نعلم أن شغفك الحقيقي هو مساعدة عملائك وتقديم أفضل رعاية علاجية، وليس قضاء وقتك في القلق بشأن التسويق أو دفع ميزانيات ضخمة للإعلانات.</p>
+  <p class="lead" style="margin-top:12px">لذلك بنينا يوما واحدا عمليا، تخرج/ين منه بأدوات جاهزة تشتغل/ين فيها من تاني يوم.</p>
+  <figure class="hall"><img src="assets/hall-people.jpg" alt="أصحاب مراكز يتحاورون حول طاولات في قاعة اللقاء"></figure>
+</section>
+
+<section>
+  <h2>ما تغادر/ين به في نهاية اليوم</h2>
+  <ul class="gets">
+    <li><b>1</b><div><h3>هوية علاجية لا تنسى</h3><p class="muted">تحدد/ين ما يجعل مركزك الخيار الأول، وتعرض/ين قيمته قبل أن يسأل العميل عن السعر.</p></div></li>
+    <li><b>2</b><div><h3>منظومة تسعير مدروسة</h3><p class="muted">أسعار مبنية على قيمة علاجاتك، تحقق لك ربحا حقيقيا وتقدمها بثقة، من دون خصومات.</p></div></li>
+    <li><b>3</b><div><h3>استشارة تنتهي بحجز</h3><p class="muted">مسار واضح للاستشارة، وإجابات راقية جاهزة لـ«غالي» و«بفكر».</p></div></li>
+    <li><b>4</b><div><h3>عملاء يعودون كل شهر</h3><p class="muted">آلية متابعة ترفع التزام العملاء بالخطة العلاجية، وتملأ جدولك من شهر لشهر.</p></div></li>
+    <li><b>5</b><div><h3>ملف عمل مطبوع خاص بمركزك</h3><p class="muted">كل ما نبنيه خلال اليوم بين يديك، جاهز للتطبيق من صباح اليوم التالي.</p></div></li>
+  </ul>
+  <p class="note" style="margin-top:18px">يصلك البرنامج التفصيلي لليوم بعد التسجيل.</p>
+</section>
+
+<section>
+  <div class="gift">
+    <span class="gift-mark">✦</span>
+    <div><h3>هدية للمشاركين</h3><p class="muted">في ختام اليوم، قرعة بين جميع المشاركين على هدية قيمة.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>مين ريما يعقوب؟</h2>
+  <div class="about">
+    <img src="assets/rima-bio.jpg" alt="ريما يعقوب">
+    <div>
+      <p>مستشارة أعمال ومرافقة لأصحاب بزنس الخدمات، بخلفية محاسبة وإدارة حسابات لشركات دخلها بالملايين.</p>
+      <p>هالخلفية هي اللي بتخلي الشغل يبدأ من مكان مختلف: من أرقام البزنس الحقيقية. ومنها بيطلع كل الباقي: العرض، التسعير، والمبيعات.</p>
+      <div class="stats">
+        <div><b><bdi>15</bdi></b><span>سنة بعالم المحاسبة</span></div>
+        <div><b><bdi>7</bdi></b><span>سنين مرافقة أصحاب بزنس</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>شو صار مع أصحاب مراكز اشتغلنا سوا</h2>
+  <div class="proof">
+    <div class="case">
+      <h3>عيادة طبيب تجميل</h3>
+      <div class="num"><bdi>14,000</bdi> <small>←</small> <bdi>42,300 ₪</bdi></div>
+      <p class="muted">دخل شهري، خلال المرافقة: تركيز على العلاجات اللي بتربح، أسعار جديدة، وشغل على الإقفال بالاستشارة.</p>
+    </div>
+    <div class="case">
+      <h3>صاحبة مركز طب بديل</h3>
+      <img src="assets/proof-27700.jpg" alt="محادثة واتساب: 27,700 هاد الشهر">
+    </div>
+    <div class="case">
+      <h3>من بيع جلسة بجلسة.. لرزم</h3>
+      <img src="assets/proof-packages.jpg" alt="رسالة واتساب: حاليا صرت بايعة رزمتين 9 جلسات">
+    </div>
+    <div class="case">
+      <h3>أول <bdi>10,940</bdi></h3>
+      <img src="assets/proof-10940.jpg" alt="محادثة واتساب: المسار اللي اشتروا 5470، أول 10,940">
+    </div>
+    <div class="vid">
+      <video controls preload="none" poster="assets/poster-ibtisam.jpg" playsinline><source src="assets/ibtisam.mp4" type="video/mp4"></video>
+      <p><b>ابتسام</b> <span class="muted">مستشارة زوجية</span></p>
+    </div>
+    <div class="vid">
+      <video controls preload="none" poster="assets/poster-norsen.jpg" playsinline><source src="assets/norsen.mp4" type="video/mp4"></video>
+      <p><b>أمال</b> <span class="muted">صاحبة Norsen Spa</span></p>
+    </div>
+    <div class="case wide">
+      <h3>«وكنت عنجد بحاجة لشخص مهني»</h3>
+      <img src="assets/feedback-nagham.jpg" alt="رسالة شكر من د. نغم: تجربتي معك بتنطبق عليها جملة التوجه بالوقت الصح للانسان الصح">
+      <p style="text-align:center"><b>د. نغم</b></p>
+    </div>
+  </div>
+  <p class="disclaimer">النتائج بتختلف من بزنس لبزنس وبتعتمد على التنفيذ.</p>
+</section>
+
+<section id="price">
+  <div class="pricebox">
+    <h2 style="margin:0">احجز/ي مكانك</h2>
+    <div class="pricetag"><span class="now"><bdi>470 ₪</bdi></span><s><bdi>590 ₪</bdi></s></div>
+    <p class="split">أو بدفعتين: <bdi>2 × 235 ₪</bdi></p>
+    <p class="note">سعر التسجيل المبكر حتى <bdi>3.12</bdi>، وبعدها <bdi>590 ₪</bdi></p>
+    <ul><li>يوم عملي كامل</li><li>ضيافة</li><li>ملف عمل مطبوع</li><li>استمارة تحضير قبل اليوم</li></ul>
+    <a class="cta" href="https://mrng.to/jv60Vs5GW7" target="_blank" rel="noopener">للدفع والتسجيل</a>
+    <p class="note">بعد الدفع منتواصل معك على الواتساب مع كل التفاصيل والعنوان.</p>
+  </div>
+</section>
+
+<section>
+  <h2>أسئلة</h2>
+  <details><summary>لمين هاد اليوم؟</summary><p>لأصحاب وصاحبات العيادات والمراكز العلاجية والتجميلية والأخصائيين، اللي عندهم زبائن وبدهم دخل ثابت ومربح أكثر من نفس المركز.</p></details>
+  <details><summary>وين بالزبط؟</summary><p>في الناصرة. يرسل عنوان المكان للمسجلين لاحقا على الواتساب.</p></details>
+  <details><summary>شو لازم أجيب معي؟</summary><p>الأرقام اللي بتعرفها عن مركزك: أسعارك، عدد الزبائن بالشهر، والعلاجات الأكثر طلبا. الباقي علينا.</p></details>
+  <details><summary>عندي سؤال قبل ما أسجل</summary><p>راسلنا على الواتساب: <bdi>055-931-1440</bdi></p></details>
+</section>
+
+<footer>ريما يعقوب | استراتيجية وتطوير الأعمال</footer>
+</div>
+
+</body>
+</html>
