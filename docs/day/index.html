@@ -317,5 +317,20 @@ h2::after{content:"";display:block;width:48px;height:1px;background:var(--gold);
 <footer>ريما يعقوب | استراتيجية وتطوير الأعمال</footer>
 </div>
 
+<script>
+// after the early-bird deadline (end of 3.12, Israel time) show the full price
+(function(){
+  var deadline=new Date('2026-12-04T00:00:00+02:00');
+  if(new Date()<deadline) return;
+  var box=document.getElementById('price'); if(!box) return;
+  var now=box.querySelector('.now'); if(now) now.innerHTML='<bdi>590 ₪</bdi>';
+  box.querySelectorAll('.pricetag s').forEach(function(e){e.remove()});
+  var split=box.querySelector('.split'); if(split) split.innerHTML='أو بدفعتين: <bdi>2 × 295 ₪</bdi>';
+  box.querySelectorAll('.note').forEach(function(n){ if(n.textContent.indexOf('3.12')>-1) n.remove(); });
+  var late=box.getAttribute('data-late-link');
+  if(late) box.querySelectorAll('a.cta').forEach(function(a){a.href=late});
+})();
+</script>
+
 </body>
 </html>
